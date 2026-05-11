@@ -1,74 +1,112 @@
+/* ── Google Fonts ───────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Hind:wght@300;400;500;600&display=swap');
+
 :root {
-  --blue: #1a3a6b;
-  --sky: #2e86de;
-  --orange: #e07b39;
-  --green: #27ae60;
-  --bg: #f5f7fa;
-  --card: #ffffff;
-  --text: #1c2237;
-  --muted: #6b7280;
-  --border: #e2e8f0;
+  --cream:        #f5f0e8;
+  --brown:        #5c3d2e;
+  --brown-light:  #8b6355;
+  --orange:       #e07b39;
+  --orange-light: #f4a261;
+  --teal:         #2a9d8f;
+  --teal-light:   #4bbfb3;
+  --blue:         #264653;
+  --yellow:       #e9c46a;
+  --red:          #e63946;
+  --green:        #57cc99;
+  --bg:           #faf7f2;
+  --card:         #ffffff;
+  --text:         #2d1b0e;
+  --muted:        #7a6055;
+  --border:       rgba(92, 61, 46, 0.12);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
 
 body {
-  font-family: 'Segoe UI', 'Noto Sans Devanagari', sans-serif;
+  font-family: 'Hind', sans-serif;
   background: var(--bg);
   color: var(--text);
   line-height: 1.7;
+  overflow-x: hidden;
 }
 
 /* ── Header ─────────────────────────────── */
 header {
-  background: linear-gradient(135deg, var(--blue) 0%, #0f2545 100%);
+  background: linear-gradient(135deg, var(--brown) 0%, #3a1f10 100%);
   color: white;
-  padding: 2.5rem 1.5rem 2rem;
+  padding: 3rem 1.5rem 2.2rem;
   text-align: center;
   position: relative;
   overflow: hidden;
 }
 header::before {
-  content: "⚗️ 🔬 🚀 🌍 🧲 💡 🔭 🧪";
+  content: "⚗️  🔬  🚀  🌍  🧲  💡  🔭  🧪";
   position: absolute;
-  top: 0.5rem; left: 0; right: 0;
-  font-size: 1.4rem;
-  opacity: 0.12;
-  letter-spacing: 1.2rem;
+  top: 0.6rem; left: 0; right: 0;
+  font-size: 1.5rem;
+  opacity: 0.08;
+  letter-spacing: 1rem;
   pointer-events: none;
 }
-header .org { font-size: 0.85rem; opacity: 0.75; letter-spacing: 0.05em; margin-bottom: 0.4rem; }
-header h1  { font-size: clamp(1.6rem, 5vw, 2.4rem); font-weight: 800; margin-bottom: 0.4rem; }
-header .tagline { font-size: 1rem; opacity: 0.85; }
+header .org {
+  font-family: 'Baloo 2', cursive;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  opacity: 0.7;
+  margin-bottom: 0.5rem;
+}
+header h1 {
+  font-family: 'Baloo 2', cursive;
+  font-size: clamp(2rem, 6vw, 3rem);
+  font-weight: 800;
+  margin-bottom: 0.3rem;
+  line-height: 1.15;
+}
+header h1 .highlight {
+  color: var(--orange-light);
+}
+header .tagline {
+  font-size: 1rem;
+  opacity: 0.8;
+  font-weight: 400;
+}
 
 .join-btn {
   display: inline-block;
-  margin-top: 1.2rem;
+  margin-top: 1.4rem;
   background: #25d366;
   color: white;
   text-decoration: none;
-  font-weight: 700;
-  padding: 0.65rem 1.6rem;
-  border-radius: 2rem;
-  font-size: 1rem;
-  transition: transform 0.15s, box-shadow 0.15s;
-  box-shadow: 0 4px 14px rgba(37,211,102,0.4);
+  font-family: 'Hind', sans-serif;
+  font-weight: 600;
+  padding: 0.7rem 1.8rem;
+  border-radius: 50px;
+  font-size: 0.95rem;
+  transition: transform 0.18s, box-shadow 0.18s;
+  box-shadow: 0 4px 16px rgba(37,211,102,0.35);
 }
-.join-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(37,211,102,0.5); }
+.join-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 22px rgba(37,211,102,0.5);
+}
 
 /* ── Nav ─────────────────────────────────── */
 nav {
-  background: #fff;
-  border-bottom: 2px solid var(--border);
+  background: rgba(250, 247, 242, 0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 2px solid var(--orange-light);
   position: sticky;
   top: 0;
   z-index: 100;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  box-shadow: 0 2px 10px rgba(92, 61, 46, 0.08);
 }
 nav ul {
   display: flex;
   list-style: none;
-  max-width: 720px;
+  max-width: 760px;
   margin: 0 auto;
   overflow-x: auto;
   scrollbar-width: none;
@@ -78,168 +116,200 @@ nav ul li a {
   display: flex;
   align-items: center;
   gap: 0.35rem;
-  padding: 0.85rem 1.1rem;
+  padding: 0.9rem 1.1rem;
   text-decoration: none;
   color: var(--muted);
-  font-size: 0.9rem;
+  font-family: 'Hind', sans-serif;
+  font-size: 0.88rem;
   font-weight: 600;
   white-space: nowrap;
   border-bottom: 3px solid transparent;
   transition: color 0.15s, border-color 0.15s;
 }
-nav ul li a:hover { color: var(--blue); }
+nav ul li a:hover { color: var(--brown); }
 nav ul li a.active {
-  color: var(--blue);
-  border-bottom-color: var(--sky);
+  color: var(--orange);
+  border-bottom-color: var(--orange);
 }
 
 /* ── Layout ─────────────────────────────── */
-.container { max-width: 720px; margin: 0 auto; padding: 2rem 1rem; }
+.container {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 2.2rem 1rem;
+}
 
 /* ── Info cards ─────────────────────────── */
 .info-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 1rem;
   margin-bottom: 2.5rem;
 }
 .info-card {
   background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 1.2rem 1.4rem;
+  border: 1.5px solid var(--border);
+  border-radius: 16px;
+  padding: 1.2rem 1rem;
   text-align: center;
+  transition: box-shadow 0.2s;
 }
-.info-card .icon  { font-size: 1.8rem; margin-bottom: 0.4rem; }
-.info-card .label { font-size: 0.8rem; color: var(--muted); }
-.info-card .value { font-size: 1rem; font-weight: 600; margin-top: 0.15rem; }
+.info-card:hover { box-shadow: 0 4px 16px rgba(224, 123, 57, 0.1); }
+.info-card .icon  { font-size: 1.9rem; margin-bottom: 0.4rem; }
+.info-card .label { font-size: 0.75rem; color: var(--muted); font-weight: 500; }
+.info-card .value {
+  font-family: 'Baloo 2', cursive;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--brown);
+  margin-top: 0.15rem;
+}
 
 /* ── Section heading ────────────────────── */
 .section-title {
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: var(--blue);
-  border-left: 4px solid var(--sky);
-  padding-left: 0.75rem;
+  font-family: 'Baloo 2', cursive;
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--brown);
+  border-left: 4px solid var(--orange);
+  padding-left: 0.8rem;
   margin-bottom: 1.2rem;
 }
 
 /* ── Padlet link card ───────────────────── */
 .padlet-card {
   background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 1.4rem 1.6rem;
+  border: 1.5px solid var(--border);
+  border-radius: 16px;
+  padding: 1.3rem 1.5rem;
   margin-bottom: 2.5rem;
   display: flex;
   align-items: center;
   gap: 1rem;
   text-decoration: none;
   color: var(--text);
-  transition: box-shadow 0.15s;
+  transition: box-shadow 0.2s, border-color 0.2s;
 }
-.padlet-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
+.padlet-card:hover {
+  box-shadow: 0 4px 20px rgba(224, 123, 57, 0.12);
+  border-color: var(--orange-light);
+}
 .padlet-card .icon  { font-size: 2.2rem; flex-shrink: 0; }
-.padlet-card .title { font-weight: 700; font-size: 1rem; }
+.padlet-card .title {
+  font-family: 'Baloo 2', cursive;
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--brown);
+}
 .padlet-card .sub   { font-size: 0.85rem; color: var(--muted); margin-top: 0.1rem; }
-.padlet-card .arrow { margin-left: auto; font-size: 1.2rem; color: var(--muted); }
+.padlet-card .arrow { margin-left: auto; font-size: 1.3rem; color: var(--orange-light); }
 
-/* ── Post feed ──────────────────────────── */
+/* ── Post / Content cards ───────────────── */
 .post-feed { margin-bottom: 3rem; }
 
-.post-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  margin-bottom: 1.2rem;
-  overflow: hidden;
-}
-.post-header {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 0.75rem 1.2rem;
-  background: #f0f4ff;
-  border-bottom: 1px solid var(--border);
-  flex-wrap: wrap;
-}
-.session-badge {
-  font-size: 0.78rem;
-  font-weight: 700;
-  padding: 0.2rem 0.7rem;
-  border-radius: 2rem;
-  letter-spacing: 0.03em;
-}
-.badge-morning { background: #fff3cd; color: #7c5a00; }
-.badge-evening { background: #d4edda; color: #1a5c2e; }
-.post-date { font-size: 0.82rem; color: var(--muted); margin-left: auto; }
-.post-body {
-  padding: 1.2rem 1.4rem;
-  white-space: pre-wrap;
-  font-size: 0.97rem;
-  line-height: 1.8;
-}
-.post-tag {
-  font-size: 0.78rem;
-  background: #eff6ff;
-  color: var(--sky);
-  padding: 0.15rem 0.6rem;
-  border-radius: 1rem;
-  display: inline-block;
-}
-
-/* ── Content cards (Mahiti / Prayog pages) ─ */
+.post-card,
 .content-card {
   background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 18px;
   margin-bottom: 1.2rem;
   overflow: hidden;
+  transition: box-shadow 0.2s, border-color 0.2s;
+  position: relative;
 }
-.content-card .card-header {
+.post-card::before,
+.content-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--orange), var(--yellow));
+}
+.post-card:hover,
+.content-card:hover {
+  box-shadow: 0 6px 24px rgba(224, 123, 57, 0.1);
+  border-color: var(--orange-light);
+}
+
+.post-header,
+.card-header {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 0.75rem 1.2rem;
-  background: #f0f4ff;
+  gap: 0.7rem;
+  padding: 0.75rem 1.3rem;
+  background: var(--cream);
   border-bottom: 1px solid var(--border);
   flex-wrap: wrap;
 }
+
+/* session badges */
+.session-badge,
 .card-type-badge {
-  font-size: 0.78rem;
+  font-family: 'Hind', sans-serif;
+  font-size: 0.75rem;
   font-weight: 700;
-  padding: 0.2rem 0.7rem;
-  border-radius: 2rem;
+  padding: 0.2rem 0.75rem;
+  border-radius: 50px;
+  letter-spacing: 0.02em;
 }
-.badge-mahiti   { background: #e0f2fe; color: #0369a1; }
-.badge-tathya   { background: #fce7f3; color: #9d174d; }
-.badge-prayog   { background: #d1fae5; color: #065f46; }
-.badge-kodi     { background: #fef3c7; color: #78350f; }
-.badge-quiz     { background: #ede9fe; color: #4c1d95; }
-.badge-upakram  { background: #fee2e2; color: #7f1d1d; }
-.content-card .card-body {
-  padding: 1.2rem 1.4rem;
+.badge-morning  { background: #fef3c7; color: #78350f; }
+.badge-evening  { background: #d1fae5; color: #065f46; }
+.badge-mahiti   { background: #fff7ed; color: #9a3412; }
+.badge-tathya   { background: #fce7f3; color: #831843; }
+.badge-prayog   { background: #ecfdf5; color: #065f46; }
+.badge-kodi     { background: #fefce8; color: #713f12; }
+.badge-quiz     { background: #ede9fe; color: #3730a3; }
+.badge-upakram  { background: #fff1f2; color: #881337; }
+
+.post-date {
+  font-size: 0.78rem;
+  color: var(--muted);
+  margin-left: auto;
+  font-weight: 500;
+}
+
+.post-tag {
+  font-size: 0.75rem;
+  background: #fff7ed;
+  color: var(--orange);
+  padding: 0.15rem 0.65rem;
+  border-radius: 50px;
+  font-weight: 600;
+  border: 1px solid rgba(224,123,57,0.2);
+}
+
+.post-body,
+.card-body {
+  padding: 1.3rem 1.5rem;
   white-space: pre-wrap;
-  font-size: 0.97rem;
-  line-height: 1.8;
+  font-size: 0.96rem;
+  line-height: 1.85;
+  color: var(--text);
 }
 
 /* ── Empty state ────────────────────────── */
 .empty-state {
   text-align: center;
-  padding: 4rem 1.5rem;
+  padding: 4.5rem 1.5rem;
   color: var(--muted);
 }
 .empty-state .big-icon { font-size: 4rem; margin-bottom: 1rem; }
-.empty-state h2 { font-size: 1.2rem; color: var(--text); margin-bottom: 0.5rem; }
-.empty-state p  { font-size: 0.95rem; }
+.empty-state h2 {
+  font-family: 'Baloo 2', cursive;
+  font-size: 1.3rem;
+  color: var(--brown);
+  margin-bottom: 0.5rem;
+}
+.empty-state p { font-size: 0.95rem; }
 
 /* ── Footer ─────────────────────────────── */
 footer {
+  background: var(--brown);
+  color: rgba(255,255,255,0.7);
   text-align: center;
-  padding: 1.5rem;
-  font-size: 0.82rem;
-  color: var(--muted);
-  border-top: 1px solid var(--border);
+  padding: 1.8rem 1rem;
+  font-size: 0.85rem;
 }
-footer a { color: var(--sky); text-decoration: none; }
+footer strong { color: #fff; }
+footer a { color: var(--orange-light); text-decoration: none; }
+footer a:hover { text-decoration: underline; }
