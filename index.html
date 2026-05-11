@@ -1,142 +1,1244 @@
 <!DOCTYPE html>
 <html lang="mr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>विज्ञान रंजन | मराठी विज्ञान परिषद, पुणे</title>
-  <link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>विज्ञान रंजन | मराठी विज्ञान परिषद - पुणे</title>
+<meta name="description" content="मराठी विज्ञान परिषद पुणे विभागाचा विज्ञान रंजन उपक्रम — मुलांसाठी प्रयोग, कोडी, क्विझ आणि बरंच काही!">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Hind:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f5f0e8;
+    --brown: #5c3d2e;
+    --brown-light: #8b6355;
+    --orange: #e07b39;
+    --orange-light: #f4a261;
+    --teal: #2a9d8f;
+    --teal-light: #4bbfb3;
+    --blue: #264653;
+    --yellow: #e9c46a;
+    --red: #e63946;
+    --green: #57cc99;
+    --bg: #faf7f2;
+    --text: #2d1b0e;
+    --text-muted: #7a6055;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Hind', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* === FLOATING PARTICLES === */
+  .particles {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .particle {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.06;
+    animation: floatUp linear infinite;
+  }
+  @keyframes floatUp {
+    0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+    10% { opacity: 0.06; }
+    90% { opacity: 0.06; }
+    100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+  }
+
+  /* === NAVBAR === */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(250, 247, 242, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 2px solid var(--orange-light);
+    padding: 0 2rem;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .nav-logo {
+    font-family: 'Baloo 2', cursive;
+    font-weight: 800;
+    font-size: 1.2rem;
+    color: var(--brown);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .nav-logo span { color: var(--orange); }
+  .nav-links {
+    display: flex;
+    gap: 0.25rem;
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: 'Hind', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-decoration: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    transition: all 0.2s;
+  }
+  .nav-links a:hover {
+    background: var(--orange-light);
+    color: #fff;
+  }
+  .nav-join {
+    background: var(--teal) !important;
+    color: #fff !important;
+  }
+
+  /* === HERO === */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6rem 2rem 4rem;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 20% 50%, rgba(224, 123, 57, 0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 80% at 80% 30%, rgba(42, 157, 143, 0.10) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 50% at 50% 80%, rgba(233, 196, 106, 0.12) 0%, transparent 60%);
+  }
+  /* Doodle icons floating in hero */
+  .hero-doodle {
+    position: absolute;
+    font-size: 2.5rem;
+    opacity: 0.12;
+    animation: drift ease-in-out infinite alternate;
+  }
+  @keyframes drift {
+    0% { transform: translateY(0px) rotate(-5deg); }
+    100% { transform: translateY(-20px) rotate(5deg); }
+  }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 780px;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: var(--teal);
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 0.4rem 1.2rem;
+    border-radius: 20px;
+    margin-bottom: 1.5rem;
+    animation: fadeSlideDown 0.6s ease forwards;
+  }
+  .hero-title {
+    font-family: 'Baloo 2', cursive;
+    font-size: clamp(2.8rem, 7vw, 5.5rem);
+    font-weight: 800;
+    line-height: 1.1;
+    color: var(--brown);
+    margin-bottom: 0.5rem;
+    animation: fadeSlideDown 0.7s ease forwards;
+  }
+  .hero-title .highlight {
+    color: var(--orange);
+    position: relative;
+    display: inline-block;
+  }
+  .hero-title .highlight::after {
+    content: '';
+    position: absolute;
+    bottom: 4px; left: 0; right: 0;
+    height: 4px;
+    background: var(--yellow);
+    border-radius: 2px;
+  }
+  .hero-subtitle {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    animation: fadeSlideDown 0.8s ease forwards;
+  }
+  .hero-org {
+    font-family: 'Baloo 2', cursive;
+    font-size: 0.9rem;
+    color: var(--teal);
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-bottom: 2.5rem;
+    animation: fadeSlideDown 0.85s ease forwards;
+  }
+  .hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+    animation: fadeSlideDown 0.9s ease forwards;
+  }
+  .stat-item {
+    text-align: center;
+  }
+  .stat-number {
+    font-family: 'Baloo 2', cursive;
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--orange);
+    display: block;
+  }
+  .stat-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    animation: fadeSlideDown 1s ease forwards;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.85rem 2rem;
+    border-radius: 50px;
+    font-family: 'Hind', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.25s;
+    cursor: pointer;
+    border: none;
+  }
+  .btn-primary {
+    background: var(--orange);
+    color: #fff;
+    box-shadow: 0 4px 20px rgba(224, 123, 57, 0.35);
+  }
+  .btn-primary:hover {
+    background: var(--brown);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(92, 61, 46, 0.35);
+  }
+  .btn-secondary {
+    background: var(--teal);
+    color: #fff;
+    box-shadow: 0 4px 20px rgba(42, 157, 143, 0.3);
+  }
+  .btn-secondary:hover {
+    background: var(--blue);
+    transform: translateY(-2px);
+  }
+  .btn-outline {
+    background: transparent;
+    color: var(--brown);
+    border: 2px solid var(--brown-light);
+  }
+  .btn-outline:hover {
+    background: var(--brown);
+    color: #fff;
+    transform: translateY(-2px);
+  }
+
+  @keyframes fadeSlideDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* === WAVE DIVIDER === */
+  .wave {
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+  }
+  .wave svg { display: block; }
+
+  /* === SECTIONS === */
+  section {
+    position: relative;
+    z-index: 1;
+  }
+  .section-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 5rem 2rem;
+  }
+  .section-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 0.75rem;
+  }
+  .section-title {
+    font-family: 'Baloo 2', cursive;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 800;
+    color: var(--brown);
+    margin-bottom: 1rem;
+    line-height: 1.2;
+  }
+  .section-desc {
+    font-size: 1rem;
+    color: var(--text-muted);
+    max-width: 600px;
+    line-height: 1.7;
+    margin-bottom: 3rem;
+  }
+
+  /* === ABOUT === */
+  #about { background: var(--cream); }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+  .about-visual {
+    position: relative;
+  }
+  .about-card-big {
+    background: var(--brown);
+    color: #fff;
+    border-radius: 24px;
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .about-card-big::before {
+    content: '🔬';
+    position: absolute;
+    font-size: 8rem;
+    right: -1rem;
+    bottom: -1rem;
+    opacity: 0.12;
+  }
+  .about-card-big h3 {
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+  }
+  .about-card-big p {
+    font-size: 0.95rem;
+    line-height: 1.8;
+    opacity: 0.9;
+  }
+  .about-features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+  .about-feature {
+    background: rgba(255,255,255,0.1);
+    border-radius: 12px;
+    padding: 1rem;
+    font-size: 0.85rem;
+  }
+  .about-feature .icon { font-size: 1.5rem; margin-bottom: 0.3rem; display: block; }
+
+  /* === ACTIVITIES (PRAYOG / QUIZ / KODE) === */
+  #upaKram { background: var(--bg); }
+  .activities-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  .activity-card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 2rem;
+    border: 2px solid transparent;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .activity-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: var(--gradient);
+  }
+  .activity-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+  }
+  .activity-card[data-color="orange"] { --accent: var(--orange); --gradient: linear-gradient(90deg, var(--orange), var(--yellow)); }
+  .activity-card[data-color="teal"] { --accent: var(--teal); --gradient: linear-gradient(90deg, var(--teal), var(--green)); }
+  .activity-card[data-color="blue"] { --accent: var(--blue); --gradient: linear-gradient(90deg, var(--blue), var(--teal)); }
+  .activity-card[data-color="red"] { --accent: var(--red); --gradient: linear-gradient(90deg, var(--red), var(--orange)); }
+  .activity-card[data-color="yellow"] { --accent: #c09b00; --gradient: linear-gradient(90deg, var(--yellow), #c09b00); }
+  .activity-card[data-color="green"] { --accent: #2d9b6f; --gradient: linear-gradient(90deg, var(--green), #2d9b6f); }
+  .activity-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    display: block;
+  }
+  .activity-card h3 {
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--brown);
+    margin-bottom: 0.75rem;
+  }
+  .activity-card p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  /* === EXPERIMENTS === */
+  #prayog { background: var(--cream); }
+  .exp-list { display: flex; flex-direction: column; gap: 1.5rem; }
+  .exp-card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 2rem 2.5rem;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 2rem;
+    align-items: center;
+    border: 2px solid transparent;
+    transition: all 0.3s;
+    cursor: default;
+  }
+  .exp-card:hover {
+    border-color: var(--orange-light);
+    box-shadow: 0 8px 30px rgba(224, 123, 57, 0.12);
+    transform: translateX(5px);
+  }
+  .exp-num {
+    font-family: 'Baloo 2', cursive;
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--orange-light);
+    opacity: 0.4;
+    line-height: 1;
+    width: 50px;
+  }
+  .exp-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+  .exp-card h3 {
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--brown);
+    margin-bottom: 0.4rem;
+  }
+  .exp-card p { font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; }
+  .exp-tag {
+    background: var(--teal);
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    white-space: nowrap;
+  }
+  .exp-tag.easy { background: var(--green); color: var(--blue); }
+  .exp-tag.medium { background: var(--yellow); color: var(--brown); }
+
+  /* === QUIZ SECTION === */
+  #quiz { background: var(--blue); color: #fff; }
+  #quiz .section-title { color: #fff; }
+  #quiz .section-label { color: var(--yellow); }
+  #quiz .section-desc { color: rgba(255,255,255,0.7); }
+  .quiz-container {
+    background: rgba(255,255,255,0.08);
+    border-radius: 24px;
+    padding: 2rem;
+    border: 1px solid rgba(255,255,255,0.15);
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  .quiz-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+  }
+  .quiz-progress-bar {
+    background: rgba(255,255,255,0.15);
+    border-radius: 10px;
+    height: 6px;
+    flex: 1;
+    margin-left: 1rem;
+    overflow: hidden;
+  }
+  .quiz-progress-fill {
+    height: 100%;
+    background: var(--yellow);
+    border-radius: 10px;
+    transition: width 0.4s ease;
+  }
+  .quiz-q-num {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.6);
+    white-space: nowrap;
+  }
+  .quiz-question {
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+    min-height: 3em;
+  }
+  .quiz-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+  .quiz-opt {
+    background: rgba(255,255,255,0.1);
+    border: 2px solid rgba(255,255,255,0.2);
+    color: #fff;
+    padding: 0.85rem 1rem;
+    border-radius: 14px;
+    font-family: 'Hind', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: left;
+  }
+  .quiz-opt:hover { background: rgba(255,255,255,0.2); border-color: var(--yellow); }
+  .quiz-opt.correct { background: rgba(87, 204, 153, 0.3); border-color: var(--green); }
+  .quiz-opt.wrong { background: rgba(230, 57, 70, 0.3); border-color: var(--red); }
+  .quiz-opt:disabled { cursor: not-allowed; }
+  .quiz-feedback {
+    min-height: 2rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--yellow);
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  .quiz-nav { display: flex; justify-content: center; gap: 1rem; }
+  .quiz-score {
+    text-align: center;
+    padding: 2rem;
+    display: none;
+  }
+  .quiz-score .score-num {
+    font-family: 'Baloo 2', cursive;
+    font-size: 4rem;
+    font-weight: 800;
+    color: var(--yellow);
+    display: block;
+  }
+
+  /* === PADLET SECTION === */
+  #padlet { background: var(--cream); }
+  .padlet-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 3rem;
+    align-items: center;
+  }
+  .padlet-info h3 {
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--brown);
+    margin-bottom: 1rem;
+  }
+  .padlet-steps { list-style: none; }
+  .padlet-steps li {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    padding: 0.75rem 0;
+    border-bottom: 1px dashed rgba(92, 61, 46, 0.15);
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+  .step-num {
+    background: var(--orange);
+    color: #fff;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    font-size: 0.75rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .padlet-embed {
+    border-radius: 20px;
+    overflow: hidden;
+    border: 3px solid var(--orange-light);
+    box-shadow: 0 10px 40px rgba(224, 123, 57, 0.15);
+  }
+  .padlet-embed iframe {
+    width: 100%;
+    height: 400px;
+    display: block;
+    border: none;
+  }
+
+  /* === CALENDAR === */
+  #calendar { background: var(--bg); }
+  .week-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.75rem;
+  }
+  .day-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 1rem 0.75rem;
+    text-align: center;
+    border: 2px solid transparent;
+    transition: all 0.25s;
+    cursor: default;
+  }
+  .day-card:hover {
+    border-color: var(--orange-light);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(224, 123, 57, 0.12);
+  }
+  .day-name {
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.4rem;
+  }
+  .day-icon { font-size: 1.6rem; margin-bottom: 0.4rem; display: block; }
+  .day-title {
+    font-family: 'Baloo 2', cursive;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--brown);
+    line-height: 1.3;
+    margin-bottom: 0.3rem;
+  }
+  .day-type {
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+  .day-card.quiz-day { background: linear-gradient(135deg, var(--orange) 0%, var(--yellow) 100%); }
+  .day-card.quiz-day .day-name,
+  .day-card.quiz-day .day-title,
+  .day-card.quiz-day .day-type { color: var(--brown); }
+
+  /* === JOIN === */
+  #join {
+    background: linear-gradient(135deg, var(--orange) 0%, #c06020 100%);
+    color: #fff;
+  }
+  .join-inner {
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 5rem 2rem;
+  }
+  .join-inner h2 {
+    font-family: 'Baloo 2', cursive;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 800;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+  }
+  .join-inner p {
+    font-size: 1.05rem;
+    opacity: 0.9;
+    margin-bottom: 2.5rem;
+    line-height: 1.7;
+  }
+  .btn-whatsapp {
+    background: #25D366;
+    color: #fff;
+    font-size: 1.05rem;
+    padding: 1rem 2.5rem;
+    box-shadow: 0 6px 30px rgba(0,0,0,0.2);
+  }
+  .btn-whatsapp:hover {
+    background: #128C7E;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 35px rgba(0,0,0,0.25);
+  }
+  .join-note {
+    margin-top: 1.5rem;
+    font-size: 0.85rem;
+    opacity: 0.75;
+  }
+
+  /* === FOOTER === */
+  footer {
+    background: var(--brown);
+    color: rgba(255,255,255,0.7);
+    text-align: center;
+    padding: 2rem;
+    font-size: 0.85rem;
+  }
+  footer strong { color: #fff; }
+
+  /* === SCROLL ANIMATIONS === */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 900px) {
+    .about-grid, .padlet-wrapper { grid-template-columns: 1fr; }
+    .activities-grid { grid-template-columns: 1fr 1fr; }
+    .week-grid { grid-template-columns: repeat(4, 1fr); }
+    .quiz-options { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+    .exp-card { grid-template-columns: 1fr; }
+    .exp-num { display: none; }
+  }
+  @media (max-width: 600px) {
+    .activities-grid { grid-template-columns: 1fr; }
+    .week-grid { grid-template-columns: repeat(2, 1fr); }
+    .hero-stats { gap: 1rem; }
+  }
+</style>
 </head>
 <body>
 
-<header>
-  <div class="org">मराठी विज्ञान परिषद — पुणे विभाग</div>
-  <h1>⚗️ विज्ञानाचे <span class="highlight">जादूई जग!</span></h1>
-  <div class="tagline">एकत्र शिकूया, एकत्र रमू या!</div>
-  <a class="join-btn" href="https://chat.whatsapp.com/DUQ1u2FmfFJBU6B4qnkuq2" target="_blank">
-    📲 WhatsApp गटात सामील व्हा
-  </a>
-</header>
+<!-- Floating particles -->
+<div class="particles" id="particles"></div>
 
+<!-- NAVBAR -->
 <nav>
-  <ul>
-    <li><a href="index.html" class="active">🏠 दैनंदिन पोस्ट</a></li>
-    <li><a href="vidnyan-mahiti.html">📚 विज्ञान माहिती</a></li>
-    <li><a href="prayog-kodi.html">🔬 प्रयोग / कोडी</a></li>
+  <a href="#" class="nav-logo">🔬 <span>विज्ञान</span>&nbsp;रंजन</a>
+  <ul class="nav-links">
+    <li><a href="#about">उपक्रम</a></li>
+    <li><a href="vidnyan-mahiti.html">विज्ञान माहिती</a></li>
+    <li><a href="prayog-kodi.html">प्रयोग / कोडी</a></li>
+    <li><a href="#padlet">गॅलरी</a></li>
+    <li><a href="#calendar">कॅलेंडर</a></li>
+    <li><a href="#join" class="nav-join">जॉईन करा</a></li>
   </ul>
 </nav>
 
-<div class="container">
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
 
-  <div class="info-grid">
-    <div class="info-card">
-      <div class="icon">👧🏽👦🏽</div>
-      <div class="label">वयोगट</div>
-      <div class="value">७ ते १६ वर्षे</div>
+  <!-- Floating doodles -->
+  <div class="hero-doodle" style="top:15%; left:5%; animation-duration:4s;">⚗️</div>
+  <div class="hero-doodle" style="top:20%; right:8%; animation-duration:5s; animation-delay:0.5s;">🔭</div>
+  <div class="hero-doodle" style="top:60%; left:3%; animation-duration:6s; animation-delay:1s;">🧲</div>
+  <div class="hero-doodle" style="top:70%; right:5%; animation-duration:4.5s; animation-delay:0.3s;">🚀</div>
+  <div class="hero-doodle" style="top:40%; left:90%; animation-duration:5.5s;">🧬</div>
+  <div class="hero-doodle" style="top:80%; left:12%; animation-duration:3.5s; animation-delay:0.8s;">⚡</div>
+  <div class="hero-doodle" style="top:10%; left:50%; animation-duration:5s; animation-delay:0.2s;">🌍</div>
+
+  <div class="hero-content">
+    <div class="hero-badge">मराठी विज्ञान परिषद • पुणे विभाग</div>
+    <h1 class="hero-title">
+      विज्ञानाचे<br><span class="highlight">जादूई जग!</span>
+    </h1>
+    <p class="hero-subtitle">मुलांसाठी रोजचे प्रयोग, कोडी, क्विझ आणि बरंच काही —</p>
+    <p class="hero-org">मराठी भाषेत, घरच्या वस्तूंनी, मजेत!</p>
+
+    <div class="hero-stats">
+      <div class="stat-item">
+        <span class="stat-number">३०+</span>
+        <span class="stat-label">दैनंदिन प्रयोग</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">७–१६</span>
+        <span class="stat-label">वयोगट (वर्षे)</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">२</span>
+        <span class="stat-label">पोस्ट दररोज</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">मोफत</span>
+        <span class="stat-label">सर्व सहभाग</span>
+      </div>
     </div>
-    <div class="info-card">
-      <div class="icon">📅</div>
-      <div class="label">पोस्ट</div>
-      <div class="value">रोज सकाळ + संध्याकाळ</div>
-    </div>
-    <div class="info-card">
-      <div class="icon">🏛️</div>
-      <div class="label">आयोजक</div>
-      <div class="value">मराठी विज्ञान परिषद</div>
+
+    <div class="hero-cta">
+      <a href="#join" class="btn btn-primary">📱 WhatsApp गटात जॉईन करा</a>
+      <a href="#prayog" class="btn btn-secondary">🧪 प्रयोग पाहा</a>
+      <a href="#padlet" target="_blank" class="btn btn-outline">📸 गॅलरी पाहा</a>
     </div>
   </div>
+</section>
 
-  <div class="section-title">🔬 आमचे प्रयोग दालन</div>
-  <a class="padlet-card" href="https://padlet.com/vivekshilimkar/padlet-8rhr2im1g2d0qunp" target="_blank">
-    <div class="icon">🖼️</div>
-    <div>
-      <div class="title">विज्ञान रंजन — आमचे प्रयोग</div>
-      <div class="sub">मुलांनी केलेल्या प्रयोगांचे फोटो आणि व्हिडिओ पाहा</div>
+<!-- Wave -->
+<div class="wave"><svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg"><path d="M0,30 C240,60 480,0 720,30 C960,60 1200,0 1440,30 L1440,60 L0,60 Z" fill="#f5f0e8"/></svg></div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div>
+        <div class="section-label reveal">आमच्याबद्दल</div>
+        <h2 class="section-title reveal reveal-delay-1">विज्ञान रंजन उपक्रम म्हणजे काय?</h2>
+        <p class="section-desc reveal reveal-delay-2">
+          मराठी विज्ञान परिषद, पुणे विभागाने सुरू केलेला हा एक खास WhatsApp-आधारित उपक्रम आहे.
+          मुलांमध्ये विज्ञानाची गोडी निर्माण करणे, घरच्या घरी सोपे प्रयोग करायला शिकवणे
+          आणि मराठी भाषेत विज्ञानाचा आनंद देणे हे आमचे ध्येय आहे!
+        </p>
+        <div class="hero-cta reveal reveal-delay-3">
+          <a href="#join" class="btn btn-primary">आजच सहभागी व्हा →</a>
+        </div>
+      </div>
+      <div class="about-visual reveal reveal-delay-2">
+        <div class="about-card-big">
+          <h3>🎯 आमचे उद्दिष्ट</h3>
+          <p>मुलांमध्ये विज्ञानाविषयी कुतूहल निर्माण करणे आणि त्यांना स्वतः प्रयोग करण्याची सवय लावणे. विज्ञान केवळ पुस्तकात नाही — ते आपल्या आजूबाजूला सर्वत्र आहे!</p>
+          <div class="about-features">
+            <div class="about-feature">
+              <span class="icon">🏠</span>
+              <strong>घरच्या वस्तूंनी</strong><br>
+              <small>विशेष साहित्य नाही</small>
+            </div>
+            <div class="about-feature">
+              <span class="icon">🗣️</span>
+              <strong>मराठी भाषेत</strong><br>
+              <small>सोप्या शब्दांत</small>
+            </div>
+            <div class="about-feature">
+              <span class="icon">👨‍👩‍👧</span>
+              <strong>पालकांसह</strong><br>
+              <small>कुटुंब एकत्र</small>
+            </div>
+            <div class="about-feature">
+              <span class="icon">🏆</span>
+              <strong>साप्ताहिक क्विझ</strong><br>
+              <small>बक्षिसे आणि मान</small>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="arrow">→</div>
-  </a>
-
-  <!-- ═══════════════════════════════════════════════════════════════
-       POST FEED  —  newest post goes at the TOP
-       To add: copy one post-card block, paste above "PASTE ABOVE" line,
-       fill in date / badge class / tag / body.
-       badge-morning = सकाळ  |  badge-evening = संध्याकाळ
-       ══════════════════════════════════════════════════════════════ -->
-  <div class="section-title">📬 दैनंदिन पोस्ट</div>
-  <div class="post-feed">
-
-    <!-- ── DAY 1 · MORNING ───────────────────────────────────────── -->
-    <article class="post-card">
-      <div class="post-header">
-        <span class="session-badge badge-morning">🌅 सकाळ</span>
-        <span class="post-tag">विज्ञान म्हणजे काय?</span>
-        <span class="post-date">दिवस १ · सोमवार</span>
-      </div>
-      <div class="post-body">🌅 सुप्रभात, विज्ञानप्रेमी मित्रांनो! 🔬
-
-आजपासून आपल्या विज्ञान रंजन प्रवासाला सुरुवात होत आहे!
-
-🤔 आजचा प्रश्न:
-विज्ञान म्हणजे काय?
-
-✅ साध्या भाषेत सांगायचं तर —
-विज्ञान म्हणजे आजूबाजूच्या जगाबद्दल प्रश्न विचारणे आणि उत्तरे शोधणे!
-
-🌍 काही उदाहरणे:
-• आकाश निळं का असतं? → भौतिकशास्त्र
-• दूध का नासतं? → रसायनशास्त्र
-• झाडं वाढतात कशी? → जीवशास्त्र
-
-💡 लक्षात ठेवा:
-"प्रत्येक प्रश्न हीच विज्ञानाची सुरुवात आहे!"
-
-आज एक प्रश्न विचारा — तुम्हाला कशाबद्दल सर्वात जास्त कुतूहल आहे?</div>
-    </article>
-
-    <!-- ── DAY 1 · EVENING ───────────────────────────────────────── -->
-    <article class="post-card">
-      <div class="post-header">
-        <span class="session-badge badge-evening">🌆 संध्याकाळ</span>
-        <span class="post-tag">सावलीचे कोडे</span>
-        <span class="post-date">दिवस १ · सोमवार</span>
-      </div>
-      <div class="post-body">🌆 संध्याकाळच्या शुभेच्छा! 🧩
-
-🎯 आजचे कोडे:
-
-"मी सकाळी लांब असतो,
-दुपारी छोटा होतो,
-संध्याकाळी परत लांब होतो.
-मी कोण आहे?"
-
-🤔 उत्तर विचार करा...
-
-.
-.
-.
-
-✅ उत्तर: सावली! 🌑
-
-🔬 विज्ञान का?
-सूर्य सकाळी आणि संध्याकाळी क्षितिजाजवळ असतो → सावली लांब पडते.
-दुपारी सूर्य डोक्यावर असतो → सावली छोटी होते.
-
-🏠 घरी करून पाहा:
-बाहेर जा, सकाळी, दुपारी, संध्याकाळी स्वतःच्या सावलीचे निरीक्षण करा!
-
-उद्या: पाण्याचे तीन रूपे! 💧</div>
-    </article>
-
-    <!-- ═══ PASTE NEW POST CARDS ABOVE THIS LINE (newest first) ══════ -->
-
   </div>
+</section>
 
-</div>
+<!-- UPAKRAM -->
+<section id="upaKram">
+  <div class="section-inner">
+    <div class="section-label reveal">उपक्रम</div>
+    <h2 class="section-title reveal reveal-delay-1">या गटात काय मिळेल?</h2>
+    <p class="section-desc reveal reveal-delay-2">दररोज सकाळ आणि संध्याकाळ — मजेदार आणि ज्ञानपूर्ण सामग्री!</p>
+    <div class="activities-grid">
+      <div class="activity-card reveal" data-color="orange">
+        <span class="activity-icon">🧪</span>
+        <h3>घरगुती प्रयोग</h3>
+        <p>घरातल्या वस्तूंनी करता येणारे सोपे आणि मजेदार विज्ञान प्रयोग — प्रत्येक प्रयोगामागे एक विज्ञान संकल्पना!</p>
+      </div>
+      <div class="activity-card reveal reveal-delay-1" data-color="teal">
+        <span class="activity-icon">🧩</span>
+        <h3>विज्ञान कोडी</h3>
+        <p>डोकं चालवणारी रंजक विज्ञान कोडी — उत्तर शोधताना विज्ञान आपोआप शिकता येते!</p>
+      </div>
+      <div class="activity-card reveal reveal-delay-2" data-color="blue">
+        <span class="activity-icon">🏆</span>
+        <h3>साप्ताहिक क्विझ</h3>
+        <p>दर रविवारी ५ प्रश्नांची क्विझ — सर्वाधिक बरोबर उत्तरे देणाऱ्याला "विज्ञानवीर" पुरस्कार!</p>
+      </div>
+      <div class="activity-card reveal reveal-delay-3" data-color="red">
+        <span class="activity-icon">🌍</span>
+        <h3>रंजक माहिती</h3>
+        <p>रोजच्या आयुष्यातील विज्ञान — आकाश निळे का? पाऊस कसा पडतो? आणि बरंच काही!</p>
+      </div>
+      <div class="activity-card reveal reveal-delay-1" data-color="yellow">
+        <span class="activity-icon">📸</span>
+        <h3>Padlet गॅलरी</h3>
+        <p>तुमचे प्रयोग फोटो/व्हिडिओ Padlet बोर्डवर शेअर करा — सगळे एकमेकांचे प्रयोग बघू शकतात!</p>
+      </div>
+      <div class="activity-card reveal reveal-delay-2" data-color="green">
+        <span class="activity-icon">🔬</span>
+        <h3>शास्त्रज्ञांच्या गोष्टी</h3>
+        <p>न्यूटन, आर्यभट, डॉ. जयंत नारळीकर — थोर शास्त्रज्ञांच्या प्रेरणादायी गोष्टी!</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Wave -->
+<div class="wave" style="background:var(--bg)"><svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg"><path d="M0,30 C360,0 720,60 1080,30 C1260,15 1380,45 1440,30 L1440,60 L0,60 Z" fill="#f5f0e8"/></svg></div>
+
+<!-- EXPERIMENTS -->
+<section id="prayog">
+  <div class="section-inner">
+    <div class="section-label reveal">प्रयोग</div>
+    <h2 class="section-title reveal reveal-delay-1">आठवडा १ चे प्रयोग</h2>
+    <p class="section-desc reveal reveal-delay-2">सगळे प्रयोग घरातल्या वस्तूंनी करता येतात — कोणतेही खास साहित्य लागत नाही!</p>
+    <div class="exp-list">
+
+      <div class="exp-card reveal">
+        <div class="exp-num">01</div>
+        <div>
+          <div class="exp-icon">🌈</div>
+          <h3>CD वर इंद्रधनुष्य!</h3>
+          <p>जुनी CD आणि टॉर्च — एवढ्यात घरच्या घरी इंद्रधनुष्य! प्रकाशाचे विवर्तन (Diffraction) समजते.</p>
+          <div style="margin-top:0.5rem; font-size:0.8rem; color:var(--teal); font-weight:600;">साहित्य: CD/DVD · टॉर्च</div>
+        </div>
+        <span class="exp-tag easy">सोपा</span>
+      </div>
+
+      <div class="exp-card reveal reveal-delay-1">
+        <div class="exp-num">02</div>
+        <div>
+          <div class="exp-icon">🌋</div>
+          <h3>ज्वालामुखी बनवा!</h3>
+          <p>बेकिंग सोडा + व्हिनेगर = फसफसणारा लाव्हा! रासायनिक अभिक्रिया सोप्या भाषेत शिकता येते.</p>
+          <div style="margin-top:0.5rem; font-size:0.8rem; color:var(--teal); font-weight:600;">साहित्य: बेकिंग सोडा · व्हिनेगर · डिश सोप · रंग</div>
+        </div>
+        <span class="exp-tag medium">मध्यम</span>
+      </div>
+
+      <div class="exp-card reveal reveal-delay-2">
+        <div class="exp-num">03</div>
+        <div>
+          <div class="exp-icon">🎈</div>
+          <h3>हवेला वजन आहे!</h3>
+          <p>दोन फुगे आणि काठीचा तराजू — हवेला वजन असते हे स्वतः सिद्ध करा!</p>
+          <div style="margin-top:0.5rem; font-size:0.8rem; color:var(--teal); font-weight:600;">साहित्य: २ फुगे · काठी · दोरा</div>
+        </div>
+        <span class="exp-tag easy">सोपा</span>
+      </div>
+
+      <div class="exp-card reveal reveal-delay-3">
+        <div class="exp-num">04</div>
+        <div>
+          <div class="exp-icon">💧</div>
+          <h3>मिनी जलचक्र</h3>
+          <p>प्लास्टिक पिशवी खिडकीला लावा — आत पाऊस पडताना दिसेल! बाष्पीभवन आणि संघनन शिका.</p>
+          <div style="margin-top:0.5rem; font-size:0.8rem; color:var(--teal); font-weight:600;">साहित्य: झिपलॉक पिशवी · पाणी · टेप · रंग</div>
+        </div>
+        <span class="exp-tag easy">सोपा</span>
+      </div>
+
+      <div class="exp-card reveal">
+        <div class="exp-num">05</div>
+        <div>
+          <div class="exp-icon">⚡</div>
+          <h3>जादूचा फुगा (स्थिर विद्युत)</h3>
+          <p>फुगा केसांवर घासा आणि कागद उचला! स्थिर विद्युत (Static Electricity) खेळकर पद्धतीने शिका.</p>
+          <div style="margin-top:0.5rem; font-size:0.8rem; color:var(--teal); font-weight:600;">साहित्य: फुगा · लहान कागदाचे तुकडे</div>
+        </div>
+        <span class="exp-tag easy">सोपा</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Wave -->
+<div class="wave" style="background:var(--cream)"><svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg"><path d="M0,0 C480,60 960,0 1440,40 L1440,60 L0,60 Z" fill="#264653"/></svg></div>
+
+<!-- QUIZ -->
+<section id="quiz">
+  <div class="section-inner">
+    <div class="section-label reveal">क्विझ</div>
+    <h2 class="section-title reveal reveal-delay-1">आठवडा १ क्विझ — खेळून पाहा!</h2>
+    <p class="section-desc reveal reveal-delay-2">या आठवड्यात आपण काय शिकलो? ५ प्रश्नांची क्विझ सोडवा!</p>
+
+    <div class="quiz-container reveal reveal-delay-2">
+      <div id="quiz-main">
+        <div class="quiz-header">
+          <span class="quiz-q-num" id="q-counter">प्रश्न १ / ५</span>
+          <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="q-progress" style="width:20%"></div></div>
+        </div>
+        <div class="quiz-question" id="q-text">पाण्याचे तीन रूपे कोणती?</div>
+        <div class="quiz-options" id="q-options"></div>
+        <div class="quiz-feedback" id="q-feedback"></div>
+        <div class="quiz-nav">
+          <button class="btn btn-secondary" id="q-next" onclick="nextQuestion()" style="display:none">पुढचा प्रश्न →</button>
+        </div>
+      </div>
+      <div class="quiz-score" id="quiz-score">
+        <span class="score-num" id="score-display"></span>
+        <p style="font-size:1.1rem; margin:0.5rem 0 1.5rem; color:rgba(255,255,255,0.8);">पैकी ५ प्रश्न बरोबर!</p>
+        <p id="score-msg" style="color:var(--yellow); font-weight:600; font-size:1rem; margin-bottom:1.5rem;"></p>
+        <button class="btn btn-outline" onclick="restartQuiz()" style="color:#fff; border-color:#fff;">🔄 पुन्हा करा</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Wave -->
+<div class="wave" style="background:#264653"><svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg"><path d="M0,40 C360,0 720,60 1080,20 C1260,5 1380,50 1440,30 L1440,60 L0,60 Z" fill="#f5f0e8"/></svg></div>
+
+<!-- PADLET -->
+<section id="padlet">
+  <div class="section-inner">
+    <div class="section-label reveal">गॅलरी</div>
+    <h2 class="section-title reveal reveal-delay-1">आमचे प्रयोग — Padlet गॅलरी</h2>
+    <p class="section-desc reveal reveal-delay-2">मुलांनी केलेले प्रयोग इथे पाहा! तुमचाही प्रयोग शेअर करा.</p>
+    <div class="padlet-wrapper">
+      <div class="padlet-info reveal">
+        <h3>📸 फोटो/व्हिडिओ कसे शेअर करायचे?</h3>
+        <ul class="padlet-steps">
+          <li><span class="step-num">१</span> Padlet App डाउनलोड करा (Play Store / App Store वर "Padlet" शोधा)</li>
+          <li><span class="step-num">२</span> खालील "गॅलरी उघडा" बटण दाबा</li>
+          <li><span class="step-num">३</span> गुलाबी ➕ बटण दाबा</li>
+          <li><span class="step-num">४</span> Subject: तुमचे नाव आणि वय लिहा</li>
+          <li><span class="step-num">५</span> Description: प्रयोगाचे नाव लिहा</li>
+          <li><span class="step-num">६</span> 📷 कॅमेरा आयकॉन दाबून फोटो/व्हिडिओ अपलोड करा</li>
+          <li><span class="step-num">७</span> Publish बटण दाबा — झालं! ✅</li>
+        </ul>
+        <div style="margin-top:1.5rem;">
+          <a href="https://padlet.com/vivekshilimkar/padlet-8rhr2im1g2d0qunp" target="_blank" class="btn btn-primary">📸 गॅलरी उघडा</a>
+        </div>
+      </div>
+      <div class="padlet-embed reveal reveal-delay-2">
+        <iframe src="https://padlet.com/vivekshilimkar/padlet-8rhr2im1g2d0qunp" 
+                title="विज्ञान रंजन गॅलरी"
+                allow="camera;microphone;geolocation"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Wave -->
+<div class="wave" style="background:var(--cream)"><svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg"><path d="M0,20 C480,60 960,0 1440,40 L1440,60 L0,60 Z" fill="#faf7f2"/></svg></div>
+
+<!-- CALENDAR -->
+<section id="calendar">
+  <div class="section-inner">
+    <div class="section-label reveal">कॅलेंडर</div>
+    <h2 class="section-title reveal reveal-delay-1">आठवडा १ — दैनंदिन विषय</h2>
+    <p class="section-desc reveal reveal-delay-2">सात दिवस, सात विषय — दररोज नवीन ज्ञान!</p>
+    <div class="week-grid">
+      <div class="day-card reveal">
+        <div class="day-name">सोमवार</div>
+        <span class="day-icon">🔬</span>
+        <div class="day-title">विज्ञान म्हणजे काय?</div>
+        <div class="day-type">माहिती + कोडे</div>
+      </div>
+      <div class="day-card reveal reveal-delay-1">
+        <div class="day-name">मंगळवार</div>
+        <span class="day-icon">💧</span>
+        <div class="day-title">पाणी आणि विज्ञान</div>
+        <div class="day-type">माहिती + प्रयोग</div>
+      </div>
+      <div class="day-card reveal reveal-delay-2">
+        <div class="day-name">बुधवार</div>
+        <span class="day-icon">🌬️</span>
+        <div class="day-title">हवा आणि वारा</div>
+        <div class="day-type">माहिती + प्रयोग</div>
+      </div>
+      <div class="day-card reveal reveal-delay-3">
+        <div class="day-name">गुरुवार</div>
+        <span class="day-icon">🌈</span>
+        <div class="day-title">रंगांचे विज्ञान</div>
+        <div class="day-type">माहिती + प्रयोग</div>
+      </div>
+      <div class="day-card reveal">
+        <div class="day-name">शुक्रवार</div>
+        <span class="day-icon">❤️</span>
+        <div class="day-title">शरीर विज्ञान</div>
+        <div class="day-type">माहिती + उपक्रम</div>
+      </div>
+      <div class="day-card reveal reveal-delay-1">
+        <div class="day-name">शनिवार</div>
+        <span class="day-icon">🧲</span>
+        <div class="day-title">चुंबकत्व</div>
+        <div class="day-type">माहिती + प्रयोग</div>
+      </div>
+      <div class="day-card quiz-day reveal reveal-delay-2">
+        <div class="day-name">रविवार</div>
+        <span class="day-icon">🏆</span>
+        <div class="day-title">साप्ताहिक क्विझ!</div>
+        <div class="day-type">५ प्रश्न + बक्षीस</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JOIN -->
+<section id="join">
+  <div class="join-inner">
+    <h2 class="reveal">आजच सहभागी व्हा! 🚀</h2>
+    <p class="reveal reveal-delay-1">
+      वय ७ ते १६ वर्षांच्या मुलांसाठी (पालकांसह). विज्ञानाची गोडी असेल तर हा गट तुमच्यासाठीच आहे!
+      एका क्लिकवर जॉईन करा — मोफत, मजेदार, मराठीत!
+    </p>
+    <a href="https://chat.whatsapp.com/DUQ1u2FmfFJBU6B4qnkuq2" target="_blank" class="btn btn-whatsapp reveal reveal-delay-2">
+      📱 WhatsApp गटात जॉईन करा
+    </a>
+    <p class="join-note reveal reveal-delay-3">स्पॅम नाही • फक्त विज्ञान • मुलांसाठी सुरक्षित</p>
+  </div>
+</section>
 
 <footer>
-  <strong>विज्ञान रंजन ग्रूप</strong> · मराठी विज्ञान परिषद, पुणे विभाग<br/>
-  <a href="https://chat.whatsapp.com/DUQ1u2FmfFJBU6B4qnkuq2">WhatsApp गट</a> ·
-  <a href="https://padlet.com/vivekshilimkar/padlet-8rhr2im1g2d0qunp">Padlet</a>
+  <p>बनवले: <strong>मराठी विज्ञान परिषद — पुणे विभाग</strong> | <strong>विज्ञान रंजन उपक्रम</strong></p>
+  <p style="margin-top:0.5rem;">एकत्र शिकूया, एकत्र रमू या! 🔬</p>
 </footer>
 
+<script>
+// === PARTICLES ===
+(function(){
+  const container = document.getElementById('particles');
+  const colors = ['#e07b39','#2a9d8f','#e9c46a','#264653','#57cc99'];
+  for(let i = 0; i < 18; i++){
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const size = Math.random() * 60 + 20;
+    p.style.cssText = `
+      width:${size}px; height:${size}px;
+      left:${Math.random()*100}%;
+      background:${colors[Math.floor(Math.random()*colors.length)]};
+      animation-duration:${Math.random()*15+10}s;
+      animation-delay:${Math.random()*10}s;
+    `;
+    container.appendChild(p);
+  }
+})();
+
+// === SCROLL REVEAL ===
+const revealEls = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+revealEls.forEach(el => observer.observe(el));
+
+// === QUIZ ===
+const questions = [
+  {
+    q: "पाण्याचे तीन रूपे कोणती?",
+    opts: ["बर्फ, पाणी, वाफ","बर्फ, पाणी, हवा","पाणी, वाफ, धूर","बर्फ, दूध, वाफ"],
+    ans: 0,
+    exp: "पाण्याची तीन रूपे आहेत — घन (बर्फ), द्रव (पाणी) आणि वायू (वाफ)."
+  },
+  {
+    q: "ग्लासच्या बाहेर पाण्याचे थेंब येणे याला काय म्हणतात?",
+    opts: ["बाष्पीभवन","संघनन","गोठणे","उकळणे"],
+    ans: 1,
+    exp: "थंड ग्लासवर हवेतील बाष्प थंड होऊन पाण्यात बदलते — याला संघनन (Condensation) म्हणतात."
+  },
+  {
+    q: "इंद्रधनुष्यात किती रंग असतात?",
+    opts: ["५","६","७","८"],
+    ans: 2,
+    exp: "इंद्रधनुष्यात ७ रंग असतात — VIBGYOR: जांभळा, निळा, आसमानी, हिरवा, पिवळा, नारंगी, लाल."
+  },
+  {
+    q: "कोणत्या धातूला चुंबक चिकटत नाही?",
+    opts: ["लोखंड","अॅल्युमिनियम","निकेल","कोबाल्ट"],
+    ans: 1,
+    exp: "फक्त लोखंड, निकेल आणि कोबाल्ट या धातू चुंबकीय आहेत. अॅल्युमिनियम धातू असला तरी चुंबकीय नाही."
+  },
+  {
+    q: "व्यायामानंतर हृदयाची गती का वाढते?",
+    opts: ["हृदय थकते म्हणून","स्नायूंना जास्त ऑक्सिजन लागतो म्हणून","शरीर थंड होते म्हणून","रक्त कमी होते म्हणून"],
+    ans: 1,
+    exp: "व्यायामाच्या वेळी स्नायूंना जास्त ऊर्जा लागते, त्यासाठी जास्त ऑक्सिजन हवा, म्हणून हृदय वेगाने धडधडते."
+  }
+];
+
+let current = 0, score = 0, answered = false;
+
+function renderQuestion() {
+  const q = questions[current];
+  document.getElementById('q-text').textContent = q.q;
+  document.getElementById('q-counter').textContent = `प्रश्न ${current+1} / ${questions.length}`;
+  document.getElementById('q-progress').style.width = `${((current+1)/questions.length)*100}%`;
+  document.getElementById('q-feedback').textContent = '';
+  document.getElementById('q-next').style.display = 'none';
+  answered = false;
+  const optsDiv = document.getElementById('q-options');
+  optsDiv.innerHTML = '';
+  q.opts.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'quiz-opt';
+    btn.textContent = opt;
+    btn.onclick = () => selectAnswer(i, btn);
+    optsDiv.appendChild(btn);
+  });
+}
+
+function selectAnswer(idx, btn) {
+  if(answered) return;
+  answered = true;
+  const q = questions[current];
+  const allBtns = document.querySelectorAll('.quiz-opt');
+  allBtns.forEach(b => b.disabled = true);
+  if(idx === q.ans) {
+    score++;
+    btn.classList.add('correct');
+    document.getElementById('q-feedback').textContent = '✅ बरोबर! ' + q.exp;
+  } else {
+    btn.classList.add('wrong');
+    allBtns[q.ans].classList.add('correct');
+    document.getElementById('q-feedback').textContent = '❌ चुकीचे. ' + q.exp;
+  }
+  document.getElementById('q-next').style.display = 'inline-flex';
+}
+
+function nextQuestion() {
+  current++;
+  if(current >= questions.length) {
+    showScore();
+  } else {
+    renderQuestion();
+  }
+}
+
+function showScore() {
+  document.getElementById('quiz-main').style.display = 'none';
+  const scoreDiv = document.getElementById('quiz-score');
+  scoreDiv.style.display = 'block';
+  document.getElementById('score-display').textContent = score;
+  const msgs = ['', 'प्रयत्न करत राहा! 💪', 'छान सुरुवात! 🙂', 'चांगले! आणखी शिका! 📚', 'खूप छान! 🌟', '🏆 विज्ञानवीर! शाब्बास!'];
+  document.getElementById('score-msg').textContent = msgs[score] || msgs[4];
+}
+
+function restartQuiz() {
+  current = 0; score = 0; answered = false;
+  document.getElementById('quiz-main').style.display = 'block';
+  document.getElementById('quiz-score').style.display = 'none';
+  renderQuestion();
+}
+
+renderQuestion();
+</script>
 </body>
 </html>

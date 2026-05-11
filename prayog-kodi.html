@@ -1,110 +1,347 @@
 <!DOCTYPE html>
 <html lang="mr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>प्रयोग / कोडी / Quiz / उपक्रम | विज्ञान रंजन</title>
-  <link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>प्रयोग / कोडी / Quiz / उपक्रम | विज्ञान रंजन</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Hind:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f5f0e8;
+    --brown: #5c3d2e;
+    --brown-light: #8b6355;
+    --orange: #e07b39;
+    --orange-light: #f4a261;
+    --teal: #2a9d8f;
+    --teal-light: #4bbfb3;
+    --blue: #264653;
+    --yellow: #e9c46a;
+    --red: #e63946;
+    --green: #57cc99;
+    --bg: #faf7f2;
+    --text: #2d1b0e;
+    --text-muted: #7a6055;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Hind', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* === NAVBAR === */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(250, 247, 242, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 2px solid var(--orange-light);
+    padding: 0 2rem;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .nav-logo {
+    font-family: 'Baloo 2', cursive;
+    font-weight: 800;
+    font-size: 1.2rem;
+    color: var(--brown);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .nav-logo span { color: var(--orange); }
+  .nav-links {
+    display: flex;
+    gap: 0.25rem;
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: 'Hind', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-decoration: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    transition: all 0.2s;
+  }
+  .nav-links a:hover { background: var(--orange-light); color: #fff; }
+  .nav-links a.active { background: var(--orange); color: #fff; }
+  .nav-join { background: var(--teal) !important; color: #fff !important; }
+
+  /* === PAGE HEADER === */
+  .page-header {
+    background: linear-gradient(135deg, var(--blue) 0%, #1a2f3a 100%);
+    color: #fff;
+    text-align: center;
+    padding: 7rem 2rem 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .page-header::before {
+    content: "🧪  🧩  🎯  🌱  🔬  ⚗️  🏆  💡";
+    position: absolute;
+    top: 0.6rem; left: 0; right: 0;
+    font-size: 1.4rem;
+    opacity: 0.07;
+    letter-spacing: 1rem;
+    pointer-events: none;
+  }
+  .page-header .page-badge {
+    display: inline-block;
+    background: var(--teal);
+    color: #fff;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 0.35rem 1.1rem;
+    border-radius: 20px;
+    margin-bottom: 1.2rem;
+  }
+  .page-header h1 {
+    font-family: 'Baloo 2', cursive;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 0.5rem;
+  }
+  .page-header h1 .highlight { color: var(--orange-light); }
+  .page-header p {
+    font-size: 1rem;
+    opacity: 0.8;
+    max-width: 540px;
+    margin: 0 auto;
+  }
+
+  /* === WAVE === */
+  .wave { width: 100%; overflow: hidden; line-height: 0; }
+  .wave svg { display: block; }
+
+  /* === CONTENT AREA === */
+  .content-area {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem 4rem;
+  }
+
+  .section-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 0.6rem;
+  }
+  .section-title {
+    font-family: 'Baloo 2', cursive;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 800;
+    color: var(--brown);
+    margin-bottom: 2rem;
+    border-left: 4px solid var(--orange);
+    padding-left: 0.8rem;
+  }
+
+  /* === CARDS === */
+  .feed { display: flex; flex-direction: column; gap: 1.2rem; }
+
+  .content-card {
+    background: #fff;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 2px solid transparent;
+    transition: all 0.25s;
+    position: relative;
+  }
+  .content-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+  }
+  .content-card.prayog::before  { background: linear-gradient(90deg, #2a9d8f, #57cc99); }
+  .content-card.kodi::before    { background: linear-gradient(90deg, #e9c46a, #e07b39); }
+  .content-card.quiz::before    { background: linear-gradient(90deg, #264653, #2a9d8f); }
+  .content-card.upakram::before { background: linear-gradient(90deg, #e63946, #f4a261); }
+  .content-card:hover {
+    border-color: var(--orange-light);
+    box-shadow: 0 8px 30px rgba(224,123,57,0.1);
+    transform: translateY(-2px);
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.75rem 1.4rem;
+    background: var(--cream);
+    border-bottom: 1px solid rgba(92,61,46,0.1);
+    flex-wrap: wrap;
+  }
+  .badge {
+    font-family: 'Hind', sans-serif;
+    font-size: 0.74rem;
+    font-weight: 700;
+    padding: 0.22rem 0.75rem;
+    border-radius: 50px;
+  }
+  .badge-prayog  { background: #ecfdf5; color: #065f46; }
+  .badge-kodi    { background: #fefce8; color: #713f12; }
+  .badge-quiz    { background: #ede9fe; color: #3730a3; }
+  .badge-upakram { background: #fff1f2; color: #881337; }
+  .card-tag {
+    font-size: 0.74rem;
+    background: #fff7ed;
+    color: var(--orange);
+    padding: 0.15rem 0.65rem;
+    border-radius: 50px;
+    font-weight: 600;
+    border: 1px solid rgba(224,123,57,0.2);
+  }
+  .card-date {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-left: auto;
+    font-weight: 500;
+  }
+  .card-body {
+    padding: 1.3rem 1.5rem;
+    white-space: pre-wrap;
+    font-size: 0.97rem;
+    line-height: 1.85;
+    color: var(--text);
+  }
+
+  /* === EMPTY STATE === */
+  .empty-state {
+    text-align: center;
+    padding: 5rem 2rem;
+    background: #fff;
+    border-radius: 24px;
+    border: 2px dashed rgba(224,123,57,0.25);
+  }
+  .empty-state .icon { font-size: 4.5rem; margin-bottom: 1.2rem; display: block; }
+  .empty-state h2 {
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--brown);
+    margin-bottom: 0.6rem;
+  }
+  .empty-state p { font-size: 0.95rem; color: var(--text-muted); line-height: 1.7; }
+
+  /* === FOOTER === */
+  footer {
+    background: var(--brown);
+    color: rgba(255,255,255,0.7);
+    text-align: center;
+    padding: 2rem;
+    font-size: 0.85rem;
+  }
+  footer strong { color: #fff; }
+  footer a { color: var(--orange-light); text-decoration: none; }
+
+  @media (max-width: 600px) {
+    .nav-links { display: none; }
+    .content-area { padding: 2rem 1rem 3rem; }
+  }
+</style>
 </head>
 <body>
 
-<header>
-  <div class="org">मराठी विज्ञान परिषद — पुणे विभाग</div>
-  <h1>⚗️ विज्ञानाचे <span class="highlight">जादूई जग!</span></h1>
-  <div class="tagline">एकत्र शिकूया, एकत्र रमू या!</div>
-  <a class="join-btn" href="https://chat.whatsapp.com/DUQ1u2FmfFJBU6B4qnkuq2" target="_blank">
-    📲 WhatsApp गटात सामील व्हा
-  </a>
-</header>
-
+<!-- NAVBAR -->
 <nav>
-  <ul>
-    <li><a href="index.html">🏠 दैनंदिन पोस्ट</a></li>
-    <li><a href="vidnyan-mahiti.html">📚 विज्ञान माहिती</a></li>
-    <li><a href="prayog-kodi.html" class="active">🔬 प्रयोग / कोडी</a></li>
+  <a href="index.html" class="nav-logo">🔬 <span>विज्ञान</span>&nbsp;रंजन</a>
+  <ul class="nav-links">
+    <li><a href="index.html">मुख्यपान</a></li>
+    <li><a href="vidnyan-mahiti.html">विज्ञान माहिती</a></li>
+    <li><a href="prayog-kodi.html" class="active">प्रयोग / कोडी</a></li>
+    <li><a href="index.html#padlet">गॅलरी</a></li>
+    <li><a href="index.html#join" class="nav-join">जॉईन करा</a></li>
   </ul>
 </nav>
 
-<div class="container">
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="page-badge">मराठी विज्ञान परिषद • पुणे विभाग</div>
+  <h1>🧪 प्रयोग / कोडी /<br><span class="highlight">Quiz / उपक्रम</span></h1>
+  <p>घरच्या वस्तूंनी प्रयोग, डोकं चालवणारी कोडी आणि मजेदार Quiz!</p>
+</div>
 
-  <!-- ═══════════════════════════════════════════════════════════════
-       PRAYOG / KODI / QUIZ / UPAKRAM FEED
-       ───────────────────────────────────────────────────────────────
-       चार प्रकारचे cards येथे येतात:
+<div class="wave"><svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg"><path d="M0,30 C240,60 480,0 720,30 C960,60 1200,0 1440,30 L1440,60 L0,60 Z" fill="#faf7f2"/></svg></div>
 
-       1) प्रयोग   →  badge: badge-prayog   label: 🧪 प्रयोग
-       2) कोडे     →  badge: badge-kodi     label: 🧩 कोडे
-       3) Quiz     →  badge: badge-quiz     label: 🎯 Quiz
-       4) उपक्रम  →  badge: badge-upakram  label: 🌱 उपक्रम
+<div class="content-area">
+  <div class="section-label">सामग्री</div>
+  <div class="section-title">प्रयोग / कोडी / Quiz / उपक्रम</div>
 
-       नवीन card जोडताना खाली दिलेल्या templates प्रमाणे copy करा आणि
-       "PASTE ABOVE" ओळीवर paste करा (newest first).
-       ══════════════════════════════════════════════════════════════ -->
-
-  <div class="section-title">🔬 प्रयोग / कोडी / Quiz / उपक्रम</div>
-  <div class="post-feed">
+  <div class="feed">
 
     <div class="empty-state">
-      <div class="big-icon">🧪</div>
+      <span class="icon">🧪</span>
       <h2>लवकरच येणार आहे!</h2>
-      <p>उद्यापासून येथे प्रयोग, कोडी, Quiz आणि उपक्रम दिसतील.</p>
+      <p>उद्यापासून येथे प्रयोग, कोडी, Quiz आणि उपक्रम दिसतील.<br>WhatsApp गटात पाठवलेली सामग्री इथे नियमितपणे जोडली जाईल.</p>
     </div>
 
-    <!-- ═══ PASTE NEW CARDS ABOVE THIS LINE (newest first) ═══════════
+    <!-- ═══════════════════════════════════════════════════════════
+         PASTE NEW CARDS ABOVE THIS LINE (newest first)
 
-    TEMPLATE — प्रयोग:
-    ─────────────────────────────────────────────────────────────────
-    <article class="content-card">
-      <div class="card-header">
-        <span class="card-type-badge badge-prayog">🧪 प्रयोग</span>
-        <span class="post-tag">विषय येथे</span>
-        <span class="post-date">दिवस X · वार</span>
-      </div>
-      <div class="card-body">मजकूर येथे</div>
-    </article>
+         🧪 प्रयोग:
+         <article class="content-card prayog">
+           <div class="card-header">
+             <span class="badge badge-prayog">🧪 प्रयोग</span>
+             <span class="card-tag">विषय येथे</span>
+             <span class="card-date">दिवस X · वार</span>
+           </div>
+           <div class="card-body">मजकूर येथे</div>
+         </article>
 
-    TEMPLATE — कोडे:
-    ─────────────────────────────────────────────────────────────────
-    <article class="content-card">
-      <div class="card-header">
-        <span class="card-type-badge badge-kodi">🧩 कोडे</span>
-        <span class="post-tag">विषय येथे</span>
-        <span class="post-date">दिवस X · वार</span>
-      </div>
-      <div class="card-body">मजकूर येथे</div>
-    </article>
+         🧩 कोडे:
+         <article class="content-card kodi">
+           <div class="card-header">
+             <span class="badge badge-kodi">🧩 कोडे</span>
+             <span class="card-tag">विषय येथे</span>
+             <span class="card-date">दिवस X · वार</span>
+           </div>
+           <div class="card-body">मजकूर येथे</div>
+         </article>
 
-    TEMPLATE — Quiz:
-    ─────────────────────────────────────────────────────────────────
-    <article class="content-card">
-      <div class="card-header">
-        <span class="card-type-badge badge-quiz">🎯 Quiz</span>
-        <span class="post-tag">विषय येथे</span>
-        <span class="post-date">दिवस X · वार</span>
-      </div>
-      <div class="card-body">मजकूर येथे</div>
-    </article>
+         🎯 Quiz:
+         <article class="content-card quiz">
+           <div class="card-header">
+             <span class="badge badge-quiz">🎯 Quiz</span>
+             <span class="card-tag">विषय येथे</span>
+             <span class="card-date">दिवस X · वार</span>
+           </div>
+           <div class="card-body">मजकूर येथे</div>
+         </article>
 
-    TEMPLATE — उपक्रम:
-    ─────────────────────────────────────────────────────────────────
-    <article class="content-card">
-      <div class="card-header">
-        <span class="card-type-badge badge-upakram">🌱 उपक्रम</span>
-        <span class="post-tag">विषय येथे</span>
-        <span class="post-date">दिवस X · वार</span>
-      </div>
-      <div class="card-body">मजकूर येथे</div>
-    </article>
-    ══════════════════════════════════════════════════════════════ -->
+         🌱 उपक्रम:
+         <article class="content-card upakram">
+           <div class="card-header">
+             <span class="badge badge-upakram">🌱 उपक्रम</span>
+             <span class="card-tag">विषय येथे</span>
+             <span class="card-date">दिवस X · वार</span>
+           </div>
+           <div class="card-body">मजकूर येथे</div>
+         </article>
+         ═══════════════════════════════════════════════════════ -->
 
   </div>
-
 </div>
 
 <footer>
-  <strong>विज्ञान रंजन ग्रूप</strong> · मराठी विज्ञान परिषद, पुणे विभाग<br/>
-  <a href="https://chat.whatsapp.com/DUQ1u2FmfFJBU6B4qnkuq2">WhatsApp गट</a> ·
-  <a href="https://padlet.com/vivekshilimkar/padlet-8rhr2im1g2d0qunp">Padlet</a>
+  <p>बनवले: <strong>मराठी विज्ञान परिषद — पुणे विभाग</strong> | <strong>विज्ञान रंजन उपक्रम</strong></p>
+  <p style="margin-top:0.5rem;">एकत्र शिकूया, एकत्र रमू या! 🔬 &nbsp;|&nbsp; <a href="https://chat.whatsapp.com/DUQ1u2FmfFJBU6B4qnkuq2">WhatsApp गट</a> &nbsp;|&nbsp; <a href="https://padlet.com/vivekshilimkar/padlet-8rhr2im1g2d0qunp">Padlet गॅलरी</a></p>
 </footer>
 
 </body>
