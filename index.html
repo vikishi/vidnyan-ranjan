@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>विज्ञान रंजन | मराठी विज्ञान परिषद, पुणे</title>
+  <style>
+    :root {
+      --blue: #1a3a6b;
+      --sky: #2e86de;
+      --orange: #e07b39;
+      --green: #27ae60;
+      --bg: #f5f7fa;
+      --card: #ffffff;
+      --text: #1c2237;
+      --muted: #6b7280;
+      --border: #e2e8f0;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', 'Noto Sans Devanagari', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    /* ── Header ─────────────────────────────── */
+    header {
+      background: linear-gradient(135deg, var(--blue) 0%, #0f2545 100%);
+      color: white;
+      padding: 2.5rem 1.5rem 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    header::before {
+      content: "⚗️ 🔬 🚀 🌍 🧲 💡 🔭 🧪";
+      position: absolute;
+      top: 0.5rem; left: 0; right: 0;
+      font-size: 1.4rem;
+      opacity: 0.12;
+      letter-spacing: 1.2rem;
+      pointer-events: none;
+    }
+    header .org { font-size: 0.85rem; opacity: 0.75; letter-spacing: 0.05em; margin-bottom: 0.4rem; }
+    header h1 { font-size: clamp(1.6rem, 5vw, 2.4rem); font-weight: 800; margin-bottom: 0.4rem; }
+    header .tagline { font-size: 1rem; opacity: 0.85; }
+
+    .join-btn {
+      display: inline-block;
+      margin-top: 1.2rem;
+      background: #25d366;
+      color: white;
+      text-decoration: none;
+      font-weight: 700;
+      padding: 0.65rem 1.6rem;
+      border-radius: 2rem;
+      font-size: 1rem;
+      transition: transform 0.15s, box-shadow 0.15s;
+      box-shadow: 0 4px 14px rgba(37,211,102,0.4);
+    }
+    .join-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(37,211,102,0.5); }
+
+    /* ── Layout ─────────────────────────────── */
+    .container { max-width: 720px; margin: 0 auto; padding: 2rem 1rem; }
+
+    /* ── Info cards ─────────────────────────── */
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+    .info-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.2rem 1.4rem;
+      text-align: center;
+    }
+    .info-card .icon { font-size: 1.8rem; margin-bottom: 0.4rem; }
+    .info-card .label { font-size: 0.8rem; color: var(--muted); }
+    .info-card .value { font-size: 1rem; font-weight: 600; margin-top: 0.15rem; }
+
+    /* ── Section heading ────────────────────── */
+    .section-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--blue);
+      border-left: 4px solid var(--sky);
+      padding-left: 0.75rem;
+      margin-bottom: 1.2rem;
+    }
+
+    /* ── Padlet link card ───────────────────── */
+    .padlet-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.4rem 1.6rem;
+      margin-bottom: 2.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      text-decoration: none;
+      color: var(--text);
+      transition: box-shadow 0.15s;
+    }
+    .padlet-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
+    .padlet-card .icon { font-size: 2.2rem; flex-shrink: 0; }
+    .padlet-card .title { font-weight: 700; font-size: 1rem; }
+    .padlet-card .sub { font-size: 0.85rem; color: var(--muted); margin-top: 0.1rem; }
+    .padlet-card .arrow { margin-left: auto; font-size: 1.2rem; color: var(--muted); }
+
+    /* ── Post feed ──────────────────────────── */
+    .post-feed { margin-bottom: 3rem; }
+
+    .post-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      margin-bottom: 1.2rem;
+      overflow: hidden;
+    }
+    .post-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1.2rem;
+      background: #f0f4ff;
+      border-bottom: 1px solid var(--border);
+    }
+    .session-badge {
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 0.2rem 0.7rem;
+      border-radius: 2rem;
+      letter-spacing: 0.03em;
+    }
+    .badge-morning { background: #fff3cd; color: #7c5a00; }
+    .badge-evening { background: #d4edda; color: #1a5c2e; }
+    .post-date { font-size: 0.82rem; color: var(--muted); margin-left: auto; }
+    .post-body {
+      padding: 1.2rem 1.4rem;
+      white-space: pre-wrap;
+      font-size: 0.97rem;
+      line-height: 1.8;
+    }
+    .post-tag {
+      font-size: 0.78rem;
+      background: #eff6ff;
+      color: var(--sky);
+      padding: 0.15rem 0.6rem;
+      border-radius: 1rem;
+      display: inline-block;
+      margin-bottom: 0.6rem;
+    }
+
+    /* ── Footer ─────────────────────────────── */
+    footer {
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 0.82rem;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+    }
+    footer a { color: var(--sky); text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="org">मराठी विज्ञान परिषद — पुणे विभाग</div>
+  <h1>⚗️ विज्ञान रंजन ग्रूप</h1>
+  <div class="tagline">एकत्र शिकूया, एकत्र रमू या!</div>
+  <a class="join-btn" href="https://chat.whatsapp.com/DUQ1u2FmfFJBU6B4qnkuq2" target="_blank">
+    📲 WhatsApp गटात सामील व्हा
+  </a>
+</header>
+
+<div class="container">
+
+  <!-- Info cards -->
+  <div class="info-grid">
+    <div class="info-card">
+      <div class="icon">👧🏽👦🏽</div>
+      <div class="label">वयोगट</div>
+      <div class="value">७ ते १६ वर्षे</div>
+    </div>
+    <div class="info-card">
+      <div class="icon">📅</div>
+      <div class="label">पोस्ट</div>
+      <div class="value">रोज सकाळ + संध्याकाळ</div>
+    </div>
+    <div class="info-card">
+      <div class="icon">🏛️</div>
+      <div class="label">आयोजक</div>
+      <div class="value">मराठी विज्ञान परिषद</div>
+    </div>
+  </div>
+
+  <!-- Padlet gallery link -->
+  <div class="section-title">🔬 आमचे प्रयोग दालन</div>
+  <a class="padlet-card" href="https://padlet.com/vivekshilimkar/padlet-8rhr2im1g2d0qunp" target="_blank">
+    <div class="icon">🖼️</div>
+    <div>
+      <div class="title">विज्ञान रंजन — आमचे प्रयोग</div>
+      <div class="sub">मुलांनी केलेल्या प्रयोगांचे फोटो आणि व्हिडिओ पाहा</div>
+    </div>
+    <div class="arrow">→</div>
+  </a>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       POST FEED
+       ───────────────────────────────────────────────────────────────
+       TO ADD A NEW POST: Copy one <article class="post-card"> block
+       below and paste it at the TOP of this section (newest first).
+       Fill in: date, badge class (badge-morning / badge-evening),
+       session label, topic tag, and the message body.
+       ══════════════════════════════════════════════════════════════ -->
+  <div class="section-title">📬 दैनंदिन पोस्ट</div>
+  <div class="post-feed">
+
+    <!-- ── DAY 1 · MORNING ───────────────────────────────────────── -->
+    <article class="post-card">
+      <div class="post-header">
+        <span class="session-badge badge-morning">🌅 सकाळ</span>
+        <span class="post-tag">विज्ञान म्हणजे काय?</span>
+        <span class="post-date">दिवस १ · सोमवार</span>
+      </div>
+      <div class="post-body">🌅 सुप्रभात, विज्ञानप्रेमी मित्रांनो! 🔬
+
+आजपासून आपल्या विज्ञान रंजन प्रवासाला सुरुवात होत आहे!
+
+🤔 आजचा प्रश्न:
+विज्ञान म्हणजे काय?
+
+✅ साध्या भाषेत सांगायचं तर —
+विज्ञान म्हणजे आजूबाजूच्या जगाबद्दल प्रश्न विचारणे आणि उत्तरे शोधणे!
+
+🌍 काही उदाहरणे:
+• आकाश निळं का असतं? → भौतिकशास्त्र
+• दूध का नासतं? → रसायनशास्त्र
+• झाडं वाढतात कशी? → जीवशास्त्र
+
+💡 लक्षात ठेवा:
+"प्रत्येक प्रश्न हीच विज्ञानाची सुरुवात आहे!"
+
+आज एक प्रश्न विचारा — तुम्हाला कशाबद्दल सर्वात जास्त कुतूहल आहे?</div>
+    </article>
+
+    <!-- ── DAY 1 · EVENING ───────────────────────────────────────── -->
+    <article class="post-card">
+      <div class="post-header">
+        <span class="session-badge badge-evening">🌆 संध्याकाळ</span>
+        <span class="post-tag">सावलीचे कोडे</span>
+        <span class="post-date">दिवस १ · सोमवार</span>
+      </div>
+      <div class="post-body">🌆 संध्याकाळच्या शुभेच्छा! 🧩
+
+🎯 आजचे कोडे:
+
+"मी सकाळी लांब असतो,
+दुपारी छोटा होतो,
+संध्याकाळी परत लांब होतो.
+मी कोण आहे?"
+
+🤔 उत्तर विचार करा...
+
+.
+.
+.
+
+✅ उत्तर: सावली! 🌑
+
+🔬 विज्ञान का?
+सूर्य सकाळी आणि संध्याकाळी क्षितिजाजवळ असतो → सावली लांब पडते.
+दुपारी सूर्य डोक्यावर असतो → सावली छोटी होते.
+
+🏠 घरी करून पाहा:
+बाहेर जा, सकाळी, दुपारी, संध्याकाळी स्वतःच्या सावलीचे निरीक्षण करा!
+
+उद्या: पाण्याचे तीन रूपे! 💧</div>
+    </article>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         PASTE NEW POST CARDS ABOVE THIS LINE (newest content first)
+         ═══════════════════════════════════════════════════════════ -->
+
+  </div><!-- /post-feed -->
+
+</div><!-- /container -->
+
+<footer>
+  <strong>विज्ञान रंजन ग्रूप</strong> · मराठी विज्ञान परिषद, पुणे विभाग<br/>
+  <a href="https://chat.whatsapp.com/DUQ1u2FmfFJBU6B4qnkuq2">WhatsApp गट</a> ·
+  <a href="https://padlet.com/vivekshilimkar/padlet-8rhr2im1g2d0qunp">Padlet</a>
+</footer>
+
+</body>
+</html>
