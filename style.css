@@ -1,0 +1,245 @@
+:root {
+  --blue: #1a3a6b;
+  --sky: #2e86de;
+  --orange: #e07b39;
+  --green: #27ae60;
+  --bg: #f5f7fa;
+  --card: #ffffff;
+  --text: #1c2237;
+  --muted: #6b7280;
+  --border: #e2e8f0;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Segoe UI', 'Noto Sans Devanagari', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+}
+
+/* ── Header ─────────────────────────────── */
+header {
+  background: linear-gradient(135deg, var(--blue) 0%, #0f2545 100%);
+  color: white;
+  padding: 2.5rem 1.5rem 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+header::before {
+  content: "⚗️ 🔬 🚀 🌍 🧲 💡 🔭 🧪";
+  position: absolute;
+  top: 0.5rem; left: 0; right: 0;
+  font-size: 1.4rem;
+  opacity: 0.12;
+  letter-spacing: 1.2rem;
+  pointer-events: none;
+}
+header .org { font-size: 0.85rem; opacity: 0.75; letter-spacing: 0.05em; margin-bottom: 0.4rem; }
+header h1  { font-size: clamp(1.6rem, 5vw, 2.4rem); font-weight: 800; margin-bottom: 0.4rem; }
+header .tagline { font-size: 1rem; opacity: 0.85; }
+
+.join-btn {
+  display: inline-block;
+  margin-top: 1.2rem;
+  background: #25d366;
+  color: white;
+  text-decoration: none;
+  font-weight: 700;
+  padding: 0.65rem 1.6rem;
+  border-radius: 2rem;
+  font-size: 1rem;
+  transition: transform 0.15s, box-shadow 0.15s;
+  box-shadow: 0 4px 14px rgba(37,211,102,0.4);
+}
+.join-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(37,211,102,0.5); }
+
+/* ── Nav ─────────────────────────────────── */
+nav {
+  background: #fff;
+  border-bottom: 2px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+nav ul {
+  display: flex;
+  list-style: none;
+  max-width: 720px;
+  margin: 0 auto;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+nav ul::-webkit-scrollbar { display: none; }
+nav ul li a {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.85rem 1.1rem;
+  text-decoration: none;
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 600;
+  white-space: nowrap;
+  border-bottom: 3px solid transparent;
+  transition: color 0.15s, border-color 0.15s;
+}
+nav ul li a:hover { color: var(--blue); }
+nav ul li a.active {
+  color: var(--blue);
+  border-bottom-color: var(--sky);
+}
+
+/* ── Layout ─────────────────────────────── */
+.container { max-width: 720px; margin: 0 auto; padding: 2rem 1rem; }
+
+/* ── Info cards ─────────────────────────── */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+}
+.info-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.2rem 1.4rem;
+  text-align: center;
+}
+.info-card .icon  { font-size: 1.8rem; margin-bottom: 0.4rem; }
+.info-card .label { font-size: 0.8rem; color: var(--muted); }
+.info-card .value { font-size: 1rem; font-weight: 600; margin-top: 0.15rem; }
+
+/* ── Section heading ────────────────────── */
+.section-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--blue);
+  border-left: 4px solid var(--sky);
+  padding-left: 0.75rem;
+  margin-bottom: 1.2rem;
+}
+
+/* ── Padlet link card ───────────────────── */
+.padlet-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.4rem 1.6rem;
+  margin-bottom: 2.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  text-decoration: none;
+  color: var(--text);
+  transition: box-shadow 0.15s;
+}
+.padlet-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
+.padlet-card .icon  { font-size: 2.2rem; flex-shrink: 0; }
+.padlet-card .title { font-weight: 700; font-size: 1rem; }
+.padlet-card .sub   { font-size: 0.85rem; color: var(--muted); margin-top: 0.1rem; }
+.padlet-card .arrow { margin-left: auto; font-size: 1.2rem; color: var(--muted); }
+
+/* ── Post feed ──────────────────────────── */
+.post-feed { margin-bottom: 3rem; }
+
+.post-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  margin-bottom: 1.2rem;
+  overflow: hidden;
+}
+.post-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1.2rem;
+  background: #f0f4ff;
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+.session-badge {
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.2rem 0.7rem;
+  border-radius: 2rem;
+  letter-spacing: 0.03em;
+}
+.badge-morning { background: #fff3cd; color: #7c5a00; }
+.badge-evening { background: #d4edda; color: #1a5c2e; }
+.post-date { font-size: 0.82rem; color: var(--muted); margin-left: auto; }
+.post-body {
+  padding: 1.2rem 1.4rem;
+  white-space: pre-wrap;
+  font-size: 0.97rem;
+  line-height: 1.8;
+}
+.post-tag {
+  font-size: 0.78rem;
+  background: #eff6ff;
+  color: var(--sky);
+  padding: 0.15rem 0.6rem;
+  border-radius: 1rem;
+  display: inline-block;
+}
+
+/* ── Content cards (Mahiti / Prayog pages) ─ */
+.content-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  margin-bottom: 1.2rem;
+  overflow: hidden;
+}
+.content-card .card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1.2rem;
+  background: #f0f4ff;
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+.card-type-badge {
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.2rem 0.7rem;
+  border-radius: 2rem;
+}
+.badge-mahiti   { background: #e0f2fe; color: #0369a1; }
+.badge-tathya   { background: #fce7f3; color: #9d174d; }
+.badge-prayog   { background: #d1fae5; color: #065f46; }
+.badge-kodi     { background: #fef3c7; color: #78350f; }
+.badge-quiz     { background: #ede9fe; color: #4c1d95; }
+.badge-upakram  { background: #fee2e2; color: #7f1d1d; }
+.content-card .card-body {
+  padding: 1.2rem 1.4rem;
+  white-space: pre-wrap;
+  font-size: 0.97rem;
+  line-height: 1.8;
+}
+
+/* ── Empty state ────────────────────────── */
+.empty-state {
+  text-align: center;
+  padding: 4rem 1.5rem;
+  color: var(--muted);
+}
+.empty-state .big-icon { font-size: 4rem; margin-bottom: 1rem; }
+.empty-state h2 { font-size: 1.2rem; color: var(--text); margin-bottom: 0.5rem; }
+.empty-state p  { font-size: 0.95rem; }
+
+/* ── Footer ─────────────────────────────── */
+footer {
+  text-align: center;
+  padding: 1.5rem;
+  font-size: 0.82rem;
+  color: var(--muted);
+  border-top: 1px solid var(--border);
+}
+footer a { color: var(--sky); text-decoration: none; }
