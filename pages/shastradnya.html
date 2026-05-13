@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>शास्त्रज्ञ ओळख | विज्ञान रंजन</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Hind:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f5f0e8;
+    --brown: #5c3d2e;
+    --brown-light: #8b6355;
+    --orange: #e07b39;
+    --orange-light: #f4a261;
+    --teal: #2a9d8f;
+    --teal-light: #4bbfb3;
+    --blue: #264653;
+    --yellow: #e9c46a;
+    --red: #e63946;
+    --green: #57cc99;
+    --bg: #faf7f2;
+    --text: #2d1b0e;
+    --text-muted: #7a6055;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Hind', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* === NAVBAR === */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(250, 247, 242, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 2px solid var(--orange-light);
+    padding: 0 2rem;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .nav-logo {
+    font-family: 'Baloo 2', cursive;
+    font-weight: 800;
+    font-size: 1.2rem;
+    color: var(--brown);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .nav-logo span { color: var(--orange); }
+  .nav-links {
+    display: flex;
+    gap: 0.25rem;
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: 'Hind', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-decoration: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    transition: all 0.2s;
+  }
+  .nav-links a:hover { background: var(--orange-light); color: #fff; }
+  .nav-links a.active { background: var(--orange); color: #fff; }
+  .nav-join { background: var(--teal) !important; color: #fff !important; }
+
+  /* === PAGE HEADER === */
+  .page-header {
+    background: linear-gradient(135deg, #1a3a4a 0%, #0d2233 100%);
+    color: #fff;
+    text-align: center;
+    padding: 7rem 2rem 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .page-header::before {
+    content: "🔬  🧬  ⚗️  🏆  🌍  🔭  💡  🧪";
+    position: absolute;
+    top: 0.6rem; left: 0; right: 0;
+    font-size: 1.4rem;
+    opacity: 0.07;
+    letter-spacing: 1rem;
+    pointer-events: none;
+  }
+  .page-header .page-badge {
+    display: inline-block;
+    background: var(--teal);
+    color: #fff;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 0.35rem 1.1rem;
+    border-radius: 20px;
+    margin-bottom: 1.2rem;
+  }
+  .page-header h1 {
+    font-family: 'Baloo 2', cursive;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 0.5rem;
+  }
+  .page-header h1 .highlight { color: var(--orange-light); }
+  .page-header p {
+    font-size: 1rem;
+    opacity: 0.8;
+    max-width: 540px;
+    margin: 0 auto;
+  }
+
+  /* === WAVE === */
+  .wave { width: 100%; overflow: hidden; line-height: 0; }
+  .wave svg { display: block; }
+
+  /* === CONTENT AREA === */
+  .content-area {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem 5rem;
+  }
+  .section-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 0.6rem;
+  }
+  .section-title {
+    font-family: 'Baloo 2', cursive;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 800;
+    color: var(--brown);
+    margin-bottom: 2rem;
+    border-left: 4px solid var(--teal);
+    padding-left: 0.8rem;
+  }
+
+  /* === SCIENTIST CARD === */
+  .feed { display: flex; flex-direction: column; gap: 2rem; }
+
+  .scientist-card {
+    background: #fff;
+    border-radius: 24px;
+    overflow: hidden;
+    border: 2px solid transparent;
+    transition: all 0.25s;
+    box-shadow: 0 4px 20px rgba(42,157,143,0.08);
+  }
+  .scientist-card::before {
+    content: '';
+    display: block;
+    height: 5px;
+    background: linear-gradient(90deg, var(--teal), var(--teal-light));
+  }
+  .scientist-card:hover {
+    border-color: var(--teal-light);
+    box-shadow: 0 10px 36px rgba(42,157,143,0.14);
+    transform: translateY(-3px);
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.75rem 1.4rem;
+    background: var(--cream);
+    border-bottom: 1px solid rgba(92,61,46,0.1);
+    flex-wrap: wrap;
+  }
+  .badge {
+    font-size: 0.74rem;
+    font-weight: 700;
+    padding: 0.22rem 0.75rem;
+    border-radius: 50px;
+    background: #e6f7f5;
+    color: #1a6b63;
+  }
+  .card-tag {
+    font-size: 0.74rem;
+    background: #fff7ed;
+    color: var(--orange);
+    padding: 0.15rem 0.65rem;
+    border-radius: 50px;
+    font-weight: 600;
+    border: 1px solid rgba(224,123,57,0.2);
+  }
+  .card-date {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-left: auto;
+    font-weight: 500;
+  }
+
+  /* === PROFILE LAYOUT === */
+  .profile {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 0;
+  }
+  .profile-photo {
+    background: #e6f7f5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 1.5rem 1rem;
+    gap: 1rem;
+  }
+  .profile-photo img {
+    width: 150px;
+    height: 170px;
+    object-fit: cover;
+    border-radius: 16px;
+    border: 3px solid var(--teal-light);
+    box-shadow: 0 4px 16px rgba(42,157,143,0.2);
+  }
+  .profile-meta {
+    width: 100%;
+    font-size: 0.78rem;
+  }
+  .profile-meta table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .profile-meta td {
+    padding: 0.25rem 0.3rem;
+    vertical-align: top;
+    line-height: 1.5;
+    color: var(--text-muted);
+  }
+  .profile-meta td:first-child {
+    font-weight: 700;
+    color: var(--teal);
+    white-space: nowrap;
+    padding-right: 0.5rem;
+  }
+
+  .profile-content {
+    padding: 1.5rem 1.8rem;
+  }
+  .scientist-name {
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--blue);
+    margin-bottom: 0.2rem;
+  }
+  .scientist-title {
+    font-size: 0.88rem;
+    color: var(--teal);
+    font-weight: 600;
+    margin-bottom: 1.2rem;
+  }
+
+  .section-heading {
+    font-family: 'Baloo 2', cursive;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--brown);
+    margin: 1.2rem 0 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .profile-content p, .profile-content li {
+    font-size: 0.95rem;
+    line-height: 1.8;
+    color: var(--text);
+  }
+  .profile-content ul {
+    padding-left: 1.2rem;
+    margin-top: 0.3rem;
+  }
+  .profile-content ul li { margin-bottom: 0.25rem; }
+
+  .discovery-box {
+    background: #f0fbf9;
+    border-left: 4px solid var(--teal);
+    border-radius: 0 12px 12px 0;
+    padding: 1rem 1.2rem;
+    margin: 0.8rem 0;
+    font-size: 0.93rem;
+    line-height: 1.8;
+  }
+
+  .fun-fact {
+    background: #fff8ee;
+    border: 1.5px dashed var(--orange-light);
+    border-radius: 14px;
+    padding: 0.9rem 1.2rem;
+    margin-top: 1rem;
+    font-size: 0.92rem;
+    line-height: 1.75;
+    color: var(--text);
+  }
+  .fun-fact strong { color: var(--orange); }
+
+  .legacy-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
+  .chip {
+    background: #e6f7f5;
+    color: #1a6b63;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.3rem 0.9rem;
+    border-radius: 50px;
+    border: 1px solid var(--teal-light);
+  }
+
+  @media (max-width: 640px) {
+    .profile { grid-template-columns: 1fr; }
+    .profile-photo {
+      flex-direction: row;
+      padding: 1rem 1.2rem;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+    .profile-photo img { width: 90px; height: 105px; }
+    .nav-links { display: none; }
+    .content-area { padding: 2rem 1rem 3rem; }
+  }
+
+  /* === FOOTER === */
+  footer {
+    background: var(--brown);
+    color: rgba(255,255,255,0.7);
+    text-align: center;
+    padding: 2rem;
+    font-size: 0.85rem;
+  }
+  footer strong { color: #fff; }
+  footer a { color: var(--orange-light); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <a href="../index.html" class="nav-logo">
+    <img src="../mvp-logo.png" alt="मराठी विज्ञान परिषद" style="height:38px;width:38px;object-fit:contain;">
+    <span>विज्ञान</span>&nbsp;रंजन
+  </a>
+  <ul class="nav-links">
+    <li><a href="../index.html">मुख्यपान</a></li>
+    <li><a href="vidnyan-mahiti.html">विज्ञान माहिती</a></li>
+    <li><a href="prayog-kodi.html">प्रयोग / कोडी</a></li>
+    <li><a href="shastradnya.html" class="active">शास्त्रज्ञ</a></li>
+    <li><a href="../index.html#padlet">गॅलरी</a></li>
+    <li><a href="../index.html#join" class="nav-join">जॉईन करा</a></li>
+  </ul>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="page-badge">मराठी विज्ञान परिषद • पुणे विभाग</div>
+  <h1>🔬 शास्त्रज्ञ <span class="highlight">ओळख</span></h1>
+  <p>जगाला बदलवणाऱ्या महान शास्त्रज्ञांच्या जीवनाचा थरारक प्रवास — सोप्या मराठी भाषेत!</p>
+</div>
+
+<div class="wave">
+  <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,30 C240,60 480,0 720,30 C960,60 1200,0 1440,30 L1440,60 L0,60 Z" fill="#faf7f2"/>
+  </svg>
+</div>
+
+<div class="content-area">
+  <div class="section-label">शास्त्रज्ञ</div>
+  <div class="section-title">महान शास्त्रज्ञांची ओळख</div>
+
+  <div class="feed">
+
+    <!-- ── Torricelli ─────────────────────────────────────── -->
+    <article class="scientist-card">
+      <div class="card-header">
+        <span class="badge">🔬 शास्त्रज्ञ ओळख</span>
+        <span class="card-tag">वायुदाब · बॅरोमीटर</span>
+        <span class="card-date">दिवस ३ · १४ मे</span>
+      </div>
+
+      <div class="profile">
+        <!-- Photo + quick facts -->
+        <div class="profile-photo">
+          <img src="../scientists/Torricelli.jpg" alt="इव्हान्जेलिस्टा टॉरिचेली">
+          <div class="profile-meta">
+            <table>
+              <tr><td>जन्म</td><td>१५ ऑक्टोबर १६०८, फेएन्झा, इटली</td></tr>
+              <tr><td>निधन</td><td>२५ ऑक्टोबर १६४७, फ्लोरेन्स (वय ३९)</td></tr>
+              <tr><td>क्षेत्र</td><td>भौतिकशास्त्र, गणित</td></tr>
+              <tr><td>ओळख</td><td>बॅरोमीटरचे जनक</td></tr>
+            </table>
+          </div>
+        </div>
+
+        <!-- Main content -->
+        <div class="profile-content">
+          <div class="scientist-name">इव्हान्जेलिस्टा टॉरिचेली</div>
+          <div class="scientist-title">Evangelista Torricelli · बॅरोमीटरचे जनक</div>
+
+          <p>
+            इटलीतील फेएन्झा शहरात जन्मलेले टॉरिचेली हे प्रसिद्ध शास्त्रज्ञ गॅलिलिओ गॅलिली यांचे शिष्य होते.
+            गॅलिलिओंच्या आयुष्याच्या अखेरच्या काही महिन्यांत ते त्यांचे वैयक्तिक सहायक म्हणून काम करत होते.
+            गॅलिलिओंच्या निधनानंतर (१६४२) टोस्कानीच्या महाराजांनी त्यांना प्रमुख दरबारी गणितज्ञ म्हणून नेमले.
+          </p>
+
+          <div class="section-heading">🧪 ऐतिहासिक प्रयोग — बॅरोमीटर (१६४३)</div>
+          <div class="discovery-box">
+            "हवेला वजन असते का?" या प्रश्नाचे उत्तर शोधताना टॉरिचेलींनी एक क्रांतिकारी प्रयोग केला —<br>
+            एक लांब काचेची नळी पाऱ्याने भरून पाऱ्याच्या भांड्यात उलटी केली.<br>
+            पारा नळीत सुमारे ७६ सेंमी उंचीवर थांबला — खाली पडला नाही!<br>
+            कारण <strong>बाहेरच्या हवेचा दाब</strong> पाऱ्याला आधार देत होता.<br>
+            नळीच्या वरच्या भागात तयार झालेली रिकामी जागा म्हणजे जगातील पहिले मानवनिर्मित <strong>शून्यावकाश (Vacuum)</strong>!
+          </div>
+
+          <div class="section-heading">📐 इतर योगदान</div>
+          <ul>
+            <li>दुर्बीण (Telescope) आणि सूक्ष्मदर्शक (Microscope) यांचे डिझाइन सुधारले</li>
+            <li><strong>टॉरिचेलीचे सूत्र</strong> — भांड्याला छिद्र केल्यावर द्रव किती वेगाने बाहेर पडेल हे गणित</li>
+            <li>गणितातील Cycloid वक्रावर महत्त्वाचे संशोधन</li>
+          </ul>
+
+          <div class="section-heading">🏆 वारसा</div>
+          <div class="legacy-chips">
+            <span class="chip">दाबाचे एकक "Torr" त्यांच्या नावावर</span>
+            <span class="chip">चंद्रावर "Torricelli" विवर</span>
+            <span class="chip">हवामानशास्त्राचा पाया</span>
+            <span class="chip">आधुनिक बॅरोमीटर</span>
+          </div>
+
+          <div class="fun-fact">
+            💡 <strong>मनोरंजक तथ्य:</strong> टॉरिचेलींच्या काळात लोक मानत होते की <em>"निसर्गाला रिकामेपणाची भीती वाटते"</em> — म्हणजे शून्यावकाश शक्य नाही.
+            टॉरिचेलींनी हा शतकानुशतकांचा गैरसमज एकाच प्रयोगाने खोडून काढला!
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- PASTE NEW SCIENTIST CARDS ABOVE THIS LINE -->
+
+  </div>
+</div>
+
+<footer>
+  <img src="../mvp-logo.png" alt="मराठी विज्ञान परिषद" style="height:60px;width:60px;object-fit:contain;margin-bottom:0.75rem;opacity:0.9;">
+  <p>बनवले: <strong>मराठी विज्ञान परिषद — पुणे विभाग</strong> | <strong>विज्ञान रंजन उपक्रम</strong></p>
+  <p style="margin-top:0.5rem;">एकत्र शिकूया, एकत्र रमू या! 🔬 &nbsp;|&nbsp; <a href="https://chat.whatsapp.com/DUQ1u2FmfFJBU6B4qnkuq2">WhatsApp गट</a> &nbsp;|&nbsp; <a href="https://padlet.com/vivekshilimkar/padlet-8rhr2im1g2d0qunp">Padlet गॅलरी</a></p>
+</footer>
+
+</body>
+</html>
