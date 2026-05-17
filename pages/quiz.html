@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>साप्ताहिक क्विझ | विज्ञान रंजन</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Hind:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f5f0e8;
+    --brown: #5c3d2e;
+    --brown-light: #8b6355;
+    --orange: #e07b39;
+    --orange-light: #f4a261;
+    --teal: #2a9d8f;
+    --teal-light: #4bbfb3;
+    --blue: #264653;
+    --yellow: #e9c46a;
+    --red: #e63946;
+    --green: #57cc99;
+    --bg: #faf7f2;
+    --text: #2d1b0e;
+    --text-muted: #7a6055;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Hind', sans-serif;
+    background: var(--blue);
+    color: #fff;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  /* === NAVBAR === */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(38, 70, 83, 0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 2px solid rgba(233,196,106,0.3);
+    padding: 0 2rem;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .nav-logo {
+    font-family: 'Baloo 2', cursive;
+    font-weight: 800;
+    font-size: 1.2rem;
+    color: #fff;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .nav-logo span { color: var(--orange-light); }
+  .nav-links {
+    display: flex;
+    gap: 0.25rem;
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: 'Hind', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    transition: all 0.2s;
+  }
+  .nav-links a:hover { background: var(--orange-light); color: #fff; }
+  .nav-links a.active { background: var(--yellow); color: var(--brown); }
+  .nav-join { background: var(--teal) !important; color: #fff !important; }
+
+  /* === PAGE HEADER === */
+  .page-header {
+    background: linear-gradient(135deg, #1a2f3a 0%, var(--blue) 100%);
+    text-align: center;
+    padding: 7rem 2rem 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .page-header::before {
+    content: "🏆  🧠  🔬  ⭐  🎯  💡  🏅  🌟";
+    position: absolute;
+    top: 0.6rem; left: 0; right: 0;
+    font-size: 1.4rem;
+    opacity: 0.06;
+    letter-spacing: 1rem;
+    pointer-events: none;
+  }
+  .page-badge {
+    display: inline-block;
+    background: var(--yellow);
+    color: var(--brown);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 0.35rem 1.1rem;
+    border-radius: 20px;
+    margin-bottom: 1.2rem;
+  }
+  .page-header h1 {
+    font-family: 'Baloo 2', cursive;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 0.5rem;
+    color: #fff;
+  }
+  .page-header h1 .highlight { color: var(--yellow); }
+  .page-header p {
+    font-size: 1rem;
+    opacity: 0.75;
+    max-width: 540px;
+    margin: 0 auto;
+  }
+
+  /* === WAVE === */
+  .wave { width: 100%; overflow: hidden; line-height: 0; }
+  .wave svg { display: block; }
+
+  /* === CONTENT AREA === */
+  .content-area {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem 5rem;
+  }
+
+  /* === WEEK SELECTOR === */
+  .week-selector {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 2.5rem;
+  }
+  .week-btn {
+    background: rgba(255,255,255,0.1);
+    border: 2px solid rgba(255,255,255,0.2);
+    color: rgba(255,255,255,0.8);
+    padding: 0.55rem 1.2rem;
+    border-radius: 50px;
+    font-family: 'Hind', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .week-btn:hover { background: rgba(255,255,255,0.2); border-color: var(--yellow); color: #fff; }
+  .week-btn.active { background: var(--yellow); border-color: var(--yellow); color: var(--brown); }
+  .week-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  /* === QUIZ CONTAINER === */
+  .quiz-wrap {
+    background: rgba(255,255,255,0.08);
+    border-radius: 28px;
+    padding: 2.5rem;
+    border: 1px solid rgba(255,255,255,0.15);
+  }
+
+  .quiz-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    gap: 1rem;
+  }
+  .quiz-q-num {
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.55);
+    white-space: nowrap;
+  }
+  .quiz-progress-bar {
+    background: rgba(255,255,255,0.12);
+    border-radius: 10px;
+    height: 7px;
+    flex: 1;
+    overflow: hidden;
+  }
+  .quiz-progress-fill {
+    height: 100%;
+    background: var(--yellow);
+    border-radius: 10px;
+    transition: width 0.45s ease;
+  }
+
+  .quiz-question {
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 1.75rem;
+    line-height: 1.55;
+    min-height: 3em;
+  }
+
+  .quiz-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.85rem;
+    margin-bottom: 1.5rem;
+  }
+  .quiz-opt {
+    background: rgba(255,255,255,0.08);
+    border: 2px solid rgba(255,255,255,0.18);
+    color: #fff;
+    padding: 0.9rem 1.1rem;
+    border-radius: 16px;
+    font-family: 'Hind', sans-serif;
+    font-size: 0.92rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: left;
+    line-height: 1.4;
+  }
+  .quiz-opt:hover:not(:disabled) { background: rgba(255,255,255,0.18); border-color: var(--yellow); }
+  .quiz-opt.correct { background: rgba(87,204,153,0.25); border-color: var(--green); }
+  .quiz-opt.wrong   { background: rgba(230,57,70,0.25);  border-color: var(--red); }
+  .quiz-opt:disabled { cursor: not-allowed; }
+
+  .quiz-feedback {
+    min-height: 2.2rem;
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: var(--yellow);
+    text-align: center;
+    margin-bottom: 1.2rem;
+    line-height: 1.5;
+    padding: 0 0.5rem;
+  }
+  .quiz-nav { display: flex; justify-content: center; }
+
+  .btn-next {
+    background: var(--yellow);
+    color: var(--brown);
+    border: none;
+    padding: 0.75rem 2rem;
+    border-radius: 50px;
+    font-family: 'Baloo 2', cursive;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: none;
+  }
+  .btn-next:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(233,196,106,0.3); }
+
+  /* === SCORE SCREEN === */
+  .quiz-score {
+    text-align: center;
+    padding: 2rem 1rem;
+    display: none;
+  }
+  .score-circle {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background: rgba(233,196,106,0.15);
+    border: 4px solid var(--yellow);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+  }
+  .score-num {
+    font-family: 'Baloo 2', cursive;
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--yellow);
+    line-height: 1;
+  }
+  .score-denom {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.6);
+    margin-top: 0.15rem;
+  }
+  .score-title {
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.6rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+  }
+  .score-msg {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.75);
+    margin-bottom: 2rem;
+  }
+  .btn-restart {
+    background: transparent;
+    color: #fff;
+    border: 2px solid rgba(255,255,255,0.4);
+    padding: 0.7rem 1.8rem;
+    border-radius: 50px;
+    font-family: 'Baloo 2', cursive;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-restart:hover { border-color: #fff; background: rgba(255,255,255,0.1); }
+
+  /* === REVIEW === */
+  .review-section {
+    margin-top: 2rem;
+    border-top: 1px solid rgba(255,255,255,0.15);
+    padding-top: 2rem;
+    text-align: left;
+  }
+  .review-title {
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--yellow);
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+  .review-item {
+    background: rgba(255,255,255,0.06);
+    border-radius: 14px;
+    padding: 1rem 1.2rem;
+    margin-bottom: 0.85rem;
+    border-left: 4px solid;
+  }
+  .review-item.correct-item { border-color: var(--green); }
+  .review-item.wrong-item   { border-color: var(--red); }
+  .review-q {
+    font-weight: 600;
+    font-size: 0.92rem;
+    margin-bottom: 0.4rem;
+    line-height: 1.5;
+  }
+  .review-a {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.5;
+  }
+  .review-a strong { color: var(--green); }
+
+  /* === COMING SOON === */
+  .coming-soon {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: rgba(255,255,255,0.05);
+    border-radius: 24px;
+    border: 2px dashed rgba(255,255,255,0.15);
+  }
+  .coming-soon .icon { font-size: 3.5rem; margin-bottom: 1rem; display: block; }
+  .coming-soon h3 {
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+  .coming-soon p { font-size: 0.9rem; color: rgba(255,255,255,0.6); }
+
+  /* === FOOTER === */
+  footer {
+    background: rgba(0,0,0,0.3);
+    color: rgba(255,255,255,0.6);
+    text-align: center;
+    padding: 2rem;
+    font-size: 0.85rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+  footer strong { color: #fff; }
+  footer a { color: var(--yellow); text-decoration: none; }
+
+  @media (max-width: 600px) {
+    .nav-links { display: none; }
+    .content-area { padding: 2rem 1rem 3rem; }
+    .quiz-options { grid-template-columns: 1fr; }
+    .quiz-wrap { padding: 1.5rem; }
+    .score-circle { width: 120px; height: 120px; }
+    .score-num { font-size: 2.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <a href="../index.html" class="nav-logo"><img src="../mvp-logo.png" alt="मराठी विज्ञान परिषद" style="height:38px;width:38px;object-fit:contain;"> <span>विज्ञान</span>&nbsp;रंजन</a>
+  <ul class="nav-links">
+    <li><a href="../index.html">मुख्यपान</a></li>
+    <li><a href="vidnyan-mahiti.html">विज्ञान माहिती</a></li>
+    <li><a href="prayog-kodi.html">प्रयोग / कोडी</a></li>
+    <li><a href="shastradnya.html">शास्त्रज्ञ</a></li>
+    <li><a href="vishesh-divas.html">विशेष दिवस</a></li>
+    <li><a href="quiz.html" class="active">क्विझ</a></li>
+    <li><a href="../index.html#padlet">गॅलरी</a></li>
+    <li><a href="../index.html#join" class="nav-join">जॉईन करा</a></li>
+  </ul>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="page-badge">मराठी विज्ञान परिषद • पुणे विभाग</div>
+  <h1>🏆 साप्ताहिक<br><span class="highlight">विज्ञान क्विझ!</span></h1>
+  <p>दर रविवारी ५ प्रश्नांची क्विझ — किती बरोबर येतात ते बघा!</p>
+</div>
+
+<div class="wave"><svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg"><path d="M0,30 C240,60 480,0 720,30 C960,60 1200,0 1440,30 L1440,60 L0,60 Z" fill="#264653"/></svg></div>
+
+<div class="content-area">
+
+  <!-- Week selector -->
+  <div class="week-selector">
+    <button class="week-btn active" onclick="loadWeek(1, this)">आठवडा १</button>
+    <button class="week-btn" disabled>आठवडा २</button>
+    <button class="week-btn" disabled>आठवडा ३</button>
+    <button class="week-btn" disabled>आठवडा ४</button>
+  </div>
+
+  <!-- Quiz box -->
+  <div class="quiz-wrap">
+    <div id="quiz-main">
+      <div class="quiz-header">
+        <span class="quiz-q-num" id="q-counter">प्रश्न १ / ५</span>
+        <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="q-progress" style="width:20%"></div></div>
+      </div>
+      <div class="quiz-question" id="q-text"></div>
+      <div class="quiz-options" id="q-options"></div>
+      <div class="quiz-feedback" id="q-feedback"></div>
+      <div class="quiz-nav">
+        <button class="btn-next" id="q-next" onclick="nextQuestion()">पुढचा प्रश्न →</button>
+      </div>
+    </div>
+
+    <div class="quiz-score" id="quiz-score">
+      <div class="score-circle">
+        <span class="score-num" id="score-display"></span>
+        <span class="score-denom">पैकी ५</span>
+      </div>
+      <div class="score-title" id="score-title"></div>
+      <div class="score-msg" id="score-msg"></div>
+      <button class="btn-restart" onclick="restartQuiz()">🔄 पुन्हा करा</button>
+
+      <div class="review-section" id="review-section">
+        <div class="review-title">📋 उत्तरांचा आढावा</div>
+        <div id="review-list"></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <img src="../mvp-logo.png" alt="मराठी विज्ञान परिषद" style="height:60px;width:60px;object-fit:contain;margin-bottom:0.75rem;opacity:0.9;">
+  <p>बनवले: <strong>मराठी विज्ञान परिषद — पुणे विभाग</strong> | <strong>विज्ञान रंजन उपक्रम</strong></p>
+  <p style="margin-top:0.5rem;">एकत्र शिकूया, एकत्र रमू या! 🔬 &nbsp;|&nbsp; <a href="https://chat.whatsapp.com/DUQ1u2FmfFJBU6B4qnkuq2">WhatsApp गट</a> &nbsp;|&nbsp; <a href="https://padlet.com/vivekshilimkar/padlet-8rhr2im1g2d0qunp">Padlet गॅलरी</a></p>
+</footer>
+
+<script>
+const allWeeks = {
+  1: {
+    title: "आठवडा १ — ११–१७ मे २०२६",
+    questions: [
+      {
+        q: "तुम्ही कंपासजवळ एक लोखंडी चाकू ठेवला, तर कंपासची सुई काय करेल?",
+        opts: ["उत्तरेकडेच दाखवत राहील", "चाकूकडे वळेल", "गोल फिरत राहील", "थांबून जाईल"],
+        ans: 1,
+        exp: "लोखंड जवळ आल्यावर चुंबकीय खेच बदलते — पृथ्वीच्या चुंबकत्वापेक्षा जवळचे लोखंड जास्त प्रभाव टाकते!"
+      },
+      {
+        q: "सकाळी पाऊस पडत असताना इंद्रधनुष्य आकाशाच्या कोणत्या दिशेला दिसेल?",
+        opts: ["पूर्वेला", "उत्तरेला", "पश्चिमेला", "दक्षिणेला"],
+        ans: 2,
+        exp: "सकाळी सूर्य पूर्वेला असतो — म्हणजे पाठीमागे. इंद्रधनुष्य नेहमी सूर्याच्या विरुद्ध दिशेला दिसते!"
+      },
+      {
+        q: "हवेत ७८% नायट्रोजन असतो, तरी आपले शरीर तो वापरत नाही. श्वासाने आत गेलेला नायट्रोजन कुठे जातो?",
+        opts: ["फुफ्फुसात साठतो", "रक्तात मिसळतो", "तसाच बाहेर येतो", "ऑक्सिजनमध्ये बदलतो"],
+        ans: 2,
+        exp: "शरीराला फक्त ऑक्सिजन लागतो — नायट्रोजन न बदलता बाहेर पडतो!"
+      },
+      {
+        q: "एक बंद खोली आहे. त्यातील सगळी हवा बाहेर काढली तर खोलीचे एकूण वजन काय होईल?",
+        opts: ["वाढेल", "कमी होईल", "तेवढेच राहील", "शून्य होईल"],
+        ans: 1,
+        exp: "हवेला वजन असते — हवा नसेल तर तेवढे वजन कमी होते!"
+      },
+      {
+        q: "एखाद्या खेळाडूचे हृदय सामान्य माणसापेक्षा कमी वेळा का धडधडते?",
+        opts: ["खेळाडू कमी श्वास घेतो म्हणून", "खेळाडूचे हृदय एका ठोक्यात जास्त रक्त पंप करते म्हणून", "खेळाडूला कमी ऑक्सिजन लागतो म्हणून", "खेळाडूचे हृदय लहान असते म्हणून"],
+        ans: 1,
+        exp: "सराव केल्याने हृदय अधिक कार्यक्षम बनते — एका ठोक्यात जास्त रक्त पंप करते!"
+      }
+    ]
+  }
+};
+
+let current = 0, score = 0, answered = false, questions = [], userAnswers = [];
+
+function loadWeek(num, btn) {
+  document.querySelectorAll('.week-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const week = allWeeks[num];
+  if (!week) return;
+  questions = week.questions;
+  restartQuiz();
+}
+
+function renderQuestion() {
+  const q = questions[current];
+  document.getElementById('q-text').textContent = q.q;
+  document.getElementById('q-counter').textContent = `प्रश्न ${current + 1} / ${questions.length}`;
+  document.getElementById('q-progress').style.width = `${((current + 1) / questions.length) * 100}%`;
+  document.getElementById('q-feedback').textContent = '';
+  document.getElementById('q-next').style.display = 'none';
+  answered = false;
+
+  const optsDiv = document.getElementById('q-options');
+  optsDiv.innerHTML = '';
+  q.opts.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'quiz-opt';
+    btn.textContent = opt;
+    btn.onclick = () => selectAnswer(i, btn);
+    optsDiv.appendChild(btn);
+  });
+}
+
+function selectAnswer(idx, btn) {
+  if (answered) return;
+  answered = true;
+  const q = questions[current];
+  userAnswers[current] = idx;
+  const allBtns = document.querySelectorAll('.quiz-opt');
+  allBtns.forEach(b => b.disabled = true);
+  if (idx === q.ans) {
+    score++;
+    btn.classList.add('correct');
+    document.getElementById('q-feedback').textContent = '✅ बरोबर! ' + q.exp;
+  } else {
+    btn.classList.add('wrong');
+    allBtns[q.ans].classList.add('correct');
+    document.getElementById('q-feedback').textContent = '❌ चुकीचे. ' + q.exp;
+  }
+  document.getElementById('q-next').style.display = 'inline-block';
+}
+
+function nextQuestion() {
+  current++;
+  if (current >= questions.length) {
+    showScore();
+  } else {
+    renderQuestion();
+  }
+}
+
+function showScore() {
+  document.getElementById('quiz-main').style.display = 'none';
+  const scoreDiv = document.getElementById('quiz-score');
+  scoreDiv.style.display = 'block';
+  document.getElementById('score-display').textContent = score;
+
+  const titles = ['', 'प्रयत्न करत राहा!', 'छान सुरुवात!', 'चांगले!', 'खूप छान!', '🏆 विज्ञानवीर!'];
+  const msgs = [
+    'निराश होऊ नका — पुन्हा एकदा प्रयत्न करा!',
+    'थोडा आणखी अभ्यास करा — तुम्ही नक्की शिकाल! 💪',
+    'छान! आणखी शिका आणि पुन्हा सोडवा! 📚',
+    'वा! आणखी एक-दोन अभ्यासले तर पूर्ण गुण! 🌟',
+    'अप्रतिम! तुम्ही खरे विज्ञानवीर आहात! 🏅',
+    'परफेक्ट स्कोर! शाब्बास — खरे विज्ञानवीर! 🚀'
+  ];
+  document.getElementById('score-title').textContent = titles[score] || titles[4];
+  document.getElementById('score-msg').textContent = msgs[score] || msgs[4];
+
+  // Build review
+  const list = document.getElementById('review-list');
+  list.innerHTML = '';
+  questions.forEach((q, i) => {
+    const correct = userAnswers[i] === q.ans;
+    const div = document.createElement('div');
+    div.className = `review-item ${correct ? 'correct-item' : 'wrong-item'}`;
+    div.innerHTML = `
+      <div class="review-q">${correct ? '✅' : '❌'} ${q.q}</div>
+      <div class="review-a"><strong>बरोबर उत्तर: ${q.opts[q.ans]}</strong>${!correct ? ` (तुमचे उत्तर: ${q.opts[userAnswers[i]]})` : ''}</div>
+      <div class="review-a" style="margin-top:0.3rem;">${q.exp}</div>
+    `;
+    list.appendChild(div);
+  });
+}
+
+function restartQuiz() {
+  current = 0; score = 0; answered = false; userAnswers = [];
+  document.getElementById('quiz-main').style.display = 'block';
+  document.getElementById('quiz-score').style.display = 'none';
+  renderQuestion();
+}
+
+// Load week 1 on start
+loadWeek(1, document.querySelector('.week-btn.active'));
+</script>
+</body>
+</html>
