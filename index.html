@@ -736,53 +736,56 @@
     border: none;
   }
 
-  /* === CALENDAR === */
-  #calendar { background: var(--bg); }
-  .week-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 0.75rem;
+  /* === WEEKLY SCHEDULE TABLE === */
+  .schedule-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
   }
-  .day-card {
+  .schedule-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
     background: #fff;
     border-radius: 16px;
-    padding: 1rem 0.75rem;
-    text-align: center;
-    border: 2px solid transparent;
-    transition: all 0.25s;
-    cursor: default;
+    overflow: hidden;
+    font-size: 0.9rem;
+    min-width: 640px;
   }
-  .day-card:hover {
-    border-color: var(--orange-light);
-    transform: translateY(-4px);
-    box-shadow: 0 8px 20px rgba(224, 123, 57, 0.12);
-  }
-  .day-name {
-    font-size: 0.65rem;
-    font-weight: 700;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 0.4rem;
-  }
-  .day-icon { font-size: 1.6rem; margin-bottom: 0.4rem; display: block; }
-  .day-title {
+  .schedule-table th {
+    background: var(--blue);
+    color: #fff;
     font-family: 'Baloo 2', cursive;
-    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.9rem 1rem;
+    text-align: left;
+    font-size: 0.85rem;
+    letter-spacing: 0.3px;
+  }
+  .schedule-table td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #f0ebe3;
+    vertical-align: top;
+    line-height: 1.5;
+  }
+  .schedule-table tr:last-child td { border-bottom: none; }
+  .schedule-table tr:hover td { background: #fdf9f3; }
+  .schedule-table .day-label {
+    font-family: 'Baloo 2', cursive;
     font-weight: 700;
     color: var(--brown);
-    line-height: 1.3;
-    margin-bottom: 0.3rem;
+    white-space: nowrap;
   }
-  .day-type {
-    font-size: 0.65rem;
-    color: var(--text-muted);
-    font-weight: 500;
+  .schedule-table .theme-tag {
+    font-size: 0.75rem;
+    background: var(--orange-light);
+    color: var(--brown);
+    padding: 0.15rem 0.6rem;
+    border-radius: 20px;
+    font-weight: 600;
+    white-space: nowrap;
   }
-  .day-card.quiz-day { background: linear-gradient(135deg, var(--orange) 0%, var(--yellow) 100%); }
-  .day-card.quiz-day .day-name,
-  .day-card.quiz-day .day-title,
-  .day-card.quiz-day .day-type { color: var(--brown); }
 
   /* === JOIN === */
   #join {
@@ -854,7 +857,7 @@
   @media (max-width: 900px) {
     .about-grid, .padlet-wrapper { grid-template-columns: 1fr; }
     .activities-grid { grid-template-columns: 1fr 1fr; }
-    .week-grid { grid-template-columns: repeat(4, 1fr); }
+    .schedule-table { min-width: 580px; font-size: 0.85rem; }
     .quiz-options { grid-template-columns: 1fr; }
     .hamburger { display: block; }
     .nav-links {
@@ -881,7 +884,7 @@
   }
   @media (max-width: 600px) {
     .activities-grid { grid-template-columns: 1fr; }
-    .week-grid { grid-template-columns: repeat(2, 1fr); }
+    .schedule-table { min-width: 500px; }
     .hero-stats { gap: 1rem; }
   }
 </style>
@@ -1004,6 +1007,66 @@
         </div>
       </div>
     </div>
+  </div>
+
+    <!-- WEEKLY SCHEDULE -->
+    <div class="schedule-table-wrap reveal reveal-delay-3" style="margin-top:2.5rem;">
+      <table class="schedule-table">
+        <thead>
+          <tr>
+            <th>वार</th>
+            <th>सकाळची पोस्ट</th>
+            <th>संध्याकाळची पोस्ट</th>
+            <th>थीम</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="day-label">📚 सोमवार</td>
+            <td>विज्ञान माहिती</td>
+            <td>सोपा प्रयोग</td>
+            <td><span class="theme-tag">सिद्धांत + सराव</span></td>
+          </tr>
+          <tr>
+            <td class="day-label">💡 मंगळवार</td>
+            <td>रंजक तथ्ये ('तुम्हाला माहीत आहे का?')</td>
+            <td>कोडे</td>
+            <td><span class="theme-tag">कुतूहल + विचार</span></td>
+          </tr>
+          <tr>
+            <td class="day-label">🔬 बुधवार</td>
+            <td>शास्त्रज्ञांच्या गोष्टी</td>
+            <td>प्रयोग</td>
+            <td><span class="theme-tag">प्रेरणा + हात-प्रयोग</span></td>
+          </tr>
+          <tr>
+            <td class="day-label">🌿 गुरुवार</td>
+            <td>निसर्ग / शरीर / समाज विज्ञान</td>
+            <td>उपक्रम / निरीक्षण</td>
+            <td><span class="theme-tag">निसर्ग + निरीक्षण</span></td>
+          </tr>
+          <tr>
+            <td class="day-label">⚡ शुक्रवार</td>
+            <td>तंत्रज्ञान / नवीन शोध</td>
+            <td>विज्ञान खेळ</td>
+            <td><span class="theme-tag">उपयोग + मजा</span></td>
+          </tr>
+          <tr>
+            <td class="day-label">🧪 शनिवार</td>
+            <td>'चला करून बघू' — मोठा प्रयोग</td>
+            <td>फोटो/व्हिडिओ Padlet शेअरिंग</td>
+            <td><span class="theme-tag">प्रयोग + शेअरिंग</span></td>
+          </tr>
+          <tr>
+            <td class="day-label">🏆 रविवार</td>
+            <td>साप्ताहिक क्विझ (५ प्रश्न)</td>
+            <td>क्विझ उत्तरे + विज्ञानवीर घोषणा</td>
+            <td><span class="theme-tag">उजळणी + पुरस्कार</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
   </div>
 </section>
 
