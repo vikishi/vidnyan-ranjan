@@ -538,6 +538,59 @@
     margin: 0.9rem 0;
   }
 
+  /* === WEEK 2 HORIZONTAL SCROLL === */
+  .exp-scroll-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+  }
+  .exp-scroll-header .section-title { margin-bottom: 0; }
+  .scroll-btns {
+    display: flex;
+    gap: 0.5rem;
+  }
+  .scroll-btn {
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    border: 2px solid var(--orange-light);
+    background: #fff;
+    color: var(--brown);
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+  .scroll-btn:hover { background: var(--orange); color: #fff; border-color: var(--orange); }
+  .scroll-btn:disabled { opacity: 0.3; cursor: default; background: #eee; }
+  .exp-scroll-wrap {
+    display: flex;
+    gap: 1.5rem;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 0.5rem 0 1.5rem;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .exp-scroll-wrap::-webkit-scrollbar { display: none; }
+  .exp-scroll-wrap .exp-card {
+    min-width: 340px;
+    max-width: 380px;
+    flex-shrink: 0;
+    grid-template-columns: 1fr;
+  }
+  .exp-scroll-wrap .exp-num { display: none; }
+  .exp-scroll-wrap .exp-card.locked {
+    display: none;
+  }
+  @media (max-width: 600px) {
+    .exp-scroll-wrap .exp-card { min-width: 85vw; max-width: 90vw; }
+    .scroll-btns { display: none; }
+  }
+
   /* === QUIZ SECTION === */
   #quiz { background: var(--blue); color: #fff; }
   #quiz .section-title { color: #fff; }
@@ -1205,6 +1258,205 @@
     </div>
   </div>
 </section>
+
+<!-- WEEK 2 EXPERIMENTS -->
+<section id="prayog2" style="background:var(--cream);">
+  <div class="section-inner">
+    <div class="section-label reveal">आठवडा २</div>
+    <div class="exp-scroll-header">
+      <h2 class="section-title reveal reveal-delay-1">आठवडा २ चे प्रयोग</h2>
+      <div class="scroll-btns">
+        <button class="scroll-btn" onclick="document.getElementById('w2scroll').scrollBy(-380,0)" aria-label="मागे">‹</button>
+        <button class="scroll-btn" onclick="document.getElementById('w2scroll').scrollBy(380,0)" aria-label="पुढे">›</button>
+      </div>
+    </div>
+    <p class="section-desc reveal reveal-delay-2">निसर्गाचे नियम — घरच्या घरी प्रयोगांतून शिका! ➡️ स्क्रोल करा</p>
+
+    <div class="exp-scroll-wrap" id="w2scroll">
+
+      <!-- Day 9 — दोऱ्याचा फोन -->
+      <div class="exp-card" data-unlock="2026-05-19">
+        <div>
+          <div class="exp-icon">📞</div>
+          <h3>दोऱ्याचा फोन बनवा!</h3>
+          <p>दोन कप आणि दोरा — एवढ्यात खरा फोन बनवा आणि ध्वनी कसा प्रवास करतो ते शिका!</p>
+          <div class="exp-materials">
+            <div class="exp-block-label">साहित्य</div>
+            <ul>
+              <li>२ रिकामे प्लास्टिक/कागदाचे कप</li>
+              <li>५–१० मीटर लांब दोरा</li>
+              <li>एक पिन किंवा टोकदार वस्तू</li>
+            </ul>
+          </div>
+          <hr class="exp-divider"/>
+          <div class="exp-steps">
+            <div class="exp-block-label">कृती</div>
+            <ol>
+              <li>प्रत्येक कपाच्या तळाला छोटे छिद्र करा</li>
+              <li>दोऱ्याचे दोन्ही टोक त्या छिद्रातून आत घाला आणि गाठ बांधा</li>
+              <li>एकाने एक कप कानाला लावा, दुसऱ्याने दुसरा कप तोंडाशी</li>
+              <li>दोरा ताणलेला ठेवा — आवाज स्पष्ट ऐकू येईल!</li>
+              <li>दोरा सैल सोडा — आता काय होते ते बघा!</li>
+            </ol>
+          </div>
+          <hr class="exp-divider"/>
+          <div class="exp-science">
+            <div class="exp-block-label">विज्ञान काय शिकलो?</div>
+            <p>बोलताना कपाचा तळ कंपन पावतो. हे कंपन दोऱ्यातून पुढे जाते आणि दुसऱ्या कपाचा तळ कंपन पावतो — म्हणजे आवाज ऐकू येतो! दोरा सैल असेल तर कंपन पोहोचत नाही — आवाज ऐकू येत नाही.</p>
+          </div>
+        </div>
+        <span class="exp-tag easy">सोपा</span>
+      </div>
+
+      <!-- Day 10 — गुरुत्वाकर्षण -->
+      <div class="exp-card locked" data-unlock="2026-05-20">
+        <div>
+          <div class="exp-icon">🔬</div>
+          <h3>दोन वस्तू एकत्र पडतात का?</h3>
+          <p>जड आणि हलकी वस्तू एकाच उंचीवरून सोडा — कोण आधी पडते? गॅलिलिओचा प्रयोग स्वतः करा!</p>
+          <div class="exp-materials">
+            <div class="exp-block-label">साहित्य</div>
+            <ul>
+              <li>एक जड वस्तू (पुस्तक किंवा दगड)</li>
+              <li>एक हलकी वस्तू (पेन किंवा रबर)</li>
+              <li>एक उंच जागा (खुर्ची किंवा खिडकी)</li>
+            </ul>
+          </div>
+          <hr class="exp-divider"/>
+          <div class="exp-steps">
+            <div class="exp-block-label">कृती</div>
+            <ol>
+              <li>दोन्ही वस्तू एकाच उंचीवर एका हातात धरा</li>
+              <li>एकाच वेळी सोडा</li>
+              <li>कोण आधी जमिनीवर पडते ते बघा!</li>
+            </ol>
+          </div>
+          <hr class="exp-divider"/>
+          <div class="exp-science">
+            <div class="exp-block-label">विज्ञान काय शिकलो?</div>
+            <p>दोन्ही एकाच वेळी पडतात! गॅलिलिओ यांनी हेच पिसा च्या मनोऱ्यावरून सिद्ध केले — गुरुत्वीय प्रवेग (g = ९.८ m/s²) सर्व वस्तूंसाठी सारखाच असतो!</p>
+          </div>
+        </div>
+        <span class="exp-tag easy">सोपा</span>
+      </div>
+
+      <!-- Day 11 — चंद्र कॅलेंडर -->
+      <div class="exp-card locked" data-unlock="2026-05-21">
+        <div>
+          <div class="exp-icon">🌙</div>
+          <h3>चंद्र कॅलेंडर बनवा!</h3>
+          <p>कागदावर ४ आठवड्यांचा चंद्र कॅलेंडर बनवा — रात्री आकाशातला खरा चंद्र बघून तपासा!</p>
+          <div class="exp-materials">
+            <div class="exp-block-label">साहित्य</div>
+            <ul>
+              <li>कागद आणि पेन/रंगपेटी</li>
+            </ul>
+          </div>
+          <hr class="exp-divider"/>
+          <div class="exp-steps">
+            <div class="exp-block-label">कृती</div>
+            <ol>
+              <li>कागदावर ४ आठवड्यांचे रकाने काढा (७ × ४ = २८ चौकोन)</li>
+              <li>प्रत्येक चौकोनात चंद्राचे रूप काढा — अमावस्या, कोर, अर्धचंद्र, पौर्णिमा</li>
+              <li>आजची तारीख शोधा आणि आजचा चंद्र खूण करा</li>
+              <li>रात्री आकाशात पाहून खरा चंद्र बघा — तुमचे कॅलेंडर बरोबर आहे का?</li>
+            </ol>
+          </div>
+          <hr class="exp-divider"/>
+          <div class="exp-science">
+            <div class="exp-block-label">विज्ञान काय शिकलो?</div>
+            <p>चंद्राच्या कला नियमित आणि अंदाजपूर्वक असतात — हेच ज्ञान वापरून प्राचीन काळी कॅलेंडर बनवले जात होते! भारतीय पंचांग चंद्राच्याच कलांवर आधारित आहे.</p>
+          </div>
+        </div>
+        <span class="exp-tag easy">सोपा</span>
+      </div>
+
+      <!-- Day 12 — स्थिर विद्युत -->
+      <div class="exp-card locked" data-unlock="2026-05-22">
+        <div>
+          <div class="exp-icon">⚡</div>
+          <h3>फुगा आणि केस — स्थिर विद्युत!</h3>
+          <p>फुगा केसांवर घासा आणि जादू बघा — कागद चिकटतो, भिंतीला लटकतो, पाण्याची धार वळते!</p>
+          <div class="exp-materials">
+            <div class="exp-block-label">साहित्य</div>
+            <ul>
+              <li>एक फुगा (फुगवलेला)</li>
+              <li>स्वतःचे केस</li>
+              <li>बारीक कागदाचे तुकडे किंवा मीठाचे कण</li>
+            </ul>
+          </div>
+          <hr class="exp-divider"/>
+          <div class="exp-steps">
+            <div class="exp-block-label">कृती</div>
+            <ol>
+              <li>फुगा केसांवर जोरात १५-२० वेळा घासा</li>
+              <li>फुगा हळूच कागदाच्या तुकड्यांजवळ आणा — काय होते?</li>
+              <li>फुगा भिंतीजवळ आणा — काय होते?</li>
+              <li>घासलेला फुगा पाण्याच्या नळाजवळ आणा — पाण्याची धार वळते का?</li>
+            </ol>
+          </div>
+          <hr class="exp-divider"/>
+          <div class="exp-science">
+            <div class="exp-block-label">विज्ञान काय शिकलो?</div>
+            <p>घासल्यामुळे फुग्यावर जास्त इलेक्ट्रॉन जमतात — तो ऋण (-) होतो. तटस्थ वस्तूंमध्ये धन (+) प्रभार जवळ येतो — आकर्षण होते!</p>
+          </div>
+        </div>
+        <span class="exp-tag easy">सोपा</span>
+      </div>
+
+      <!-- Day 13 — पाणी गाळणी -->
+      <div class="exp-card locked" data-unlock="2026-05-23">
+        <div>
+          <div class="exp-icon">💧</div>
+          <h3>पाणी शुद्ध करा!</h3>
+          <p>प्लास्टिक बाटली, वाळू, दगड आणि कापूस — एवढ्यात घरचा वॉटर फिल्टर बनवा!</p>
+          <div class="exp-materials">
+            <div class="exp-block-label">साहित्य</div>
+            <ul>
+              <li>एक रिकामी प्लास्टिक बाटली (कापलेली)</li>
+              <li>वाळू, छोटे दगड/खडे</li>
+              <li>कापूस किंवा कापड</li>
+              <li>गढूळ पाणी (माती मिसळलेले)</li>
+            </ul>
+          </div>
+          <hr class="exp-divider"/>
+          <div class="exp-steps">
+            <div class="exp-block-label">कृती</div>
+            <ol>
+              <li>बाटलीचे तोंड खाली करा</li>
+              <li>आतमध्ये थरांमध्ये भरा: सर्वात खाली कापूस, मग वाळू, मग दगड</li>
+              <li>वरून गढूळ पाणी हळूहळू घाला</li>
+              <li>खाली येणारे पाणी बघा — ते स्वच्छ झाले का?</li>
+            </ol>
+          </div>
+          <hr class="exp-divider"/>
+          <div class="exp-science">
+            <div class="exp-block-label">विज्ञान काय शिकलो?</div>
+            <p>वाळू आणि दगड यांच्यातील सूक्ष्म जागांमधून पाणी जाताना माती आणि मोठे कण अडतात — हेच गाळणीचे तत्त्व! (टीप: हे पाणी पिण्यायोग्य नाही — फक्त दृश्यतः स्वच्छ होते.)</p>
+          </div>
+          <div class="exp-safety" style="margin-top:0.6rem;">
+            <div class="exp-block-label">सुरक्षितता</div>
+            <p>⚠️ हे पाणी पिऊ नका! पिण्यासाठी उकळणे आवश्यक.</p>
+          </div>
+        </div>
+        <span class="exp-tag medium">मध्यम</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+  var today = new Date();
+  today.setHours(0,0,0,0);
+  var cards = document.querySelectorAll('#w2scroll .exp-card[data-unlock]');
+  cards.forEach(function(card){
+    var unlock = new Date(card.getAttribute('data-unlock')+'T00:00:00+05:30');
+    if(today >= unlock) card.classList.remove('locked');
+  });
+})();
+</script>
 
 <!-- Wave -->
 <div class="wave" style="background:var(--cream)"><svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg"><path d="M0,0 C480,60 960,0 1440,40 L1440,60 L0,60 Z" fill="#264653"/></svg></div>
