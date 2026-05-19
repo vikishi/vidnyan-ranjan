@@ -88,6 +88,17 @@
   .nav-links a.active { background: var(--yellow); color: var(--brown); }
   .nav-join { background: var(--teal) !important; color: #fff !important; }
 
+  /* === HAMBURGER === */
+  .hamburger {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.4rem;
+    z-index: 200;
+  }
+  .hamburger svg { width: 28px; height: 28px; stroke: var(--brown); }
+
   /* === PAGE HEADER === */
   .page-header {
     background: linear-gradient(135deg, #1a2f3a 0%, var(--blue) 100%);
@@ -385,7 +396,26 @@
   footer a { color: var(--yellow); text-decoration: none; }
 
   @media (max-width: 600px) {
-    .nav-links { display: none; }
+    .hamburger { display: block; }
+    .nav-links {
+      display: none;
+      position: fixed;
+      top: 64px; left: 0; right: 0;
+      background: rgba(250, 247, 242, 0.98);
+      backdrop-filter: blur(12px);
+      flex-direction: column;
+      padding: 1rem 1.5rem;
+      gap: 0.3rem;
+      border-bottom: 2px solid var(--orange-light);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+    .nav-links.open { display: flex; }
+    .nav-links a {
+      font-size: 1rem;
+      padding: 0.65rem 1rem;
+      border-radius: 10px;
+      width: 100%;
+    }
     .content-area { padding: 2rem 1rem 3rem; }
     .quiz-options { grid-template-columns: 1fr; }
     .quiz-wrap { padding: 1.5rem; }
@@ -409,6 +439,9 @@
     <li><a href="../index.html#padlet">गॅलरी</a></li>
     <li><a href="../index.html#join" class="nav-join">जॉईन करा</a></li>
   </ul>
+  <button class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  </button>
 </nav>
 
 <!-- PAGE HEADER -->
