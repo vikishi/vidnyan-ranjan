@@ -318,17 +318,49 @@
         <span class="card-age">वय ८–१४</span>
         <span class="card-date">१८ मे · सोमवार</span>
       </div>
-      <div class="card-body">🤔 आजचा विचार-प्रश्न:
-
-झाडे आपल्याला ऑक्सिजन देतात हे आपण नेहमी ऐकतो; पण एका माणसाच्या रोजच्या ऑक्सिजन गरजेसाठी प्रत्यक्षात किती मोठी झाडे लागतात?
-
-अ) २ झाडे
-ब) ३ झाडे
-क) ४ झाडे
-ड) ५ झाडे
-
-उत्तर: ब) ३ मोठी झाडे! 🌳🌳🌳
-एक माणूस दररोज सुमारे ५५० लिटर ऑक्सिजन वापरतो. एक मोठे झाड दररोज सुमारे १७५–२१० लिटर ऑक्सिजन तयार करते — म्हणजे एका माणसासाठी साधारण ३ झाडे लागतात! 🌱</div>
+      <div class="card-body" style="white-space:normal;padding:1rem 1.3rem;">
+        <div style="font-size:1.05rem;margin-bottom:0.5rem;">🤔 <strong>आजचा विचार-प्रश्न:</strong></div>
+        <p style="margin-bottom:0.8rem;line-height:1.7;">झाडे आपल्याला ऑक्सिजन देतात हे आपण नेहमी ऐकतो; पण एका माणसाच्या रोजच्या ऑक्सिजन गरजेसाठी प्रत्यक्षात किती मोठी झाडे लागतात?</p>
+        <div id="quiz-day8-options" style="display:flex;flex-direction:column;gap:0.45rem;margin-bottom:0;">
+          <button onclick="revealDay8Answer(this)" style="text-align:left;padding:0.75rem 1.2rem;border:2px solid #e9c46a;border-radius:12px;background:#fffdf5;font-size:0.95rem;font-family:'Hind',sans-serif;cursor:pointer;transition:all 0.2s;font-weight:600;color:#5c3d2e;" onmouseover="this.style.background='#fff7ed';this.style.borderColor='#e07b39'" onmouseout="if(!this.classList.contains('selected')){this.style.background='#fffdf5';this.style.borderColor='#e9c46a'}">अ) २ झाडे</button>
+          <button onclick="revealDay8Answer(this)" style="text-align:left;padding:0.75rem 1.2rem;border:2px solid #e9c46a;border-radius:12px;background:#fffdf5;font-size:0.95rem;font-family:'Hind',sans-serif;cursor:pointer;transition:all 0.2s;font-weight:600;color:#5c3d2e;" onmouseover="this.style.background='#fff7ed';this.style.borderColor='#e07b39'" onmouseout="if(!this.classList.contains('selected')){this.style.background='#fffdf5';this.style.borderColor='#e9c46a'}">ब) ३ झाडे</button>
+          <button onclick="revealDay8Answer(this)" style="text-align:left;padding:0.75rem 1.2rem;border:2px solid #e9c46a;border-radius:12px;background:#fffdf5;font-size:0.95rem;font-family:'Hind',sans-serif;cursor:pointer;transition:all 0.2s;font-weight:600;color:#5c3d2e;" onmouseover="this.style.background='#fff7ed';this.style.borderColor='#e07b39'" onmouseout="if(!this.classList.contains('selected')){this.style.background='#fffdf5';this.style.borderColor='#e9c46a'}">क) ४ झाडे</button>
+          <button onclick="revealDay8Answer(this)" style="text-align:left;padding:0.75rem 1.2rem;border:2px solid #e9c46a;border-radius:12px;background:#fffdf5;font-size:0.95rem;font-family:'Hind',sans-serif;cursor:pointer;transition:all 0.2s;font-weight:600;color:#5c3d2e;" onmouseover="this.style.background='#fff7ed';this.style.borderColor='#e07b39'" onmouseout="if(!this.classList.contains('selected')){this.style.background='#fffdf5';this.style.borderColor='#e9c46a'}">ड) ५ झाडे</button>
+        </div>
+        <div id="quiz-day8-answer" style="display:none;background:#ecfdf5;border:2px solid #57cc99;border-radius:14px;padding:0.9rem 1.2rem;margin-top:0.7rem;line-height:1.6;">
+          <div style="font-weight:700;font-size:1.05rem;color:#065f46;margin-bottom:0.3rem;">✅ सर्व पर्याय बरोबर आहेत! 🌳🌳🌳</div>
+          <p>एका प्रौढ माणसाला दररोज सुमारे ५५०–५८८ लिटर ऑक्सिजन लागतो (NASA व USDA संशोधनानुसार). पण किती झाडे लागतील हे <strong>झाडाच्या व्यासावर</strong> अवलंबून आहे:</p>
+          <table style="width:100%;border-collapse:collapse;margin:0.4rem 0;font-size:0.9rem;">
+            <thead><tr style="background:#d1fae5;">
+              <th style="padding:0.5rem 0.8rem;text-align:left;border-bottom:2px solid #57cc99;">झाडांची संख्या</th>
+              <th style="padding:0.5rem 0.8rem;text-align:left;border-bottom:2px solid #57cc99;">व्यास</th>
+              <th style="padding:0.5rem 0.8rem;text-align:left;border-bottom:2px solid #57cc99;">ऑक्सिजन (लिटर/दिवस)</th>
+            </tr></thead>
+            <tbody>
+              <tr><td style="padding:0.4rem 0.8rem;border-bottom:1px solid #d1fae5;">🌳🌳 २ झाडे</td><td style="padding:0.4rem 0.8rem;border-bottom:1px solid #d1fae5;">३०+ इंच (७६+ सेमी)</td><td style="padding:0.4rem 0.8rem;border-bottom:1px solid #d1fae5;">~२९४ लिटर</td></tr>
+              <tr><td style="padding:0.4rem 0.8rem;border-bottom:1px solid #d1fae5;">🌳🌳🌳 ३ झाडे</td><td style="padding:0.4rem 0.8rem;border-bottom:1px solid #d1fae5;">~२४ इंच (६१ सेमी)</td><td style="padding:0.4rem 0.8rem;border-bottom:1px solid #d1fae5;">~१८६ लिटर</td></tr>
+              <tr><td style="padding:0.4rem 0.8rem;border-bottom:1px solid #d1fae5;">🌳🌳🌳🌳 ४ झाडे</td><td style="padding:0.4rem 0.8rem;border-bottom:1px solid #d1fae5;">~२१ इंच (५३ सेमी)</td><td style="padding:0.4rem 0.8rem;border-bottom:1px solid #d1fae5;">~१४७ लिटर</td></tr>
+              <tr><td style="padding:0.4rem 0.8rem;">🌳🌳🌳🌳🌳 ५ झाडे</td><td style="padding:0.4rem 0.8rem;">~१८ इंच (४५ सेमी)</td><td style="padding:0.4rem 0.8rem;">~११८ लिटर</td></tr>
+            </tbody>
+          </table>
+          <p style="margin-top:0.4rem;margin-bottom:0;font-weight:600;color:#065f46;">झाड जितके जुने व जाड, तितकी कमी झाडे पुरेशी ठरतात. म्हणूनच जुनी व मोठी झाडे तोडू नयेत — ती आपल्या श्वासाचा खरा आधार आहेत! 🌱</p>
+        </div>
+        <script>
+        function revealDay8Answer(btn) {
+          var btns = document.querySelectorAll('#quiz-day8-options button');
+          btns.forEach(function(b) {
+            b.classList.add('selected');
+            b.style.background = '#d1fae5';
+            b.style.borderColor = '#57cc99';
+            b.style.cursor = 'default';
+          });
+          btn.style.background = '#a7f3d0';
+          btn.style.borderColor = '#2a9d8f';
+          btn.style.boxShadow = '0 0 0 3px rgba(42,157,143,0.2)';
+          document.getElementById('quiz-day8-answer').style.display = 'block';
+        }
+        </script>
+      </div>
     </article>
 
     <!-- Day 6 -->
