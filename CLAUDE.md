@@ -57,6 +57,14 @@ https://padlet.com/vivekshilimkar/padlet-8rhr2im1g2d0qunp
 
 **का:** index.html च्या experiments section मधील प्रयोग plan file शी तंतोतंत जुळले पाहिजेत. आधी न वाचल्यास जुने/चुकीचे प्रयोग राहतात.
 
+### ८. card-body मध्ये white-space:normal नेहमी द्या
+HTML tags (`<h3>`, `<h4>`, `<p>`, `<ul>`, `<ol>`) वापरलेल्या प्रत्येक `.card-body` ला `style="white-space:normal;"` द्या.
+
+**का:** `.card-body` चा default `white-space: pre-wrap` आहे — त्यामुळे HTML tags मधील blank lines literal gaps म्हणून render होतात आणि lines मध्ये खूप जास्त space दिसतो.
+
+**नियम:** card body मध्ये HTML markup असेल तर → `<div class="card-body" style="white-space:normal;">`
+Plain text असेल तर → `<div class="card-body">` (pre-wrap ठीक आहे)
+
 ### ७. सकाळचा प्रश्न + संध्याकाळचे उत्तर = एकच ब्लॉग पोस्ट
 जेव्हा सकाळी प्रश्न विचारला जातो आणि संध्याकाळी उत्तर दिले जाते, तेव्हा **दोन वेगळ्या cards नको** — एकाच card मध्ये JavaScript reveal button वापरा.
 
