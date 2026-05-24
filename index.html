@@ -871,6 +871,8 @@
       gap: 0.3rem;
       border-bottom: 2px solid var(--orange-light);
       box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      max-height: calc(100vh - 64px);
+      overflow-y: auto;
     }
     .nav-links.open { display: flex; }
     .nav-links a {
@@ -905,6 +907,7 @@
     <li><a href="pages/vishesh-divas.html">विशेष दिवस</a></li>
     <li><a href="pages/quiz.html">क्विझ</a></li>
     <li><a href="#padlet">गॅलरी</a></li>
+    <li><a href="#calendar">कॅलेंडर</a></li>
     <li><a href="#join" class="nav-join">जॉईन करा</a></li>
   </ul>
   <button class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">
