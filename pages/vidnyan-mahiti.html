@@ -334,7 +334,7 @@
     <!-- VIDRANJ_INSERT -->
 
     <!-- Day 26 -->
-    <article class="content-card mahiti">
+    <article class="content-card mahiti" data-unlock="2026-06-05">
       <div class="card-header">
         <span class="badge badge-mahiti">⚡ तंत्रज्ञान / पर्यावरण</span>
         <span class="card-tag">पृष्ठतान · जहाज बांधणी</span>
@@ -361,7 +361,7 @@
     </article>
 
     <!-- Day 25 -->
-    <article class="content-card mahiti">
+    <article class="content-card mahiti" data-unlock="2026-06-04">
       <div class="card-header">
         <span class="badge badge-mahiti">🌿 निसर्ग / शरीर विज्ञान</span>
         <span class="card-tag">मानवी सांगाडा</span>
@@ -394,7 +394,7 @@
     </article>
 
     <!-- Day 23 -->
-    <article class="content-card mahiti">
+    <article class="content-card mahiti" data-unlock="2026-06-02">
       <div class="card-header">
         <span class="badge badge-mahiti">💡 रंजक तथ्ये</span>
         <span class="card-tag">साधी यंत्रे · आर्किमिडीज</span>
@@ -877,5 +877,15 @@
   <p style="margin-top:0.5rem;">एकत्र शिकूया, एकत्र रमू या! 🔬 &nbsp;|&nbsp; <a href="https://chat.whatsapp.com/DUQ1u2FmfFJBU6B4qnkuq2">WhatsApp गट</a> &nbsp;|&nbsp; <a href="https://padlet.com/vivekshilimkar/padlet-8rhr2im1g2d0qunp">Padlet गॅलरी</a></p>
 </footer>
 
+<script>
+(function(){
+  var today = new Date();
+  today.setHours(0,0,0,0);
+  document.querySelectorAll('.feed article[data-unlock]').forEach(function(el){
+    var unlock = new Date(el.getAttribute('data-unlock')+'T00:00:00+05:30');
+    if(today < unlock) el.style.display = 'none';
+  });
+})();
+</script>
 </body>
 </html>
