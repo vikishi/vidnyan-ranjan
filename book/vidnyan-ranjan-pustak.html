@@ -2,31 +2,34 @@
 <html lang="mr">
 <head>
   <meta charset="UTF-8">
-  <title>विज्ञान रंजन — दैनिक विज्ञान उपक्रम पुस्तिका</title>
+  <title>विज्ञानाचा रंजक शोध</title>
   <style>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600;700&display=swap');
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --orange:       #C94E0A;
-  --orange-mid:   #E8621B;
-  --orange-light: #FFF3E8;
-  --blue:         #005F99;
-  --blue-mid:     #1882C4;
-  --blue-light:   #E0F0FF;
-  --amber:        #B87800;
-  --amber-light:  #FFFAE0;
-  --teal:         #097860;
-  --teal-light:   #E0F5EF;
-  --purple:       #5E35A8;
-  --purple-light: #F2ECFC;
-  --green:        #256B3A;
-  --green-light:  #E4F3EA;
-  --red:          #B03020;
-  --text:         #1C1C2E;
-  --muted:        #5A6070;
-  --rule:         #E0E4EA;
+  --orange:          #C94E0A;
+  --orange-mid:      #E8621B;
+  --orange-light:    #FFF3E8;
+  --blue:            #005F99;
+  --blue-mid:        #1882C4;
+  --blue-light:      #E0F0FF;
+  --amber:           #B87800;
+  --amber-light:     #FFFAE0;
+  --teal:            #097860;
+  --teal-light:      #E0F5EF;
+  --purple:          #5E35A8;
+  --purple-light:    #F2ECFC;
+  --green:           #256B3A;
+  --green-light:     #E4F3EA;
+  --red:             #B03020;
+  --text:            #1C1C2E;
+  --muted:           #5A6070;
+  --rule:            #E0E4EA;
+  --scientist:       #4A1580;
+  --scientist-mid:   #7B2FBE;
+  --scientist-light: #F3EAFF;
 }
 
 body {
@@ -34,10 +37,32 @@ body {
   font-size: 8.5pt;
   line-height: 1.5;
   color: var(--text);
+  counter-reset: pg;
+}
+
+/* ── Page counter ────────────────────────────────────── */
+.page { counter-increment: pg; }
+
+.pg-footer {
+  text-align: center;
+  font-size: 6pt;
+  color: var(--muted);
+  padding: 1.5mm 0 1mm;
+  border-top: 0.5px solid var(--rule);
+  flex-shrink: 0;
+}
+.pg-footer::after { content: counter(pg); }
+
+.ans-xref {
+  font-size: 7pt;
+  color: var(--muted);
+  text-align: right;
+  margin-top: 5px;
+  font-style: italic;
 }
 
 /* ── Print ─────────────────────────────────────────── */
-@page { size: A5; margin: 0; }
+@page { size: 130mm 198mm; margin: 0; }
 
 @media print {
   body { background: white; }
@@ -48,12 +73,11 @@ body {
 @media screen {
   body { background: #b8bec8; padding: 8mm; }
   .page {
-    width: 148mm;
-    min-height: 210mm;
+    width: 130mm;
+    min-height: 198mm;
     margin: 8mm auto;
     background: white;
     box-shadow: 0 5px 22px rgba(0,0,0,0.35);
-    overflow: hidden;
     display: flex;
     flex-direction: column;
   }
@@ -80,21 +104,18 @@ body {
   color: white;
 }
 
-.band-day {
-  font-size: 26pt;
-  font-weight: 700;
-  line-height: 1;
-  min-width: 16mm;
-  text-align: center;
+.scientist-band {
+  background: linear-gradient(120deg, var(--scientist) 0%, var(--scientist-mid) 55%, #A855F7 100%);
+  color: white;
 }
 
-.band-day small {
-  display: block;
-  font-size: 6.5pt;
-  font-weight: 400;
-  opacity: 0.85;
-  margin-top: 1mm;
-  white-space: nowrap;
+.scientist-box {
+  background: var(--scientist-light);
+  border-left: 4px solid var(--scientist-mid);
+  border-radius: 0 6px 6px 0;
+  padding: 6px 9px;
+  margin: 5px 0 8px;
+  page-break-inside: avoid;
 }
 
 .band-divider {
@@ -128,7 +149,7 @@ body {
   flex-direction: column;
 }
 
-.page-content { flex: 1; overflow: hidden; }
+.page-content { flex: 1; overflow: visible; }
 
 /* ── Scientist card ──────────────────────────────────── */
 .scientist-card {
@@ -142,6 +163,19 @@ body {
 }
 
 .scientist-card img { width: 100%; height: auto; display: block; }
+
+/* ── Topic image card ────────────────────────────────── */
+.topic-img-card {
+  float: right;
+  margin: 0 0 5mm 5mm;
+  width: 36mm;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.22);
+  border: 2px solid var(--rule);
+}
+
+.topic-img-card img { width: 100%; height: auto; display: block; }
 
 /* ── Day icon (non-scientist pages) ─────────────────── */
 .day-icon-card {
@@ -454,6 +488,181 @@ hr.separator { border: none; border-top: 1.5px solid var(--rule); margin: 4px 0;
 .answer-table th, .answer-table td { border: 1px solid #ccc; padding: 3px 7px; }
 .answer-table th { background: var(--green-light); font-weight: 700; }
 
+/* ── Scientists section page ─────────────────────────── */
+.scientists-section-page { min-height: 198mm; overflow: hidden; display: flex; flex-direction: column; }
+
+.sci-sec-top {
+  background: linear-gradient(145deg, var(--scientist) 0%, var(--scientist-mid) 55%, #A855F7 100%);
+  padding: 18mm 8mm 12mm;
+  text-align: center;
+  color: white;
+}
+
+.sci-sec-icon-row {
+  font-size: 18pt;
+  letter-spacing: 3mm;
+  margin-bottom: 6mm;
+}
+
+.sci-sec-title {
+  font-size: 30pt;
+  font-weight: 700;
+  margin-bottom: 3mm;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.sci-sec-subtitle {
+  font-size: 9pt;
+  opacity: 0.88;
+}
+
+.sci-sec-body {
+  flex: 1;
+  background: var(--scientist-light);
+  padding: 8mm 7mm 6mm;
+  display: flex;
+  flex-direction: column;
+  gap: 5mm;
+}
+
+.sci-sec-label {
+  font-size: 7.5pt;
+  font-weight: 700;
+  color: var(--scientist);
+  text-transform: uppercase;
+  letter-spacing: 0.8pt;
+}
+
+.sci-sec-chips {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5mm;
+}
+
+.sci-sec-chip {
+  background: white;
+  border: 1.5px solid var(--scientist-mid);
+  border-radius: 8px;
+  padding: 3px 10px;
+  font-size: 8.5pt;
+  font-weight: 600;
+  color: var(--scientist);
+  box-shadow: 0 1px 4px rgba(74,21,128,0.1);
+}
+
+.sci-sec-note {
+  font-size: 7.5pt;
+  color: var(--muted);
+  line-height: 1.6;
+  border-top: 1px solid #D8C8F0;
+  padding-top: 4mm;
+}
+
+/* ── Blog-style scientist profile layout ─────────────── */
+.scientist-page .page-content { overflow: visible; }
+
+.sci-profile {
+  display: flex;
+  gap: 3.5mm;
+  margin-bottom: 3mm;
+  align-items: stretch;
+}
+
+.sci-profile-left {
+  width: 30mm;
+  flex-shrink: 0;
+  background: var(--scientist-light);
+  border-radius: 5px;
+  padding: 2mm 1.5mm 2mm;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5mm;
+}
+
+.sci-profile-left img {
+  width: 100%;
+  border-radius: 4px;
+  border: 2px solid var(--scientist-mid);
+  box-shadow: 0 2px 8px rgba(74,21,128,0.2);
+  display: block;
+}
+
+.sci-name {
+  font-size: 8.5pt;
+  font-weight: 700;
+  color: var(--scientist);
+  line-height: 1.3;
+  text-align: center;
+}
+
+.sci-subtitle {
+  font-size: 5.5pt;
+  color: var(--scientist-mid);
+  font-weight: 600;
+  text-align: center;
+  line-height: 1.4;
+}
+
+.sci-profile-right { flex: 1; min-width: 0; padding-top: 1mm; }
+
+.sci-meta-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 5.5pt;
+  margin-bottom: 2.5mm;
+  border: 1px solid #D8C8F0;
+  border-radius: 4px;
+}
+
+.sci-meta-table td {
+  padding: 1.5px 3px;
+  vertical-align: top;
+  line-height: 1.45;
+  color: var(--muted);
+  border-bottom: 1px solid #EDE5FF;
+}
+
+.sci-meta-table tr:last-child td { border-bottom: none; }
+
+.sci-meta-table td:first-child {
+  font-weight: 700;
+  color: var(--scientist-mid);
+  white-space: nowrap;
+  padding-right: 3px;
+  background: #F3EAFF;
+}
+
+.sci-tag {
+  display: inline-block;
+  background: white;
+  border: 1px solid var(--scientist-mid);
+  border-radius: 20px;
+  font-size: 6pt;
+  color: var(--scientist);
+  padding: 1px 6px;
+  margin-bottom: 2.5mm;
+}
+
+.sci-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  margin-top: 3mm;
+  padding-top: 2.5mm;
+  border-top: 1px solid #D8C8F0;
+}
+
+.sci-chip {
+  background: var(--scientist-light);
+  color: var(--scientist);
+  font-size: 6pt;
+  font-weight: 600;
+  padding: 1.5px 5px;
+  border-radius: 20px;
+  border: 1px solid var(--scientist-mid);
+}
+
   </style>
 </head>
 <body>
@@ -461,8 +670,7 @@ hr.separator { border: none; border-top: 1.5px solid var(--rule); margin: 4px 0;
 <div class="page cover-page">
   <div class="cover-top">
     <div class="cover-emoji-row">🔬 🧪 🌡️ 🔭 ⚡ 🌿</div>
-    <div class="cover-title">विज्ञान रंजन</div>
-    <div class="cover-subtitle">दैनिक विज्ञान उपक्रम पुस्तिका</div>
+    <div class="cover-title">विज्ञानाचा रंजक शोध</div>
     <div class="cover-period">मे – जून २०२६</div>
   </div>
   <div class="cover-bottom">
@@ -477,21 +685,15 @@ hr.separator { border: none; border-top: 1.5px solid var(--rule); margin: 4px 0;
 </div>
 <div class="page morning-page">
   <div class="page-band morning-band">
-    <div class="band-day">
-      १
-      <small>सोमवार</small>
-    </div>
     <div class="band-middle">
-      <div class="band-session">🌅 सकाळ &nbsp;·&nbsp; ११ मे</div>
+      <div class="band-session">🌅</div>
       <div class="band-topic">पाणी आणि विज्ञान</div>
     </div>
   </div>
   <div class="page-body">
     <div class="page-content">
       <div class="day-icon-card">💧</div>
-      <p>🔬 <strong>विज्ञान रंजन | दिवस १</strong></p>
-<hr class="separator">
-<p>💧 <strong>आजचा विषय: पाण्याचे ३ अद्भुत रूपे!</strong></p>
+      <hr class="separator">
 <p>नमस्कार मित्र-मैत्रिणींनो! आजपासून आपला विज्ञानाचा रोमांचक प्रवास सुरू होतोय! 🚀</p>
 <p>सकाळी नळातून पाणी येते, फ्रीझरमध्ये बर्फ होतो, आणि चहाच्या आधणावर वाफ दिसते — हे तीनही वेगळे दिसतात, पण एकाच पदार्थाचे तीन वेगळे रूपे आहेत! हे कसे होते? चला समजून घेऊया!</p>
 <p><strong>पाण्याचे ३ रूपे — आणि ते का बदलतात:</strong></p>
@@ -502,22 +704,19 @@ hr.separator { border: none; border-top: 1.5px solid var(--rule); margin: 4px 0;
 <p>पृथ्वीवरील ९७% पाणी खारे (समुद्राचे) आहे! फक्त ३% गोडे पाणी आहे — आणि त्यातलेही बरेचसे बर्फाच्या स्वरूपात ध्रुवांवर आहे. म्हणजे पिण्यायोग्य पाणी खरोखरच खूप दुर्मिळ आहे!</p>
     </div>
   </div>
+  <div class="pg-footer"></div>
 </div>
 <div class="page evening-page">
   <div class="page-band evening-band">
-    <div class="band-day">
-      १
-      <small>सोमवार</small>
-    </div>
     <div class="band-middle">
-      <div class="band-session">🧩 कोडे &nbsp;·&nbsp; ११ मे</div>
+      <div class="band-session">🧩 कोडे</div>
       <div class="band-topic">पाणी आणि विज्ञान</div>
     </div>
   </div>
   <div class="page-body">
     <div class="page-content">
-      <p>🧩 <strong>विज्ञान रंजन | दिवस १ — कोडे</strong></p>
-<hr class="separator">
+      
+      <hr class="separator">
 <p>🤔 <strong>आजचे विज्ञान कोडे:</strong></p>
 <div class="verse-box">मी गरम केल्यावर वाफ होतो,<br>थंड केल्यावर बर्फ होतो.<br>सगळ्यांना माझी गरज आहे,<br>माझ्याशिवाय जगणे अशक्य आहे.</div>
 <p><strong>मी कोण?</strong> 💭</p>
@@ -527,28 +726,23 @@ hr.separator { border: none; border-top: 1.5px solid var(--rule); margin: 4px 0;
   <div class="obs-line wide"></div>
   <div class="obs-line wide"></div>
 </div>
+      <div class="ans-xref">उत्तर: पृ. 59</div>
     </div>
   </div>
+  <div class="pg-footer"></div>
 </div>
 <div class="page morning-page">
   <div class="page-band morning-band">
-    <div class="band-day">
-      २
-      <small>मंगळवार</small>
-    </div>
     <div class="band-middle">
-      <div class="band-session">🌅 सकाळ &nbsp;·&nbsp; १२ मे</div>
+      <div class="band-session">🌅</div>
       <div class="band-topic">विज्ञान म्हणजे काय?</div>
     </div>
   </div>
   <div class="page-body">
     <div class="page-content">
       <div class="day-icon-card">💧</div>
-      <p>🔬 <strong>विज्ञान रंजन | दिवस २</strong></p>
+      <hr class="separator">
 <hr class="separator">
-<p>✅ <strong>कालच्या कोड्याचे उत्तर: पाणी! 💧</strong> 🎉<br>गरम केल्यावर वाफ, थंड केल्यावर बर्फ — हेच पाण्याचे तीन रूपे!</p>
-<hr class="separator">
-<p>🌟 <strong>आजचा विषय: विज्ञान म्हणजे काय?</strong></p>
 <p>विज्ञान म्हणजे निसर्गाला प्रश्न विचारणे आणि त्याची उत्तरे शोधणे! जेव्हा तुम्ही विचारता "आकाश निळे का दिसते?" किंवा "पाऊस कसा पडतो?" — तेव्हा तुम्ही विज्ञान करत असता!</p>
 <div class="fact-box">💡 <strong>तुम्हाला माहीत आहे का?</strong></div>
 <p>एक मनुष्य दिवसाला सुमारे २३,००० वेळा श्वास घेतो! प्रत्येक श्वासात आपण ऑक्सिजन आत घेतो आणि कार्बन डायऑक्साइड बाहेर सोडतो. हेही विज्ञानच!</p>
@@ -556,103 +750,39 @@ hr.separator { border: none; border-top: 1.5px solid var(--rule); margin: 4px 0;
 <p>✍️ असे करा:<br>१) कागदावर तुमचे ३ प्रश्न लिहा<br>२) प्रत्येक प्रश्नाचे उत्तर शोधण्याचा प्रयत्न करा आणि लिहा<br>३) त्या कागदाचा फोटो काढा</p>
     </div>
   </div>
+  <div class="pg-footer"></div>
 </div>
 <div class="page evening-page">
   <div class="page-band evening-band">
-    <div class="band-day">
-      २
-      <small>मंगळवार</small>
-    </div>
     <div class="band-middle">
-      <div class="band-session">🌆 संध्याकाळ &nbsp;·&nbsp; १२ मे</div>
+      <div class="band-session">🌆</div>
       <div class="band-topic">विज्ञान म्हणजे काय?</div>
     </div>
   </div>
   <div class="page-body">
     <div class="page-content">
-      <p>🫁 <strong>विज्ञान रंजन | दिवस २ — प्रयोग</strong></p>
-<hr class="separator">
+      
+      <hr class="separator">
 <p>🫁 <strong>आजचा छोटा प्रयोग: तुमची श्वासाची गती मोजा!</strong></p>
 <p><strong>कसे करायचे?</strong><br>१) शांत बसा — १ मिनिट विश्रांती घ्या<br>२) मोबाईलचा टायमर १ मिनिटाचा लावा<br>३) श्वास मोजा — एक श्वास म्हणजे श्वास आत घेणे आणि बाहेर सोडणे<br>४) आता एक दिवसात तुम्ही किती वेळा श्वास घेत असाल याची गणना करा!</p>
 <div class="science-box"><strong>विज्ञान काय शिकलो?</strong><br>जर तुम्ही १ मिनिटात १६ वेळा श्वास घेत असाल, तर —<br>१६ × ६० × २४ = <strong>२३,०४०</strong> वेळा एका दिवसात!<br>निरोगी मुलांसाठी सामान्य गती: <strong>१५–२३ श्वास/मिनिट.</strong></div>
       
-    </div>
-  </div>
-</div>
-<div class="page morning-page">
-  <div class="page-band morning-band">
-    <div class="band-day">
-      ३
-      <small>बुधवार</small>
-    </div>
-    <div class="band-middle">
-      <div class="band-session">🌅 सकाळ &nbsp;·&nbsp; १३ मे</div>
-      <div class="band-topic">हवा आणि वायुदाब</div>
-    </div>
-  </div>
-  <div class="page-body">
-    <div class="page-content">
-      <div class="scientist-card"><img src="../scientists/Torricelli.jpg" alt="शास्त्रज्ञ"></div>
-      <p>🔬 <strong>आजचा शास्त्रज्ञ: इव्हान्जेलिस्टा टॉरिचेली</strong></p>
-<p>इटलीमध्ये १६०८ साली जन्मलेले टॉरिचेली हे गॅलिलिओंचे शिष्य होते.<br>गॅलिलिओंच्या आयुष्याच्या अखेरच्या काही महिन्यांत ते त्यांचे सहायक होते.<br>गॅलिलिओंच्या निधनानंतर (१६४२) टोस्कानीच्या महाराजांचे प्रमुख गणितज्ञ म्हणून त्यांची नेमणूक झाली.<br>"हवेला वजन आहे का?" या एका प्रश्नाने त्यांचे आयुष्य बदलले!</p>
-<p><strong>त्यांनी काय शोधले?</strong><br>१६४३ साली त्यांनी एक साधा पण क्रांतिकारी प्रयोग केला —<br>एक लांब काचेची नळी पाऱ्याने भरून उलटी केली.<br>पारा नळीत एका ठराविक उंचीवर थांबला, खाली पडला नाही!<br>का? कारण बाहेरच्या हवेचा दाब पाऱ्याला धरून ठेवत होता.<br>वरची रिकामी जागा म्हणजे जगातील पहिले 'शून्यावकाश' (Vacuum)!</p>
-<p><strong>इतर योगदान:</strong><br>टॉरिचेली केवळ भौतिकशास्त्रज्ञच नव्हते — ते उत्तम गणितज्ञही होते.<br>त्यांनी दुर्बीण (Telescope) आणि सूक्ष्मदर्शक (Microscope) यांचे डिझाइन सुधारले.<br>दाबाचे एकक <strong>"Torr"</strong> त्यांच्याच नावावर आहे.<br>वयाच्या अवघ्या ३९ व्या वर्षी टायफॉइडमुळे त्यांचे निधन झाले.</p>
-<p><strong>आपल्या आयुष्यावर काय परिणाम?</strong><br>टॉरिचेलींनी जगातील पहिला बॅरोमीटर बनवला —<br>हवामान अंदाज सांगणारे यंत्र!<br>आजही विमानातील उंचीमापक, हवामान केंद्रे, आणि<br>वैद्यकीय उपकरणे याच तत्त्वावर काम करतात.</p>
-<div class="fact-box">💡 <strong>विचार करा:</strong></div>
-<p>हवेला वजन असेल तर आपल्या डोक्यावर किती हवा असेल?</p>
-<p>(आम्ही संध्याकाळची पोस्ट दुपारी पाठवू, जेणेकरून मुलांना त्याच दिवशी प्रयोग/उपक्रम करता येईल.)</p>
-    </div>
-  </div>
-</div>
-<div class="page evening-page">
-  <div class="page-band evening-band">
-    <div class="band-day">
-      ३
-      <small>बुधवार</small>
-    </div>
-    <div class="band-middle">
-      <div class="band-session">🧪 प्रयोग &nbsp;·&nbsp; १३ मे</div>
-      <div class="band-topic">हवा आणि वायुदाब</div>
-    </div>
-  </div>
-  <div class="page-body">
-    <div class="page-content">
-      <p>🧪 <strong>विज्ञान रंजन | प्रयोग</strong></p>
-<hr class="separator">
-<p>🔬 <strong>आजचा प्रयोग: हवेचे वजन</strong></p>
-<div class="materials-box"><div class="section-label">📦 साहित्य</div><ul><li>२ फुगे (सारख्या आकाराचे)</li><li>१ लांब काठी किंवा हँगर</li><li>दोरा/सुतळी</li></ul></div>
-<div class="steps-box"><div class="section-label">📋 कृती</div><ol><li>दोन्ही फुगे सारख्या आकाराचे फुगवा</li><li>प्रत्येक फुग्याला दोऱ्याने काठीच्या दोन टोकांना बांधा</li><li>काठीच्या मध्यभागी दोरा बांधून तराजूसारखे लटकवा</li><li>काठी समतोल होईपर्यंत मधला दोरा समायोजित करा</li><li>आता एक फुगा फोडा किंवा हवा सोडा — काय होते ते पहा!</li></ol></div>
-<div class="science-box"><strong>विज्ञान काय शिकलो?</strong><br>फुगवलेल्या फुग्यात हवा भरलेली असते.<br>हवेला वजन असल्यामुळे फुगवलेला फुगा जड होतो —<br>म्हणून त्याची बाजू खाली झुकते!<br>प्रयोग हे सिद्ध करतो की <strong>हवेला वजन असते!</strong><br>आपल्या शरीरावर सुमारे १,००० किलो हवेचा दाब असतो —<br>याला <strong>वायुदाब (Atmospheric Pressure)</strong> म्हणतात.</div>
-<p><strong>मग आपले शरीर चपटे का होत नाही?</strong><br>कारण आपल्या शरीराच्या आतूनही तितकाच दाब बाहेरच्या दिशेने असतो!<br>रक्त, पेशींमधील द्रव, आणि श्वासातील हवा —<br>हे सगळे मिळून शरीराच्या आतून बाहेरील दाबाइतकाच प्रतिदाब देतात.<br>बाहेरील दाब = आतील दाब → समतोल!<br>म्हणूनच आपल्याला तो दाब जाणवत नाही.</p>
-<div class="warning-box">⚠️ <strong>सुरक्षितता:</strong> लहान मुलांनी फुगा फोडताना काळजी घ्या!</div>
       
-<div class="observation-box">
-  <div class="obs-title">✏️ माझे निरीक्षण</div>
-  <div class="obs-line"></div>
-  <div class="obs-line"></div>
-  <div class="obs-line"></div>
-  <div class="obs-draw">✏️ चित्र काढा / फोटो चिकटवा</div>
-</div>
     </div>
   </div>
+  <div class="pg-footer"></div>
 </div>
 <div class="page morning-page">
   <div class="page-band morning-band">
-    <div class="band-day">
-      ४
-      <small>गुरुवार</small>
-    </div>
     <div class="band-middle">
-      <div class="band-session">🌅 सकाळ &nbsp;·&nbsp; १४ मे</div>
+      <div class="band-session">🌅</div>
       <div class="band-topic">रंगांचे विज्ञान</div>
     </div>
   </div>
   <div class="page-body">
     <div class="page-content">
-      <div class="day-icon-card">🌈</div>
-      <p>🔬 <strong>विज्ञान रंजन | दिवस ४</strong></p>
-<hr class="separator">
-<p>🌈 <strong>आजचा विषय: इंद्रधनुष्य कसे तयार होते?</strong></p>
+      <div class="topic-img-card"><img src="../Double-alaskan-rainbow.jpg" alt="रंगांचे विज्ञान"></div>
+      <hr class="separator">
 <p>पावसानंतर आकाशात दिसणारे इंद्रधनुष्य पाहून मन आनंदून जाते! आपण म्हणतो — "अरे, किती सुंदर!" पण कधी विचार केला का, हे रंग येतात कुठून? आकाश स्वतःच रंगवतो का? नाही! हे शुद्ध विज्ञान आहे — आणि ते समजून घेणे अजून मजेशीर आहे! 🔬</p>
 <p><strong>असे घडते — पायरीपायरीने:</strong><br>☀️ <strong>पायरी १ — सूर्यप्रकाश:</strong><br>सूर्यप्रकाश पांढरा दिसतो, पण तो खरं तर ७ वेगवेगळ्या रंगांनी मिळून बनलेला असतो! हे रंग आपल्याला सामान्यपणे दिसत नाहीत कारण ते एकत्र मिसळलेले असतात.</p>
 <p>🌧️ <strong>पायरी २ — पावसाचा थेंब — एक नैसर्गिक प्रिझम:</strong><br>पावसाचा प्रत्येक थेंब साधारण गोलाकार असतो. जेव्हा सूर्यप्रकाश त्या थेंबात शिरतो, तेव्हा तो थेंब एखाद्या काचेच्या प्रिझमसारखे काम करतो — प्रकाश आत शिरताना वाकतो.</p>
@@ -665,22 +795,19 @@ hr.separator { border: none; border-top: 1.5px solid var(--rule); margin: 4px 0;
 <p>🧪 संध्याकाळी घरच्या घरी पाण्याच्या थेंबांनी स्वतःचे इंद्रधनुष्य बनवणार आहोत — तयार राहा!</p>
     </div>
   </div>
+  <div class="pg-footer"></div>
 </div>
 <div class="page evening-page">
   <div class="page-band evening-band">
-    <div class="band-day">
-      ४
-      <small>गुरुवार</small>
-    </div>
     <div class="band-middle">
-      <div class="band-session">🧪 प्रयोग &nbsp;·&nbsp; १४ मे</div>
+      <div class="band-session">🧪 प्रयोग</div>
       <div class="band-topic">रंगांचे विज्ञान</div>
     </div>
   </div>
   <div class="page-body">
     <div class="page-content">
-      <p>🌈 <strong>विज्ञान रंजन | दिवस ४ — उपक्रम</strong></p>
-<hr class="separator">
+      <div class="topic-img-card"><img src="../Double-alaskan-rainbow.jpg" alt="रंगांचे विज्ञान"></div>
+      <hr class="separator">
 <p>🧪 <strong>आजचा उपक्रम: घरच्या घरी इंद्रधनुष्य बनवा!</strong></p>
 <p>सकाळी शिकलो इंद्रधनुष्य कसे तयार होते — आता स्वतःच्या हाताने बनवायचे आहे!</p>
 <div class="materials-box"><div class="section-label">📦 साहित्य</div><ul><li>एक स्प्रे बाटली (पाण्याने भरलेली)</li><li>एक टॉर्च (मोबाईलची चालेल)</li><li>अंधारी खोली किंवा गडद पार्श्वभूमी</li></ul></div>
@@ -694,26 +821,22 @@ hr.separator { border: none; border-top: 1.5px solid var(--rule); margin: 4px 0;
   <div class="obs-line"></div>
   <div class="obs-draw">✏️ चित्र काढा / फोटो चिकटवा</div>
 </div>
+      
     </div>
   </div>
+  <div class="pg-footer"></div>
 </div>
 <div class="page morning-page">
   <div class="page-band morning-band">
-    <div class="band-day">
-      ५
-      <small>शुक्रवार</small>
-    </div>
     <div class="band-middle">
-      <div class="band-session">🌅 सकाळ &nbsp;·&nbsp; १५ मे</div>
+      <div class="band-session">🌅</div>
       <div class="band-topic">शरीर विज्ञान — हृदय</div>
     </div>
   </div>
   <div class="page-body">
     <div class="page-content">
-      <div class="day-icon-card">❤️</div>
-      <p>🔬 <strong>विज्ञान रंजन | दिवस ५</strong></p>
-<hr class="separator">
-<p>❤️ <strong>आजचा विषय: तुमचे हृदय — शरीरातील सुपर पंप!</strong></p>
+      <div class="topic-img-card"><img src="../Gemini_Generated_whale-heart.png" alt="शरीर विज्ञान — हृदय"></div>
+      <hr class="separator">
 <p>तुमच्या छातीत मुठीएवढे हृदय दिवसरात्र काम करत असते — एक सेकंदही सुट्टी न घेता!</p>
 <p>🫀 <strong>हृदयाबद्दल अद्भुत तथ्ये:</strong><br>- हृदय दर मिनिटाला ६०-१०० वेळा धडधडते<br>- एका दिवसात सुमारे <strong>१,००,००० वेळा</strong> ठोके मारते!<br>- दररोज सुमारे <strong>७,५०० लिटर</strong> रक्त पंप करते<br>- प्रौढ व्यक्तीच्या शरीरातील रक्तवाहिन्या सलग जोडल्या तर त्या <strong>१ लाख किलोमीटर</strong> लांब होतील — पृथ्वीला अडीच वेळा गुंडाळता येतील!</p>
 <p><strong>हृदय कसे काम करते?</strong><br>हृदयाला ४ कप्पे (chambers) आहेत. ते एक पंपासारखे काम करते — शुद्ध रक्त शरीरभर पाठवते आणि अशुद्ध रक्त फुफ्फुसांकडे शुद्ध होण्यासाठी पाठवते.</p>
@@ -722,22 +845,19 @@ hr.separator { border: none; border-top: 1.5px solid var(--rule); margin: 4px 0;
 <p>🏃 संध्याकाळी तुमच्या स्वतःच्या हृदयाचा प्रयोग!</p>
     </div>
   </div>
+  <div class="pg-footer"></div>
 </div>
 <div class="page evening-page">
   <div class="page-band evening-band">
-    <div class="band-day">
-      ५
-      <small>शुक्रवार</small>
-    </div>
     <div class="band-middle">
-      <div class="band-session">🧪 प्रयोग &nbsp;·&nbsp; १५ मे</div>
+      <div class="band-session">🧪 प्रयोग</div>
       <div class="band-topic">शरीर विज्ञान — हृदय</div>
     </div>
   </div>
   <div class="page-body">
     <div class="page-content">
-      <p>🧪 <strong>विज्ञान रंजन | दिवस ५ — उपक्रम</strong></p>
-<hr class="separator">
+      <div class="topic-img-card"><img src="../Gemini_Generated_whale-heart.png" alt="शरीर विज्ञान — हृदय"></div>
+      <hr class="separator">
 <p>🏃 <strong>आजचा उपक्रम: तुमच्या हृदयाची गती मोजा!</strong></p>
 <div class="materials-box"><div class="section-label">📦 साहित्य</div><ul><li>फक्त तुमचे दोन हात!</li><li>घड्याळ किंवा मोबाईलचा टायमर</li></ul></div>
 <div class="steps-box"><div class="section-label">📋 कृती</div><ol><li>शांत बसा (२ मिनिटे)</li><li>डाव्या मनगटावर उजव्या हाताची तर्जनी आणि मधली बोटे ठेवा</li><li>हलक्या दाबाने नाडी (pulse) शोधा — धक् धक् जाणवेल</li><li>टायमर लावा आणि <strong>१ मिनिटात</strong> किती ठोके मोजता ते लिहा</li><li>आता <strong>२० उड्या मारा</strong> किंवा <strong>२ मिनिटे पळा</strong></li><li>लगेचच पुन्हा नाडी मोजा</li></ol></div>
@@ -752,25 +872,22 @@ hr.separator { border: none; border-top: 1.5px solid var(--rule); margin: 4px 0;
   <div class="obs-line"></div>
   <div class="obs-draw">✏️ चित्र काढा / फोटो चिकटवा</div>
 </div>
+      
     </div>
   </div>
+  <div class="pg-footer"></div>
 </div>
 <div class="page morning-page">
   <div class="page-band morning-band">
-    <div class="band-day">
-      ६
-      <small>शनिवार</small>
-    </div>
     <div class="band-middle">
-      <div class="band-session">🌅 सकाळ &nbsp;·&nbsp; १६ मे</div>
+      <div class="band-session">🌅</div>
       <div class="band-topic">चुंबकत्व</div>
     </div>
   </div>
   <div class="page-body">
     <div class="page-content">
       <div class="day-icon-card">🧲</div>
-      <p>🔬 विज्ञान रंजन | दिवस ६ — प्रयोग</p>
-<hr class="separator">
+      <hr class="separator">
 <p>🧲 आजचा मोठा प्रयोग: चुंबक डिटेक्टिव्ह</p>
 <p><strong>प्रयोग १: चुंबक डिटेक्टिव्ह</strong></p>
 <div class="materials-box"><div class="section-label">📦 साहित्य</div><ul><li>एक चुंबक (फ्रीजचा मॅग्नेट चालेल!)</li><li>घरातल्या विविध वस्तू</li></ul></div>
@@ -781,45 +898,39 @@ hr.separator { border: none; border-top: 1.5px solid var(--rule); margin: 4px 0;
 <p>पृथ्वी स्वतः एक मोठा चुंबक आहे — म्हणूनच कंपासची सुई नेहमी उत्तरेकडे दाखवते! 🌍</p>
     </div>
   </div>
+  <div class="pg-footer"></div>
 </div>
 <div class="page evening-page">
   <div class="page-band evening-band">
-    <div class="band-day">
-      ६
-      <small>शनिवार</small>
-    </div>
     <div class="band-middle">
-      <div class="band-session">📸 फोटो &nbsp;·&nbsp; १६ मे</div>
+      <div class="band-session">📸 फोटो</div>
       <div class="band-topic">चुंबकत्व</div>
     </div>
   </div>
   <div class="page-body">
     <div class="page-content">
-      <p>📸 <strong>विज्ञान रंजन | दिवस ६ — फोटो शेअरिंग</strong></p>
-<hr class="separator">
+      
+      <hr class="separator">
 <p>🎉 <strong>या आठवड्याचे प्रयोग — फोटो शेअर करा!</strong></p>
 <p>या आठवड्यात आपण खूप छान प्रयोग केले!</p>
 <p>उद्या रविवारी आठवड्याची क्विझ आहे — तयार राहा! 🏆</p>
       
+      
     </div>
   </div>
+  <div class="pg-footer"></div>
 </div>
 <div class="page morning-page">
   <div class="page-band morning-band">
-    <div class="band-day">
-      ७
-      <small>रविवार</small>
-    </div>
     <div class="band-middle">
-      <div class="band-session">🌅 सकाळ &nbsp;·&nbsp; १७ मे</div>
+      <div class="band-session">🌅</div>
       <div class="band-topic">साप्ताहिक क्विझ</div>
     </div>
   </div>
   <div class="page-body">
     <div class="page-content">
       <div class="day-icon-card">🏆</div>
-      <p>🔬 <strong>विज्ञान रंजन | दिवस ७ — साप्ताहिक क्विझ!</strong></p>
-<hr class="separator">
+      <hr class="separator">
 <p>🏆 <strong>आठवडा १ ची क्विझ!</strong></p>
 <p>या आठवड्यात आपण खूप काही शिकलो! चला तर मग, तुमची स्मरणशक्ती तपासूया!</p>
 <p><strong>पुढच्या आठवड्यापूर्वी तुमची उत्तरे आमच्यापर्यंत कशी पोहोचवायची याचा आम्ही मार्ग शोधून काढू.</strong></p>
@@ -828,25 +939,21 @@ hr.separator { border: none; border-top: 1.5px solid var(--rule); margin: 4px 0;
 <p><strong>प्र.३)</strong> हवेत ७८% नायट्रोजन असतो, तरी आपले शरीर तो वापरत नाही. श्वासाने आत गेलेला नायट्रोजन कुठे जातो?<br>अ) फुफ्फुसात साठतो<br>ब) रक्तात मिसळतो<br>क) तसाच बाहेर येतो<br>ड) ऑक्सिजनमध्ये बदलतो</p>
 <p><strong>प्र.४)</strong> एक बंद खोली आहे. त्यातील सगळी हवा बाहेर काढली तर खोलीचे एकूण वजन काय होईल?<br>अ) वाढेल<br>ब) कमी होईल<br>क) तेवढेच राहील<br>ड) शून्य होईल</p>
 <p><strong>प्र.५)</strong> एखाद्या खेळाडूचे हृदय सामान्य माणसापेक्षा कमी वेळा का धडधडते?<br>अ) खेळाडू कमी श्वास घेतो म्हणून<br>ब) खेळाडूचे हृदय एका ठोक्यात जास्त रक्त पंप करते म्हणून<br>क) खेळाडूला कमी ऑक्सिजन लागतो म्हणून<br>ड) खेळाडूचे हृदय लहान असते म्हणून</p>
-<p>⏰ उत्तरे संध्याकाळी ६ वा. जाहीर होतील!</p>
     </div>
   </div>
+  <div class="pg-footer"></div>
 </div>
 <div class="page evening-page">
   <div class="page-band evening-band">
-    <div class="band-day">
-      ७
-      <small>रविवार</small>
-    </div>
     <div class="band-middle">
-      <div class="band-session">✅ उत्तरे &nbsp;·&nbsp; १७ मे</div>
+      <div class="band-session">✅ उत्तरे</div>
       <div class="band-topic">साप्ताहिक क्विझ</div>
     </div>
   </div>
   <div class="page-body">
     <div class="page-content">
-      <p>🔬 <strong>विज्ञान रंजन | दिवस ७ — क्विझ उत्तरे</strong></p>
-<hr class="separator">
+      
+      <hr class="separator">
 <p>🏆 <strong>क्विझ उत्तरे:</strong></p>
 <p>✅ प्र.१ — <strong>ब) चाकूकडे वळेल</strong> (लोखंड जवळ आल्यावर चुंबकीय खेच बदलते — पृथ्वीच्या चुंबकत्वापेक्षा जवळचे लोखंड जास्त प्रभाव टाकते!)<br>✅ प्र.२ — <strong>क) पश्चिमेला</strong> (सकाळी सूर्य पूर्वेला असतो — म्हणजे पाठीमागे. इंद्रधनुष्य नेहमी सूर्याच्या विरुद्ध दिशेला दिसते!)<br>✅ प्र.३ — <strong>क) तसाच बाहेर येतो</strong> (शरीराला फक्त ऑक्सिजन लागतो — नायट्रोजन न बदलता बाहेर पडतो!)<br>✅ प्र.४ — <strong>ब) कमी होईल</strong> (हवेला वजन असते — हवा नसेल तर तेवढे वजन कमी होते!)<br>✅ प्र.५ — <strong>ब) खेळाडूचे हृदय एका ठोक्यात जास्त रक्त पंप करते म्हणून</strong> (सराव केल्याने हृदय अधिक कार्यक्षम बनते!)</p>
 <hr class="separator">
@@ -855,28 +962,24 @@ hr.separator { border: none; border-top: 1.5px solid var(--rule); margin: 4px 0;
 <p>📢 <strong>पुढच्या आठवड्याची झलक:</strong><br>आठवडा २ मध्ये आपण शिकणार आहोत:<br>🌱 वनस्पती अन्न कसे बनवतात<br>🎵 आवाज कसा निर्माण होतो<br>🍎 गुरुत्वाकर्षण म्हणजे काय<br>🌙 चंद्राच्या कलांचे रहस्य<br>⚡ विज कशी तयार होते<br>🌍 पर्यावरण आणि प्रदूषण</p>
 <p>तयार राहा — आणखी मजा, आणखी विज्ञान! 🚀</p>
       
+      
     </div>
   </div>
+  <div class="pg-footer"></div>
 </div>
 <div class="page morning-page">
   <div class="page-band morning-band">
-    <div class="band-day">
-      ८
-      <small>सोमवार</small>
-    </div>
     <div class="band-middle">
-      <div class="band-session">🌅 सकाळ &nbsp;·&nbsp; १८ मे</div>
+      <div class="band-session">🌅</div>
       <div class="band-topic">वनस्पती अन्न कसे बनवतात?</div>
     </div>
   </div>
   <div class="page-body">
     <div class="page-content">
       <div class="day-icon-card">🌿</div>
-      <p>🔬 <strong>विज्ञान रंजन | दिवस ८</strong></p>
-<hr class="separator">
+      <hr class="separator">
 <p>आठवडा २ मध्ये आपले स्वागत आहे! 🌱<br>या आठवड्यात आपण शिकणार आहोत निसर्गाचे नियम — जे प्रत्येक ठिकाणी, प्रत्येक क्षणी काम करत असतात!</p>
 <hr class="separator">
-<p>🌿 <strong>आजचा विषय: प्रकाशसंश्लेषण — झाडांचा जादूचा स्वयंपाक!</strong></p>
 <p>झाडे जमिनीतून अन्न शोषतात असे आपल्याला वाटते — पण हे खरे नाही! झाडे स्वतःचे अन्न <strong>स्वतःच बनवतात</strong> — आणि त्यासाठी ते सूर्यप्रकाश वापरतात!</p>
 <p><strong>हे कसे घडते — तीन घटक:</strong></p>
 <p>☀️ <strong>घटक १ — सूर्यप्रकाश:</strong><br>पानांमध्ये असणारा हिरवा रंगद्रव्य (Chlorophyll) सूर्यप्रकाश पकडतो. म्हणूनच झाडांना सूर्यप्रकाश नसेल तर ती जगू शकत नाहीत!</p>
@@ -889,37 +992,32 @@ hr.separator { border: none; border-top: 1.5px solid var(--rule); margin: 4px 0;
 <p>🌙 संध्याकाळी एक प्रश्न येणार आहे!</p>
     </div>
   </div>
+  <div class="pg-footer"></div>
 </div>
 <div class="page evening-page">
   <div class="page-band evening-band">
-    <div class="band-day">
-      ८
-      <small>सोमवार</small>
-    </div>
     <div class="band-middle">
-      <div class="band-session">🌆 संध्याकाळ &nbsp;·&nbsp; १८ मे</div>
+      <div class="band-session">🌆</div>
       <div class="band-topic">वनस्पती अन्न कसे बनवतात?</div>
     </div>
   </div>
   <div class="page-body">
     <div class="page-content">
-      <p>🧩 <strong>विज्ञान रंजन | दिवस ८ — आजचा प्रश्न</strong></p>
-<hr class="separator">
+      
+      <hr class="separator">
 <p>🤔 <strong>आजचा विचार-प्रश्न:</strong></p>
 <p>झाडे आपल्याला ऑक्सिजन देतात हे आपण नेहमी ऐकतो; पण एका माणसाच्या रोजच्या ऑक्सिजन गरजेसाठी प्रत्यक्षात किती मोठी झाडे लागतात?</p>
 <p>अ) २ झाडे<br>ब) ३ झाडे<br>क) ४ झाडे<br>ड) ५ झाडे</p>
       
+      
     </div>
   </div>
+  <div class="pg-footer"></div>
 </div>
 <div class="page morning-page">
   <div class="page-band morning-band">
-    <div class="band-day">
-      ९
-      <small>मंगळवार</small>
-    </div>
     <div class="band-middle">
-      <div class="band-session">🌅 सकाळ &nbsp;·&nbsp; १९ मे</div>
+      <div class="band-session">🌅</div>
       <div class="band-topic">ध्वनी — आवाजाचे विज्ञान</div>
     </div>
   </div>
@@ -927,7 +1025,6 @@ hr.separator { border: none; border-top: 1.5px solid var(--rule); margin: 4px 0;
     <div class="page-content">
       <div class="day-icon-card">🎵</div>
       <hr class="separator">
-<p>✅ <strong>कालच्या प्रश्नाचे उत्तर: सर्व पर्याय बरोबर आहेत!</strong> 🌳🌳🌳<br>हो, तुम्ही बरोबर वाचलं! एका प्रौढ माणसाला दररोज सुमारे ५५०–५८८ लिटर ऑक्सिजन लागतो (NASA व USDA संशोधनानुसार ~०.८४ किलो/दिवस). पण किती झाडे लागतील हे <strong>झाडाच्या व्यासावर</strong> अवलंबून आहे:</p>
 <table class="content-table">
 <tr><th>झाडांची संख्या</th><th>व्यास</th><th>ऑक्सिजन क्षमता (लिटर/दिवस)</th></tr>
 <tr><td>२ झाडे</td><td>३०+ इंच (७६+ सेमी)</td><td>~२९४ लिटर</td></tr>
@@ -937,9 +1034,7 @@ hr.separator { border: none; border-top: 1.5px solid var(--rule); margin: 4px 0;
 </table>
 <p>झाड जितके जुने व जाड, तितकी कमी झाडे पुरेशी ठरतात. म्हणूनच जुनी व मोठी झाडे तोडू नयेत — ती आपल्या श्वासाचा खरा आधार आहेत! 🌱</p>
 <hr class="separator">
-<p>🔬 <strong>विज्ञान रंजन | दिवस ९</strong></p>
 <hr class="separator">
-<p>🎵 <strong>आजचा विषय: आवाज कसा तयार होतो?</strong></p>
 <p>तुम्ही बोलता तेव्हा आवाज येतो. ढोल वाजवला की आवाज येतो. पण हा आवाज नेमका कसा तयार होतो आणि आपल्यापर्यंत कसा पोहोचतो?</p>
 <p><strong>आवाजाचे तत्त्व — कंपन!</strong><br>कोणतीही वस्तू जेव्हा वेगाने मागे-पुढे हलते (कंपन करते), तेव्हा आजूबाजूच्या हवेच्या रेणूंना ती धक्का देते. हे रेणू पुढच्या रेणूंना धक्का देतात — असे करत करत ध्वनी लहरी आपल्या कानापर्यंत पोहोचतात!</p>
 <p><strong>आवाजाची गती:</strong><br>हवेतून आवाज — <strong>३४३ मीटर/सेकंद</strong><br>पाण्यातून आवाज — <strong>१,४८४ मीटर/सेकंद</strong> (जास्त वेगाने!)<br>लोखंडातून आवाज — <strong>५,१२० मीटर/सेकंद</strong> (सर्वात वेगाने!)</p>
@@ -949,22 +1044,19 @@ hr.separator { border: none; border-top: 1.5px solid var(--rule); margin: 4px 0;
 <p>📢 संध्याकाळी घरच्या घरी एक मजेदार प्रयोग!</p>
     </div>
   </div>
+  <div class="pg-footer"></div>
 </div>
 <div class="page evening-page">
   <div class="page-band evening-band">
-    <div class="band-day">
-      ९
-      <small>मंगळवार</small>
-    </div>
     <div class="band-middle">
-      <div class="band-session">🧪 प्रयोग &nbsp;·&nbsp; १९ मे</div>
+      <div class="band-session">🧪 प्रयोग</div>
       <div class="band-topic">ध्वनी — आवाजाचे विज्ञान</div>
     </div>
   </div>
   <div class="page-body">
     <div class="page-content">
-      <p>🧪 <strong>विज्ञान रंजन | दिवस ९ — प्रयोग</strong></p>
-<hr class="separator">
+      
+      <hr class="separator">
 <p>📞 <strong>आजचा प्रयोग: दोऱ्याचा फोन बनवा!</strong></p>
 <div class="materials-box"><div class="section-label">📦 साहित्य</div><ul><li>२ रिकामे प्लास्टिक/कागदाचे कप</li><li>५–१० मीटर लांब दोरा</li><li>एक पिन किंवा टोकदार वस्तू</li></ul></div>
 <div class="steps-box"><div class="section-label">📋 कृती</div><ol><li>प्रत्येक कपाच्या तळाला छोटे छिद्र करा</li><li>दोऱ्याचे दोन्ही टोक त्या छिद्रातून आत घाला आणि गाठ बांधा</li><li>एकाने एक कप कानाला लावा, दुसऱ्याने दुसरा कप तोंडाशी</li><li>दोरा ताणलेला ठेवा — आवाज स्पष्ट ऐकू येईल!</li><li>दोरा सैल सोडा — आता काय होते ते बघा!</li></ol></div>
@@ -977,98 +1069,22 @@ hr.separator { border: none; border-top: 1.5px solid var(--rule); margin: 4px 0;
   <div class="obs-line"></div>
   <div class="obs-draw">✏️ चित्र काढा / फोटो चिकटवा</div>
 </div>
-    </div>
-  </div>
-</div>
-<div class="page morning-page">
-  <div class="page-band morning-band">
-    <div class="band-day">
-      १०
-      <small>बुधवार</small>
-    </div>
-    <div class="band-middle">
-      <div class="band-session">🌅 सकाळ &nbsp;·&nbsp; २० मे</div>
-      <div class="band-topic">गुरुत्वाकर्षण</div>
-    </div>
-  </div>
-  <div class="page-body">
-    <div class="page-content">
-      <div class="scientist-card"><img src="../scientists/Sir_Newton.png" alt="शास्त्रज्ञ"></div>
-      <p>🔬 <strong>विज्ञान रंजन | दिवस १०</strong></p>
-<hr class="separator">
-<p>⚖️ <strong>आज जागतिक मेट्रोलॉजी दिवस!</strong><br>मेट्रोलॉजी म्हणजे मापनाचे शास्त्र — आणि विज्ञानात अचूक मापन हे सर्वात महत्त्वाचे आहे! न्यूटन यांनी गुरुत्वाकर्षण शोधले तेव्हाही त्यांनी अचूक मापनाचा आधार घेतला.</p>
-<hr class="separator">
-<p>🍎 <strong>आजचा विषय: गुरुत्वाकर्षण — विश्वाला बांधणारी शक्ती!</strong></p>
-<p>१६६५ साली न्यूटन यांच्या डोक्यावर सफरचंद पडले — आणि त्यांनी विचारले: "हे खाली का पडले? वरती का गेले नाही?" हा एक प्रश्न आणि विज्ञान जगत बदलले!</p>
-<p><strong>गुरुत्वाकर्षण म्हणजे काय?</strong><br>प्रत्येक वस्तू इतर प्रत्येक वस्तूला आकर्षित करते — ही शक्ती म्हणजे गुरुत्वाकर्षण! पृथ्वी मोठी असल्याने तिचे गुरुत्वाकर्षण जास्त आहे — म्हणून सगळ्या गोष्टी खाली पडतात.</p>
-<p><strong>महत्त्वाचे तथ्य:</strong><br>चंद्रावर गुरुत्वाकर्षण पृथ्वीच्या १/६ आहे.<br>म्हणजे तुमचे वजन जर ४२ किलो असेल, तर चंद्रावर फक्त ७ किलो वाटेल!</p>
-<div class="fact-box">💡 <strong>तुम्हाला माहीत आहे का?</strong></div>
-<p>लोखंडी गोळा आणि पिस आकाशातून एकाच वेळी सोडले — कोण आधी पडेल?<br>जर हवेचा प्रतिकार नसेल तर गुरुत्वाकर्षणाने दोन्ही <strong>एकाच वेळी</strong> पडतात! हे गॅलिलिओ यांनी सिद्ध केले.</p>
-<p>🔬 <strong>विज्ञान रंजन | दिवस १० — शास्त्रज्ञ ओळख</strong></p>
-<hr class="separator">
-<p>🍎 <strong>आजचे शास्त्रज्ञ: सर आयझॅक न्यूटन</strong><br><strong>(Sir Isaac Newton · ४ जानेवारी १६४३ – ३१ मार्च १७२७)</strong></p>
-<p>इंग्लंडमधील वूल्सथॉर्प या छोट्या गावातील एका शेतकरी कुटुंबात जन्मलेले न्यूटन हे<br>इतिहासातील सर्वात प्रभावशाली शास्त्रज्ञ मानले जातात!</p>
-<p>जन्माच्या वेळी ते इतके लहान होते की त्यांच्या आईला वाटले ते जगणार नाहीत — पण<br>त्यांनी ८४ वर्षे जगून विज्ञान जगत कायमचे बदलले!</p>
-<p><strong>🍎 प्रसिद्ध शोध — गुरुत्वाकर्षणाचा नियम</strong><br>१६६५ साली प्लेगच्या साथीमुळे केंब्रिज विद्यापीठ बंद झाले. न्यूटन गावी परतले आणि<br>तिथे एक सफरचंद झाडावरून पडताना पाहिले.<br>त्यांनी विचार केला: "सफरचंद खाली का पडते? वर का जात नाही?"<br>या एका प्रश्नातून त्यांनी <strong>सार्वत्रिक गुरुत्वाकर्षणाचा नियम</strong> शोधला —<br>"विश्वातील प्रत्येक वस्तू इतर प्रत्येक वस्तूला आकर्षित करते."</p>
-<p><strong>⚙️ गतीचे तीन नियम (Laws of Motion):</strong><br>१) <strong>जडत्व:</strong> वस्तू स्वतःहून अवस्था बदलत नाही — थांबलेली थांबतेच, चाललेली चालतच<br>राहते.<br>२) <strong>F = ma:</strong> बल = वस्तुमान × त्वरण. जितकी जड वस्तू, तितका जास्त बल लागतो.<br>३) <strong>प्रत्येक क्रियेला समान आणि विरुद्ध प्रतिक्रिया असते.</strong> रॉकेट याच तत्त्वावर उडतो!</p>
-<p><strong>📐 इतर योगदान:</strong><br>- प्रिझमातून सूर्यप्रकाश ७ रंगांत विभागला जातो हे सिद्ध केले<br>- कॅल्क्युलसचा शोध लावला (लाइबनिझ यांनी स्वतंत्रपणे)<br>- पहिली यशस्वी परावर्ती दुर्बीण (Reflecting Telescope) बनवली<br>- "Principia Mathematica" — विज्ञान इतिहासातील सर्वात प्रभावशाली पुस्तक लिहिले</p>
-<p><strong>🏆 वारसा:</strong><br>बलाचे एकक "Newton (N)" त्यांच्या नावावर | Royal Society चे अध्यक्ष |<br>गुरुत्वाकर्षणाचा नियम | गतीचे ३ नियम</p>
-<div class="fact-box">💡 <strong>मनोरंजक तथ्य:</strong></div>
-<p>न्यूटन यांचा जन्म ख्रिसमसच्या दिवशी (२५ डिसेंबर १६४२, ज्युलियन कॅलेंडरनुसार)<br>झाला. ते लहानपणी अत्यंत एकलकोंडे होते — पण वयाच्या २३ व्या वर्षी त्यांनी<br>गुरुत्वाकर्षण, कॅल्क्युलस आणि प्रकाश विज्ञान — तिन्ही क्षेत्रांत क्रांतिकारी शोध लावले!</p>
-<p>🍎 <strong>सफरचंदाची कथा — खरी की खोटी?</strong><br>न्यूटनच्या मित्र William Stukeley यांनी १७२६ मध्ये लिहून ठेवले — न्यूटन बागेत<br>बसले असताना सफरचंद पडताना पाहिले आणि विचार केला: "हे नेहमी खालीच का पडते?"<br>ही घटना प्रेरणादायी होती, पण "डोक्यावर पडले आणि लगेच नियम सापडला" ही नाट्यमय<br>आवृत्ती खरी नाही. त्यामागे न्यूटनचा दीर्घ गणिती अभ्यास, खगोलशास्त्रीय निरीक्षणे<br>आणि अनेक वर्षांचा विचार होता.</p>
-    </div>
-  </div>
-</div>
-<div class="page evening-page">
-  <div class="page-band evening-band">
-    <div class="band-day">
-      १०
-      <small>बुधवार</small>
-    </div>
-    <div class="band-middle">
-      <div class="band-session">🧪 प्रयोग &nbsp;·&nbsp; २० मे</div>
-      <div class="band-topic">गुरुत्वाकर्षण</div>
-    </div>
-  </div>
-  <div class="page-body">
-    <div class="page-content">
-      <p>🧪 <strong>विज्ञान रंजन | दिवस १० — प्रयोग + विशेष</strong></p>
-<hr class="separator">
-<p>🐝 <strong>आज जागतिक मधमाशी दिवस!</strong><br>मधमाशी षटकोनी (Hexagonal) घर का बांधते? — कारण षटकोन आकारात सर्वात कमी मेण वापरून सर्वात जास्त जागा मिळते. निसर्गाने स्वतः गणित शोधले आहे! 🏠</p>
-<hr class="separator">
-<p>🔬 <strong>आजचा प्रयोग: दोन वस्तू एकत्र पडतात का?</strong></p>
-<div class="materials-box"><div class="section-label">📦 साहित्य</div><ul><li>एक जड वस्तू (दगड)</li><li>एक हलकी वस्तू (पेन किंवा रबर)</li><li>एक उंच जागा (खुर्ची किंवा खिडकी)</li></ul></div>
-<div class="steps-box"><div class="section-label">📋 कृती</div><ol><li>दोन्ही वस्तू एकाच उंचीवर एका हातात धरा</li><li>एकाच वेळी सोडा</li><li>कोण आधी जमिनीवर पडते ते बघा!</li></ol></div>
-<p><strong>काय दिसेल?</strong><br>दोन्ही एकाच वेळी पडतात! — जड-हलके काहीही असो, गुरुत्वाकर्षण सगळ्यांना सारख्याच वेगाने खेचते.</p>
-<div class="science-box"><strong>विज्ञान काय शिकलो?</strong><br>गॅलिलिओ यांनी हेच पिसा च्या मनोऱ्यावरून सिद्ध केले होते — गुरुत्वीय प्रवेग (g = ९.८ m/s²) सर्व वस्तूंसाठी सारखाच असतो!</div>
       
-<div class="observation-box">
-  <div class="obs-title">✏️ माझे निरीक्षण</div>
-  <div class="obs-line"></div>
-  <div class="obs-line"></div>
-  <div class="obs-line"></div>
-  <div class="obs-draw">✏️ चित्र काढा / फोटो चिकटवा</div>
-</div>
     </div>
   </div>
+  <div class="pg-footer"></div>
 </div>
 <div class="page morning-page">
   <div class="page-band morning-band">
-    <div class="band-day">
-      ११
-      <small>गुरुवार</small>
-    </div>
     <div class="band-middle">
-      <div class="band-session">🌅 सकाळ &nbsp;·&nbsp; २१ मे</div>
+      <div class="band-session">🌅</div>
       <div class="band-topic">चंद्र — पृथ्वीचा एकमेव उपग्रह</div>
     </div>
   </div>
   <div class="page-body">
     <div class="page-content">
       <div class="day-icon-card">🌙</div>
-      <p>🔬 <strong>विज्ञान रंजन | दिवस ११</strong></p>
-<hr class="separator">
-<p>🌙 <strong>आजचा विषय: चंद्र — पृथ्वीचा रक्षक आणि शिल्पकार!</strong></p>
+      <hr class="separator">
 <p>चंद्राच्या कला तुम्ही पाहिल्या असतील — अमावस्या, पौर्णिमा. पण चंद्र फक्त रात्री<br>सुंदर दिसण्यापुरता नाही — तो पृथ्वीवरील जीवसृष्टीसाठी अत्यंत महत्त्वाचा आहे!</p>
 <p><strong>🌊 भरती-ओहोटी (Tides) — चंद्राचा खेळ</strong><br>समुद्राचे पाणी दिवसातून दोनदा वर-खाली होते. का? चंद्राचे गुरुत्वाकर्षण पृथ्वीवरील<br>पाण्याला खेचते — चंद्राच्या जवळची बाजू जास्त खेचली जाते, तर दूरची बाजू कमी.<br>यामुळे दोन्ही बाजूंना पाणी फुगते — हीच भरती! पृथ्वी फिरत असल्याने दिवसातून दोनदा<br>भरती येते.<br>पौर्णिमा/अमावस्येला सूर्य-चंद्र एका रेषेत → <strong>उधाणाची भरती</strong> (Spring Tide)!<br>अर्धचंद्राला ते काटकोनात → <strong>भांगाची भरती</strong> (Neap Tide) — कमी उंचीची.</p>
 <p><strong>🔒 Tidal Locking — चंद्राची एकच बाजू का दिसते?</strong><br>चंद्र पृथ्वीभोवती फिरण्यास ~२७.३ दिवस लागतात — आणि स्वतःभोवती फिरण्यासही<br>तेवढाच वेळ! हा योगायोग नाही — पृथ्वीच्या गुरुत्वाकर्षणाने कोट्यवधी वर्षांत चंद्राचे<br>परिभ्रमण मंदावले. याला <strong>Tidal Locking</strong> म्हणतात. म्हणूनच चंद्राची "Dark Side"<br>आपण कधीच पाहू शकत नाही — ती खरेतर dark नाही, तिलाही सूर्यप्रकाश मिळतो!</p>
@@ -1077,22 +1093,19 @@ hr.separator { border: none; border-top: 1.5px solid var(--rule); margin: 4px 0;
 <p>📢 संध्याकाळी निरीक्षण उपक्रम!</p>
     </div>
   </div>
+  <div class="pg-footer"></div>
 </div>
 <div class="page evening-page">
   <div class="page-band evening-band">
-    <div class="band-day">
-      ११
-      <small>गुरुवार</small>
-    </div>
     <div class="band-middle">
-      <div class="band-session">🏃 उपक्रम &nbsp;·&nbsp; २१ मे</div>
+      <div class="band-session">🏃 उपक्रम</div>
       <div class="band-topic">चंद्र — पृथ्वीचा एकमेव उपग्रह</div>
     </div>
   </div>
   <div class="page-body">
     <div class="page-content">
-      <p>🌙 <strong>विज्ञान रंजन | दिवस ११ — निरीक्षण उपक्रम</strong></p>
-<hr class="separator">
+      
+      <hr class="separator">
 <p>🔭 <strong>आजचा उपक्रम: चंद्र निरीक्षण + भरती गणित!</strong></p>
 <p><strong>भाग १ — चंद्र निरीक्षण (रात्री)</strong><br>१) आज रात्री आकाशात चंद्र शोधा<br>२) चंद्राचा आकार नोंदवा — कोर, अर्ध, पूर्ण?<br>३) "Tidal Locking" मुळे तुम्हाला दिसणारी बाजू नेहमी सारखीच असते — त्यावरील<br>गडद भाग (Maria = लावा मैदाने) ओळखण्याचा प्रयत्न करा!</p>
 <p><strong>भाग २ — भरतीचे गणित</strong><br>समजा चंद्राचे गुरुत्वाकर्षण पृथ्वीच्या पृष्ठभागावर a = GM/r² या सूत्राने कार्य करते.<br>- चंद्राचे वस्तुमान M = ७.३ × 10²² किग्रॅ<br>- पृथ्वी-चंद्र अंतर r = ३,८४,४०० किमी<br>- G = ६.६७ × 10⁻¹¹ N·m²/kg²<br>प्रश्न: चंद्राचे पृथ्वीवरील गुरुत्वीय त्वरण किती?</p>
@@ -1104,27 +1117,23 @@ hr.separator { border: none; border-top: 1.5px solid var(--rule); margin: 4px 0;
   <div class="obs-line"></div>
   <div class="obs-draw">✏️ चित्र काढा / फोटो चिकटवा</div>
 </div>
+      
     </div>
   </div>
+  <div class="pg-footer"></div>
 </div>
 <div class="page morning-page">
   <div class="page-band morning-band">
-    <div class="band-day">
-      १२
-      <small>शुक्रवार</small>
-    </div>
     <div class="band-middle">
-      <div class="band-session">🌅 सकाळ &nbsp;·&nbsp; २२ मे</div>
+      <div class="band-session">🌅</div>
       <div class="band-topic">जैवविविधता तंत्रज्ञान</div>
     </div>
   </div>
   <div class="page-body">
     <div class="page-content">
-      <div class="day-icon-card">🌿</div>
-      <p>🔬 <strong>विज्ञान रंजन | दिवस १२</strong></p>
-<hr class="separator">
+      <div class="topic-img-card"><img src="../licensed-image.jpeg" alt="जैवविविधता तंत्रज्ञान"></div>
+      <hr class="separator">
 <p>🌿 <strong>आज आंतरराष्ट्रीय जैवविविधता दिवस!</strong></p>
-<p>⚡ <strong>आजचा विषय: जैवविविधता वाचवणारे नवीन तंत्रज्ञान!</strong></p>
 <p>पृथ्वीवर ८७ लाखांपेक्षा जास्त प्रजाती आहेत — पण त्यांचा अभ्यास कसा करायचा? आता तंत्रज्ञानाने हे काम सोपे झाले आहे!</p>
 <p>🧬 <strong>DNA Barcoding:</strong><br>प्रत्येक सजीवाच्या DNA मध्ये एक विशिष्ट "बारकोड" असतो. शास्त्रज्ञ एखाद्या झाडाच्या पानाचा किंवा प्राण्याच्या केसाचा नमुना घेतात — आणि DNA तपासून मिनिटांत सांगतात ही कोणती प्रजाती आहे ते! बाजारात बनावट मध किंवा मासे विकले जातात का हे देखील DNA Barcoding ने पकडता येते.</p>
 <p>📡 <strong>Satellite Tracking:</strong><br>समुद्री कासव, हत्ती, बिबट्या — यांच्या शरीरावर GPS टॅग लावतात. उपग्रहामार्फत शास्त्रज्ञ हजारो किलोमीटर दूर बसून त्यांचा प्रवास पाहू शकतात. ऑलिव्ह रिडले कासवाचे ओडिशापासून श्रीलंकेपर्यंतचे स्थलांतर असेच शोधले गेले!</p>
@@ -1134,22 +1143,19 @@ hr.separator { border: none; border-top: 1.5px solid var(--rule); margin: 4px 0;
 <p>📢 संध्याकाळी एक मजेदार विज्ञान खेळ!</p>
     </div>
   </div>
+  <div class="pg-footer"></div>
 </div>
 <div class="page evening-page">
   <div class="page-band evening-band">
-    <div class="band-day">
-      १२
-      <small>शुक्रवार</small>
-    </div>
     <div class="band-middle">
-      <div class="band-session">🌆 संध्याकाळ &nbsp;·&nbsp; २२ मे</div>
+      <div class="band-session">🌆</div>
       <div class="band-topic">जैवविविधता तंत्रज्ञान</div>
     </div>
   </div>
   <div class="page-body">
     <div class="page-content">
-      <p>⚡ <strong>विज्ञान रंजन | दिवस १२ — विज्ञान खेळ</strong></p>
-<hr class="separator">
+      <div class="topic-img-card"><img src="../licensed-image.jpeg" alt="जैवविविधता तंत्रज्ञान"></div>
+      <hr class="separator">
 <p>🎮 <strong>आजचा खेळ: अन्नसाखळी तुटली तर? (Food Chain Collapse)</strong></p>
 <p>खालील अन्नसाखळी वाचा:</p>
 <p>☀️ सूर्य → 🌿 गवत → 🦗 टोळ → 🐸 बेडूक → 🐍 साप → 🦅 गरुड</p>
@@ -1159,26 +1165,22 @@ hr.separator { border: none; border-top: 1.5px solid var(--rule); margin: 4px 0;
 <p><strong>बोनस:</strong> या साखळीत माणूस कुठे बसेल?</p>
 <p>उत्तरे उद्या सकाळच्या पोस्टमध्ये!</p>
       
+      
     </div>
   </div>
+  <div class="pg-footer"></div>
 </div>
 <div class="page morning-page">
   <div class="page-band morning-band">
-    <div class="band-day">
-      १३
-      <small>शनिवार</small>
-    </div>
     <div class="band-middle">
-      <div class="band-session">🌅 सकाळ &nbsp;·&nbsp; २३ मे</div>
+      <div class="band-session">🌅</div>
       <div class="band-topic">Oobleck</div>
     </div>
   </div>
   <div class="page-body">
     <div class="page-content">
       <div class="day-icon-card">🌊</div>
-      <p>🧪 <strong>विज्ञान रंजन | दिवस १३ — चला करून बघू!</strong></p>
-<hr class="separator">
-<p>🔑 <strong>काल'च्या अन्नसाखळी खेळाची उत्तरे:</strong></p>
+      <hr class="separator">
 <p>☀️ सूर्य → 🌿 गवत → 🦗 टोळ → 🐸 बेडूक → 🐍 साप → 🦅 गरुड</p>
 <p><strong>उत्तर १:</strong> बेडूक नष्ट झाले तर → टोळांना खाणारा कोणी नाही, त्यामुळे टोळांची संख्या<br>प्रचंड वाढेल! टोळ गवत संपवतील → गवत कमी होईल. सापांना बेडूक मिळणार नाहीत →<br>सापांची संख्या कमी होईल → गरुडांना अन्न कमी होईल.</p>
 <p><strong>उत्तर २:</strong> गवत नष्ट झाले तर → सर्वप्रथम टोळांना फरक पडेल कारण ते गवत खातात.<br>टोळ नष्ट → बेडूक उपाशी → साप उपाशी → गरुड उपाशी. <strong>संपूर्ण साखळीच कोसळेल!</strong><br>म्हणूनच उत्पादकांना (वनस्पती) अन्नसाखळीचा पाया म्हणतात.</p>
@@ -1197,22 +1199,19 @@ hr.separator { border: none; border-top: 1.5px solid var(--rule); margin: 4px 0;
 <p>🔑 <strong>उत्तर आणि विज्ञान संध्याकाळच्या पोस्टमध्ये!</strong></p>
     </div>
   </div>
+  <div class="pg-footer"></div>
 </div>
 <div class="page evening-page">
   <div class="page-band evening-band">
-    <div class="band-day">
-      १३
-      <small>शनिवार</small>
-    </div>
     <div class="band-middle">
-      <div class="band-session">📸 फोटो &nbsp;·&nbsp; २३ मे</div>
+      <div class="band-session">📸 फोटो</div>
       <div class="band-topic">Oobleck</div>
     </div>
   </div>
   <div class="page-body">
     <div class="page-content">
-      <p>🧪 <strong>विज्ञान रंजन | दिवस १३ — Oobleck उत्तर + फोटो शेअरिंग</strong></p>
-<hr class="separator">
+      
+      <hr class="separator">
 <p>🔑 <strong>Oobleck प्रयोगाचे उत्तर!</strong></p>
 <p><strong>काय दिसले?</strong><br>- हळू बोट बुडवले तर आत जाते — द्रवासारखे!<br>- जोरात थाप मारली तर घट्ट वाटते — घनासारखे!<br>- मूठ आवळली तर घट्ट, सोडली तर बोटांतून वाहते!</p>
 <div class="science-box"><strong>विज्ञान काय शिकलो?</strong><br>हे <strong>Non-Newtonian Fluid</strong> आहे! साध्या द्रवांचा (पाणी, तेल) प्रवाह दाबाशिवाय बदलत नाही. पण Oobleck मध्ये cornflour चे कण पाण्यात विखुरलेले असतात — जोरात दाब दिला की कण एकमेकांवर घट्ट बसतात (घन), दाब नसेल तर मोकळे (द्रव).<br>निसर्गात असे पदार्थ आहेत — quicksand हे याचेच उदाहरण आहे!</div>
@@ -1222,25 +1221,22 @@ hr.separator { border: none; border-top: 1.5px solid var(--rule); margin: 4px 0;
 <p><strong>फोटो कसे अपलोड करायचे?</strong></p>
 <p>उद्या रविवारी आठवड्याची क्विझ — तयार राहा! 🏆</p>
       
+      
     </div>
   </div>
+  <div class="pg-footer"></div>
 </div>
 <div class="page morning-page">
   <div class="page-band morning-band">
-    <div class="band-day">
-      १४
-      <small>रविवार</small>
-    </div>
     <div class="band-middle">
-      <div class="band-session">🌅 सकाळ &nbsp;·&nbsp; २४ मे</div>
+      <div class="band-session">🌅</div>
       <div class="band-topic">साप्ताहिक क्विझ</div>
     </div>
   </div>
   <div class="page-body">
     <div class="page-content">
       <div class="day-icon-card">🏆</div>
-      <p>🔬 <strong>विज्ञान रंजन | दिवस १४ — साप्ताहिक क्विझ!</strong></p>
-<hr class="separator">
+      <hr class="separator">
 <p>🏆 <strong>आठवडा २ ची क्विझ!</strong></p>
 <p>या आठवड्यात आपण खूप काही शिकलो! चला तर मग, तुमची समज तपासूया — हे प्रश्न थोडे अवघड आहेत!</p>
 <p><strong>प्र.१)</strong> झाडे दिवसा ऑक्सिजन सोडतात हे आपण शिकलो. पण रात्री झाडांजवळ झोपणे धोकादायक आहे असे म्हणतात — का? <strong>(दिवस ८)</strong><br>अ) रात्री झाडे विषारी वायू सोडतात<br>ब) रात्री प्रकाशसंश्लेषण थांबते, पण श्वसन चालू राहते — झाडे O₂ घेतात आणि CO₂ सोडतात, बंद खोलीत CO₂ वाढतो<br>क) रात्री झाडांचे मूळ जमिनीतून मिथेन वायू शोषतात<br>ड) रात्री झाडे पाण्याचे बाष्पीभवन करतात, ज्यामुळे हवेतील ऑक्सिजन कमी होतो</p>
@@ -1252,22 +1248,19 @@ hr.separator { border: none; border-top: 1.5px solid var(--rule); margin: 4px 0;
 <p><strong>बोनस प्र.७)</strong> अन्नसाखळीत शिखर भक्षक (apex predator — उदा. गरुड) संख्येने कमी का असतात? <strong>(दिवस १२)</strong><br>अ) शिखर भक्षकांचे आयुष्य कमी असते<br>ब) प्रत्येक स्तरावर ऊर्जेचा फक्त ~१०% भाग पुढच्या स्तराला मिळतो — शिखरापर्यंत खूप कमी ऊर्जा पोहोचते<br>क) शिखर भक्षकांना इतर प्राणी मारतात<br>ड) शिखर भक्षक फक्त विशिष्ट हवामानात जगू शकतात</p>
     </div>
   </div>
+  <div class="pg-footer"></div>
 </div>
 <div class="page evening-page">
   <div class="page-band evening-band">
-    <div class="band-day">
-      १४
-      <small>रविवार</small>
-    </div>
     <div class="band-middle">
-      <div class="band-session">✅ उत्तरे &nbsp;·&nbsp; २४ मे</div>
+      <div class="band-session">✅ उत्तरे</div>
       <div class="band-topic">साप्ताहिक क्विझ</div>
     </div>
   </div>
   <div class="page-body">
     <div class="page-content">
-      <p>🔬 <strong>विज्ञान रंजन | दिवस १४ — क्विझ उत्तरे</strong></p>
-<hr class="separator">
+      
+      <hr class="separator">
 <p>🏆 <strong>क्विझ उत्तरे:</strong></p>
 <p>✅ प्र.१ — <strong>ब) रात्री प्रकाशसंश्लेषण थांबते, पण श्वसन चालू राहते</strong><br>झाडे दिवसा प्रकाशसंश्लेषण + श्वसन दोन्ही करतात (O₂ जास्त सोडतात). पण रात्री फक्त श्वसन चालते — O₂ घेतात, CO₂ सोडतात. बंद खोलीत हे धोकादायक होऊ शकते. मोकळ्या हवेत मात्र फरक पडत नाही!</p>
 <p>✅ प्र.२ — <strong>ब) लोखंडातून ध्वनी ~५,१२० m/s वेगाने प्रवास करतो</strong><br>घनपदार्थातील रेणू अत्यंत जवळ असतात, त्यामुळे कंपन वेगाने पुढे जाते. रूळ लोखंडाचे आहेत → आवाज हवेपेक्षा ~१५ पट वेगाने पोहोचतो. म्हणूनच जुन्या काळी लोक रुळावर कान लावून गाडी येतेय का ते तपासायचे!</p>
@@ -1288,28 +1281,24 @@ hr.separator { border: none; border-top: 1.5px solid var(--rule); margin: 4px 0;
 <p>📢 <strong>पुढच्या आठवड्याची झलक:</strong><br>आठवडा ३ मध्ये आपण शिकणार आहोत:<br>🌡️ उष्णता आणि तापमान — थर्मामीटर कसे काम करते?<br>🧲 विद्युत-चुंबक (Electromagnet) — स्वतः बनवा!<br>🌊 पाण्याचे गुणधर्म — पृष्ठतान आणि केशाकर्षण<br>🦠 सूक्ष्मजीव — दिसत नाहीत पण सगळीकडे आहेत!<br>🌬️ हवामान आणि ऋतू — बदल का होतात?<br>🔭 दुर्बीण — दूरच्या गोष्टी कशा दिसतात?</p>
 <p>तयार राहा — आणखी मजा, आणखी विज्ञान! 🚀</p>
       
+      
     </div>
   </div>
+  <div class="pg-footer"></div>
 </div>
 <div class="page morning-page">
   <div class="page-band morning-band">
-    <div class="band-day">
-      १५
-      <small>सोमवार</small>
-    </div>
     <div class="band-middle">
-      <div class="band-session">🌅 सकाळ &nbsp;·&nbsp; २५ मे</div>
+      <div class="band-session">🌅</div>
       <div class="band-topic">उष्णता आणि तापमान</div>
     </div>
   </div>
   <div class="page-body">
     <div class="page-content">
       <div class="day-icon-card">🌡️</div>
-      <p>🔬 <strong>विज्ञान रंजन | दिवस १५</strong></p>
-<hr class="separator">
+      <hr class="separator">
 <p>आठवडा ३ मध्ये आपले स्वागत आहे! 🌡️<br>या आठवड्यात आपण शिकणार आहोत ऊर्जा आणि पदार्थाचे गुणधर्म — जे आपल्या रोजच्या जीवनात प्रत्येक क्षणी जाणवतात!</p>
 <hr class="separator">
-<p>🌡️ <strong>आजचा विषय: उष्णता आणि तापमान — एकच आहेत का?</strong></p>
 <p>"उष्णता" आणि "तापमान" — या दोन वेगळ्या गोष्टी आहेत! हे ऐकून आश्चर्य वाटले का? चला समजून घेऊया.</p>
 <p><strong>तापमान म्हणजे काय?</strong><br>एखाद्या वस्तूतील रेणू किती वेगाने थरथरतात (कंपन करतात) त्याचे मोजमाप म्हणजे तापमान. रेणू जितके वेगाने हलतात, तितके तापमान जास्त!</p>
 <p><strong>उष्णता म्हणजे काय?</strong><br>उष्णता म्हणजे एका वस्तूतून दुसऱ्या वस्तूत हस्तांतरित होणारी ऊर्जा. उष्ण वस्तू थंड वस्तूला उष्णता देते — आणि हे तोपर्यंत चालते जोपर्यंत दोन्हींचे तापमान समान होत नाही. याला <strong>Thermal Equilibrium</strong> म्हणतात.</p>
@@ -1320,22 +1309,19 @@ hr.separator { border: none; border-top: 1.5px solid var(--rule); margin: 4px 0;
 <p>📢 संध्याकाळी उष्णतेवर एक मजेदार घरगुती प्रयोग!</p>
     </div>
   </div>
+  <div class="pg-footer"></div>
 </div>
 <div class="page evening-page">
   <div class="page-band evening-band">
-    <div class="band-day">
-      १५
-      <small>सोमवार</small>
-    </div>
     <div class="band-middle">
-      <div class="band-session">🧪 प्रयोग &nbsp;·&nbsp; २५ मे</div>
+      <div class="band-session">🧪 प्रयोग</div>
       <div class="band-topic">उष्णता आणि तापमान</div>
     </div>
   </div>
   <div class="page-body">
     <div class="page-content">
-      <p>🧪 <strong>विज्ञान रंजन | दिवस १५ — प्रयोग</strong></p>
-<hr class="separator">
+      
+      <hr class="separator">
 <p>🌡️ <strong>आजचा प्रयोग: रंगाचा थर्मामीटर!</strong></p>
 <div class="materials-box"><div class="section-label">📦 साहित्य</div><ul><li>एक पारदर्शक काचेचा/प्लास्टिकचा ग्लास</li><li>थंड पाणी आणि गरम पाणी (वेगळ्या भांड्यात)</li><li>खाण्याचे रंग (लाल आणि निळा)</li><li>एक छोटी बाटली किंवा टेस्ट ट्यूब</li></ul></div>
 <div class="steps-box"><div class="section-label">📋 कृती</div><ol><li>एका ग्लासात थंड पाणी घ्या, त्यात निळा रंग टाका</li><li>छोट्या बाटलीत गरम पाणी घ्या, त्यात लाल रंग टाका</li><li>बोटाने बाटलीचे तोंड झाकून उलटी करा आणि ग्लासात बुडवा</li><li>बोट हळूच काढा — काय होते ते पाहा!</li></ol></div>
@@ -1348,25 +1334,22 @@ hr.separator { border: none; border-top: 1.5px solid var(--rule); margin: 4px 0;
   <div class="obs-line"></div>
   <div class="obs-draw">✏️ चित्र काढा / फोटो चिकटवा</div>
 </div>
+      
     </div>
   </div>
+  <div class="pg-footer"></div>
 </div>
 <div class="page morning-page">
   <div class="page-band morning-band">
-    <div class="band-day">
-      १६
-      <small>मंगळवार</small>
-    </div>
     <div class="band-middle">
-      <div class="band-session">🌅 सकाळ &nbsp;·&nbsp; २६ मे</div>
+      <div class="band-session">🌅</div>
       <div class="band-topic">सूक्ष्मजीव — दिसत नाहीत पण सगळीकडे आहेत!</div>
     </div>
   </div>
   <div class="page-body">
     <div class="page-content">
       <div class="day-icon-card">🦠</div>
-      <p>🔬 <strong>विज्ञान रंजन | दिवस १६</strong></p>
-<hr class="separator">
+      <hr class="separator">
 <div class="fact-box">🦠 <strong>तुम्हाला माहीत आहे का? — सूक्ष्मजीवांचे अद्भुत जग!</strong></div>
 <p>तुम्ही आत्ता या क्षणी जिथे बसला आहात तिथे कोट्यवधी सूक्ष्मजीव आहेत — हवेत, त्वचेवर, तोंडात, पोटात! पण घाबरू नका — हे बहुतांश आपले मित्र आहेत!</p>
 <div class="fact-box">💡 <strong>रंजक तथ्ये:</strong></div>
@@ -1378,22 +1361,19 @@ hr.separator { border: none; border-top: 1.5px solid var(--rule); margin: 4px 0;
 <p>📢 संध्याकाळी सूक्ष्मजीवांवर एक रंजक कोडे!</p>
     </div>
   </div>
+  <div class="pg-footer"></div>
 </div>
 <div class="page evening-page">
   <div class="page-band evening-band">
-    <div class="band-day">
-      १६
-      <small>मंगळवार</small>
-    </div>
     <div class="band-middle">
-      <div class="band-session">🧩 कोडे &nbsp;·&nbsp; २६ मे</div>
+      <div class="band-session">🧩 कोडे</div>
       <div class="band-topic">सूक्ष्मजीव — दिसत नाहीत पण सगळीकडे आहेत!</div>
     </div>
   </div>
   <div class="page-body">
     <div class="page-content">
-      <p>🧩 <strong>विज्ञान रंजन | दिवस १६ — कोडे</strong></p>
-<hr class="separator">
+      
+      <hr class="separator">
 <p>🤔 <strong>आजचे कोडे — थोडे कठीण आहे!</strong></p>
 <p>मी ~१ मायक्रोमीटर आकाराचा आहे.<br>माझ्यापेक्षाही १० पट लहान माझा एक शत्रू आहे — जो माझ्यातच घुसून मला संपवतो.<br>तुमच्या शरीरात तुमच्या स्वतःच्या पेशींएवढ्याच संख्येने मी राहतो.<br>एका चमच्याभर मातीत माझ्या शेकडो कोटी साथीदार असतात.<br>मी दही बनवतो, नायट्रोजन स्थिर करतो — पण TB आणि कॉलराही माझ्यामुळेच होतो.</p>
 <p><strong>मी कोण आहे?</strong><br><strong>माझा तो १० पट लहान शत्रू कोण? त्याचे नाव आणि एक उदाहरण सांगा!</strong></p>
@@ -1404,88 +1384,22 @@ hr.separator { border: none; border-top: 1.5px solid var(--rule); margin: 4px 0;
   <div class="obs-line wide"></div>
   <div class="obs-line wide"></div>
 </div>
+      <div class="ans-xref">उत्तर: पृ. 59</div>
     </div>
   </div>
+  <div class="pg-footer"></div>
 </div>
 <div class="page morning-page">
   <div class="page-band morning-band">
-    <div class="band-day">
-      १७
-      <small>बुधवार</small>
-    </div>
     <div class="band-middle">
-      <div class="band-session">🌅 सकाळ &nbsp;·&nbsp; २७ मे</div>
-      <div class="band-topic">मायकेल फॅरेडे आणि विद्युत-चुंबक</div>
-    </div>
-  </div>
-  <div class="page-body">
-    <div class="page-content">
-      <div class="scientist-card"><img src="../scientists/M_Faraday_Th_Phillips_oil_1842.jpg" alt="शास्त्रज्ञ"></div>
-      <p>🔬 <strong>विज्ञान रंजन | दिवस १७</strong></p>
-<hr class="separator">
-<p>🔑 <strong>काल'च्या कोड्याचे उत्तर:</strong><br>मी <strong>जीवाणू</strong> (Bacteria) आहे!<br>▸ आकार ~१ मायक्रोमीटर, शरीरात ~३८ ट्रिलियन, मातीत शेकडो कोटी प्रति चमचा<br>▸ दही, नायट्रोजन स्थिरीकरण — मित्र; TB, कॉलरा — शत्रू ✅</p>
-<p>माझा १० पट लहान शत्रू — <strong>विषाणू</strong> (Virus)!<br>▸ आकार ~०.१ मायक्रोमीटर — जीवाणूपेक्षा १० पट लहान<br>▸ स्वतः जगू शकत नाही — जीवाणू किंवा इतर पेशींमध्ये घुसून गुणाकार करतो<br>▸ उदाहरणे: सर्दी (Rhinovirus), कोरोना (SARS-CoV-2), पोलिओ (Poliovirus) ✅</p>
-<hr class="separator">
-<p>🔬 <strong>आजचे शास्त्रज्ञ: मायकेल फॅरेडे</strong><br><strong>(Michael Faraday · ²² सप्टेंबर १७९१ – २५ ऑगस्ट १८६७)</strong></p>
-<p>इंग्लंडमधील एका गरीब लोहाराच्या घरी जन्मलेल्या फॅरेडे यांना शाळेत जाण्याची संधीच मिळाली नाही — ते पुस्तक बांधणाऱ्याच्या दुकानात काम करत स्वतः पुस्तके वाचत शिकले! आज त्यांच्या नावावर विज्ञानातील काही सर्वात मूलभूत नियम आहेत.</p>
-<p><strong>⚡ सर्वात मोठा शोध — विद्युत-चुंबकीय प्रेरण (Electromagnetic Induction)</strong><br>१८३१ साली फॅरेडे यांनी सिद्ध केले: <strong>चुंबक हलवले की वायरमध्ये वीज निर्माण होते!</strong><br>हे एकच वाक्य आधुनिक सभ्यतेचा पाया आहे. यावरून जनित्र (Generator) बनले — आज घरात येणारी सर्व वीज याच तत्त्वावर बनते.<br>विपरीत देखील खरे: <strong>वायरमधून वीज सोडली की चुंबकीय बल निर्माण होते</strong> — हाच विद्युत-चुंबक (Electromagnet)! यावरून विद्युत मोटर बनली.</p>
-<p><strong>🔬 इतर महत्त्वाचे शोध:</strong><br>- इलेक्ट्रोलिसिस (विजेने पदार्थ वेगळे करणे) — सोने-चांदी मढवणे (Electroplating) यावरच चालते<br>- Faraday Cage — धातूच्या पिंजऱ्यात वीज आत शिरत नाही. विमानात वीज पडली तरी प्रवासी सुरक्षित असतात!<br>- बेंझिनचा शोध (सेंद्रिय रसायनशास्त्राचा पाया)</p>
-<p><strong>🏆 वारसा:</strong><br>विद्युत धारितेचे (Capacitance) एकक Farad (F) — त्यांच्याच नावावर.<br>अल्बर्ट आईन्स्टाईन यांनी फॅरेडे यांचे चित्र भिंतीवर लावले होते — आदर्श म्हणून!</p>
-<div class="fact-box">💡 <strong>मनोरंजक तथ्य:</strong></div>
-<p>ब्रिटिश सरकारने फॅरेडे यांना "नाइट" (Sir) हा किताब देऊ केला — पण त्यांनी नम्रपणे नाकारला. ते म्हणाले, "मला फक्त मायकेल फॅरेडेच राहायचे आहे."</p>
-<p>📢 संध्याकाळी विद्युत-चुंबक स्वतः बनवा!</p>
-    </div>
-  </div>
-</div>
-<div class="page evening-page">
-  <div class="page-band evening-band">
-    <div class="band-day">
-      १७
-      <small>बुधवार</small>
-    </div>
-    <div class="band-middle">
-      <div class="band-session">🧪 प्रयोग &nbsp;·&nbsp; २७ मे</div>
-      <div class="band-topic">मायकेल फॅरेडे आणि विद्युत-चुंबक</div>
-    </div>
-  </div>
-  <div class="page-body">
-    <div class="page-content">
-      <p>🧪 <strong>विज्ञान रंजन | दिवस १७ — प्रयोग</strong></p>
-<hr class="separator">
-<p>🧲 <strong>आजचा प्रयोग: विद्युत-चुंबक बनवा!</strong></p>
-<div class="materials-box"><div class="section-label">📦 साहित्य</div><ul><li>एक लोखंडी खिळा (किंवा bolt)</li><li>विद्युत तार (~५० सेमी; इन्सुलेशनसकट)</li><li>१.५V किंवा ९V बॅटरी</li><li>लहान कागदाचे तुकडे किंवा पिना</li></ul></div>
-<div class="steps-box"><div class="section-label">📋 कृती</div><ol><li>तार खिळ्यावर घट्ट गुंडाळा — जितकी जास्त वेटोळी तितके जास्त चुंबकीय बल!</li><li>तारेचे दोन्ही टोक बॅटरीशी जोडा (+ आणि -)</li><li>खिळ्याजवळ कागदाचे तुकडे आणा — ते चिकटतात का?</li><li>बॅटरी काढा — आता काय होते?</li></ol></div>
-<p><strong>प्रयोग करा:</strong><br>- वेटोळ्यांची संख्या वाढवा — चुंबकीय शक्ती कशी बदलते?<br>- वेगळ्या आकाराचा खिळा वापरा — फरक पडतो का?</p>
-<div class="science-box"><strong>विज्ञान काय शिकलो?</strong><br>वीज वाहिली की चुंबकीय क्षेत्र निर्माण होते — हेच फॅरेडे यांनी शोधले! खिळा लोखंडाचा असल्याने तो तात्पुरता चुंबक बनतो. वीज बंद केली की चुंबकत्व जाते — म्हणून याला <strong>Electromagnet</strong> म्हणतात. क्रेन मध्ये जड लोखंड उचलायला हेच वापरतात!</div>
-<div class="warning-box">⚠️ <strong>सुरक्षितता:</strong> तार जास्त वेळ बॅटरीशी जोडू नका — बॅटरी गरम होते!</div>
-      
-<div class="observation-box">
-  <div class="obs-title">✏️ माझे निरीक्षण</div>
-  <div class="obs-line"></div>
-  <div class="obs-line"></div>
-  <div class="obs-line"></div>
-  <div class="obs-draw">✏️ चित्र काढा / फोटो चिकटवा</div>
-</div>
-    </div>
-  </div>
-</div>
-<div class="page morning-page">
-  <div class="page-band morning-band">
-    <div class="band-day">
-      १८
-      <small>गुरुवार</small>
-    </div>
-    <div class="band-middle">
-      <div class="band-session">🌅 सकाळ &nbsp;·&nbsp; २८ मे</div>
+      <div class="band-session">🌅</div>
       <div class="band-topic">पाण्याचे गुणधर्म — पृष्ठतान आणि केशाकर्षण</div>
     </div>
   </div>
   <div class="page-body">
     <div class="page-content">
       <div class="day-icon-card">💧</div>
-      <p>🔬 <strong>विज्ञान रंजन | दिवस १८</strong></p>
-<hr class="separator">
-<p>💧 <strong>आजचा विषय: पाणी — जगातील सर्वात अद्भुत पदार्थ!</strong></p>
+      <hr class="separator">
 <p>पाणी साधे वाटते — पण त्याचे गुणधर्म इतके विलक्षण आहेत की त्याशिवाय पृथ्वीवर जीवसृष्टीच शक्य नसती!</p>
 <p><strong>🫧 पृष्ठतान (Surface Tension)</strong><br>पाण्याच्या पृष्ठभागावर एक प्रकारचा "त्वचा" तयार होतो — रेणू एकमेकांना ओढून घट्ट जोडलेले असतात. याचे दोन पुरावे:<br>▸ पाण्यावर कोळी, डासाचे लार्व्हा तरंगतात — पाण्यात बुडत नाहीत!<br>▸ नाणे हळुवारपणे ठेवले तर पाण्यावर तरंगते — जरी ते धातूचे असले तरी!<br>पृष्ठतान <strong>साबणाने</strong> का नष्ट होते? साबणाचे रेणू पाण्याच्या रेणूंमधला बंध कमकुवत करतात!</p>
 <p><strong>🌱 केशाकर्षण (Capillary Action)</strong><br>अरुंद नळी (केश = केसाएवढी पातळ) पाण्यात बुडवली तर पाणी आपोआप वर चढते — कोणीही उचलत नाही! का? पाण्याचे रेणू नळीच्या भिंतींना चिकटतात (Adhesion) आणि एकमेकांना ओढतात (Cohesion) — हे दोन्ही मिळून पाणी वर खेचते.<br>▸ झाडाच्या मुळांतून उंच पाने/फुलांपर्यंत पाणी कसे पोहोचते? — केशाकर्षण आणि बाष्पोत्सर्जनाच्या ओढीमुळे (Transpiration Pull)! पाने बाष्प सोडतात → वर पाण्याची कमतरता होते → खालून पाणी ओढले जाते. लहान झाडांत केशाकर्षण मोठी भूमिका बजावते; उंच झाडांत बाष्पोत्सर्जन हे मुख्य बल असते.<br>▸ टिश्यू पेपर ओला होतो, माती पाणी शोषते — हे सर्व केशाकर्षण!</p>
@@ -1494,22 +1408,19 @@ hr.separator { border: none; border-top: 1.5px solid var(--rule); margin: 4px 0;
 <p>📢 संध्याकाळी पृष्ठतान आणि केशाकर्षणाचे प्रयोग — तयार राहा!</p>
     </div>
   </div>
+  <div class="pg-footer"></div>
 </div>
 <div class="page evening-page">
   <div class="page-band evening-band">
-    <div class="band-day">
-      १८
-      <small>गुरुवार</small>
-    </div>
     <div class="band-middle">
-      <div class="band-session">🏃 उपक्रम &nbsp;·&nbsp; २८ मे</div>
+      <div class="band-session">🏃 उपक्रम</div>
       <div class="band-topic">पाण्याचे गुणधर्म — पृष्ठतान आणि केशाकर्षण</div>
     </div>
   </div>
   <div class="page-body">
     <div class="page-content">
-      <p>🧪 <strong>विज्ञान रंजन | दिवस १८ — उपक्रम</strong></p>
-<hr class="separator">
+      
+      <hr class="separator">
 <p>💧 <strong>आजचा उपक्रम: पाण्याचे दोन चमत्कार पाहा!</strong></p>
 <p><strong>प्रयोग अ — पाण्यावर तरंगणारे नाणे:</strong><br>१) एक ग्लास पाणी भरा<br>२) एक रुपयाचे नाणे हळुवारपणे (सरळ, तिरके नाही) पाण्यावर ठेवा<br>३) नाणे तरंगते का ते पाहा!</p>
 <div class="fact-box">💡 साबण एक थेंब टाका — आता काय होते?</div>
@@ -1523,28 +1434,24 @@ hr.separator { border: none; border-top: 1.5px solid var(--rule); margin: 4px 0;
   <div class="obs-line"></div>
   <div class="obs-draw">✏️ चित्र काढा / फोटो चिकटवा</div>
 </div>
+      
     </div>
   </div>
+  <div class="pg-footer"></div>
 </div>
 <div class="page morning-page">
   <div class="page-band morning-band">
-    <div class="band-day">
-      १९
-      <small>शुक्रवार</small>
-    </div>
     <div class="band-middle">
-      <div class="band-session">🌅 सकाळ &nbsp;·&nbsp; २९ मे</div>
+      <div class="band-session">🌅</div>
       <div class="band-topic">हवामान अंदाज तंत्रज्ञान</div>
     </div>
   </div>
   <div class="page-body">
     <div class="page-content">
       <div class="day-icon-card">☁️</div>
-      <p>🔬 <strong>विज्ञान रंजन | दिवस १९</strong></p>
-<hr class="separator">
+      <hr class="separator">
 <p>🌍 <strong>आज जागतिक पाचन आरोग्य दिवस!</strong><br>पोट हे "दुसरा मेंदू" आहे — त्यात ~१०० दशलक्ष मज्जातंतू असतात! पचनसंस्था अन्नातील पोषक घटक शोषते आणि आपल्या आतड्यातील जीवाणू (Gut Microbiome) रोगप्रतिकार शक्ती ७०% नियंत्रित करतात.</p>
 <hr class="separator">
-<p>⚡ <strong>आजचा विषय: हवामान अंदाज — विज्ञान आणि तंत्रज्ञान!</strong></p>
 <p>"उद्या पाऊस येईल का?" — हा प्रश्न शेतकरी, मच्छीमार, पायलट आणि आपण सगळेच विचारतो. आज हे सांगणे शक्य झाले आहे ते अत्याधुनिक तंत्रज्ञानामुळे!</p>
 <p>📡 <strong>हवामान उपग्रह (Weather Satellites):</strong><br>INSAT-3D आणि INSAT-3DR हे भारताचे हवामान उपग्रह पृथ्वीपासून ३५,७८६ किमी उंचीवर स्थिर राहून (Geostationary Orbit) सतत ढगांचे, वाऱ्याचे आणि तापमानाचे चित्रण करतात. दर १५ मिनिटांनी संपूर्ण भारताचे हवामान चित्र IMD (India Meteorological Department) ला मिळते!</p>
 <p>🌀 <strong>डॉप्लर रडार (Doppler Radar):</strong><br>पाऊस आणि वादळाचा अचूक अंदाज देतो. रडारमधून रेडिओ लहरी सोडल्या जातात — पावसाचे थेंब लहरी परत पाठवतात. त्या लहरींच्या बदलावरून वाऱ्याचा वेग, पावसाची तीव्रता आणि ढगांची हालचाल कळते!</p>
@@ -1554,22 +1461,19 @@ hr.separator { border: none; border-top: 1.5px solid var(--rule); margin: 4px 0;
 <p>📢 संध्याकाळी हवामानावर एक विज्ञान खेळ!</p>
     </div>
   </div>
+  <div class="pg-footer"></div>
 </div>
 <div class="page evening-page">
   <div class="page-band evening-band">
-    <div class="band-day">
-      १९
-      <small>शुक्रवार</small>
-    </div>
     <div class="band-middle">
-      <div class="band-session">🌆 संध्याकाळ &nbsp;·&nbsp; २९ मे</div>
+      <div class="band-session">🌆</div>
       <div class="band-topic">हवामान अंदाज तंत्रज्ञान</div>
     </div>
   </div>
   <div class="page-body">
     <div class="page-content">
-      <p>⚡ <strong>विज्ञान रंजन | दिवस १९ — विज्ञान खेळ</strong></p>
-<hr class="separator">
+      
+      <hr class="separator">
 <p>⚡ <strong>True की False — हवामानावर ५ विधाने!</strong></p>
 <p><strong>१.</strong> ढगाळ रात्री तापमान ढग नसलेल्या रात्रीपेक्षा जास्त असते.</p>
 <p><strong>२.</strong> विजेचा आवाज (Thunder) विजेच्या प्रकाशापेक्षा (Lightning) आधी येतो.</p>
@@ -1578,33 +1482,28 @@ hr.separator { border: none; border-top: 1.5px solid var(--rule); margin: 4px 0;
 <p><strong>५.</strong> इंद्रधनुष्य नेहमी सूर्याच्या विरुद्ध दिशेला दिसते.</p>
 <p>उत्तरे उद्या सकाळी — तुम्ही किती बरोबर?</p>
       
+      
     </div>
   </div>
+  <div class="pg-footer"></div>
 </div>
 <div class="page morning-page">
   <div class="page-band morning-band">
-    <div class="band-day">
-      २०
-      <small>शनिवार</small>
-    </div>
     <div class="band-middle">
-      <div class="band-session">🌅 सकाळ &nbsp;·&nbsp; ३० मे</div>
+      <div class="band-session">🌅</div>
       <div class="band-topic">दुर्बीण — दूरच्या गोष्टी कशा दिसतात?</div>
     </div>
   </div>
   <div class="page-body">
     <div class="page-content">
       <div class="day-icon-card">🔭</div>
-      <p>🧪 <strong>विज्ञान रंजन | दिवस २० — चला करून बघू!</strong></p>
-<hr class="separator">
-<p>🔑 <strong>काल'च्या True/False खेळाची उत्तरे:</strong></p>
+      <hr class="separator">
 <p><strong>१. True ✅</strong> — ढगाळ रात्री पृथ्वीची उष्णता अवकाशात जाऊ शकत नाही (ढग ब्लँकेटसारखे काम करतात), त्यामुळे तापमान जास्त राहते!</p>
 <p><strong>२. False ❌</strong> — प्रकाश आधी दिसतो, आवाज नंतर येतो! प्रकाशाचा वेग (३ लाख km/s) आवाजाच्या वेगापेक्षा (०.३४ km/s) खूप जास्त आहे. दोन्हीतील अंतर मोजून वीज किती दूर आहे ते काढता येते!</p>
 <p><strong>३. True ✅</strong> — उंचावर हवेचा दाब कमी असतो, त्यामुळे पाणी कमी तापमानातच उकळते. एव्हरेस्टवर पाणी ~७० °C ला उकळते — म्हणून तिथे चहा नीट बनत नाही!</p>
 <p><strong>४. True ✅</strong> — मान्सून अरबी समुद्र (पश्चिम) आणि बंगालचा उपसागर (पूर्व) — दोन्हीकडून येतो. केरळमध्ये आधी अरबी समुद्राकडून पोहोचतो!</p>
 <p><strong>५. True ✅</strong> — इंद्रधनुष्य पाहताना सूर्य नेहमी पाठीमागे असतो! सूर्यप्रकाश पावसाच्या थेंबांतून परावर्तित होऊन आपल्याकडे येतो — म्हणून सूर्योदयाला पश्चिमेला आणि सूर्यास्ताला पूर्वेला इंद्रधनुष्य दिसते.</p>
 <hr class="separator">
-<p>📷 <strong>आजचा विषय: पिनहोल कॅमेरा — प्रकाशाचा सरळ मार्ग!</strong></p>
 <p>प्रकाश सरळ रेषेत प्रवास करतो — याला <strong>Rectilinear Propagation</strong> म्हणतात. जेव्हा एखाद्या अंधाऱ्या डब्यात फक्त एकच छोटे छिद्र असते, तेव्हा बाहेरच्या वस्तूंचे प्रकाशकिरण त्या छिद्रातून जाऊन विरुद्ध भिंतीवर <strong>उलटी प्रतिमा</strong> तयार करतात!</p>
 <p><strong>पिनहोल कॅमेऱ्याचे तत्त्व:</strong><br>📷 <strong>उलटी प्रतिमा का?</strong> वस्तूच्या वरच्या भागाचे किरण छिद्रातून खाली जातात आणि खालच्या भागाचे वर जातात — म्हणून प्रतिमा उलटी दिसते!<br>🎯 <strong>छिद्राचा आकार महत्त्वाचा:</strong> छोटे छिद्र = स्पष्ट पण अंधुक प्रतिमा. मोठे छिद्र = उजळ पण अस्पष्ट प्रतिमा!<br>📸 <strong>खऱ्या कॅमेऱ्याशी संबंध:</strong> आजच्या कॅमेऱ्यात लेन्स आहे, पण तत्त्व तेच आहे — प्रकाश छोट्या भागातून जाऊन विरुद्ध बाजूला प्रतिमा तयार करतो!<br>🌍 <strong>इतिहास:</strong> चीनी तत्त्वज्ञ Mozi (400 BCE) यांनी पिनहोल कॅमेऱ्याचे पहिले वर्णन केले. अरबी शास्त्रज्ञ Ibn al-Haytham यांनी याचा वापर सूर्यग्रहण पाहण्यासाठी केला!</p>
 <hr class="separator">
@@ -1615,45 +1514,40 @@ hr.separator { border: none; border-top: 1.5px solid var(--rule); margin: 4px 0;
 <div class="warning-box">⚠️ <strong>सुरक्षितता:</strong> सूर्याकडे दुर्बिणीतून कधीही पाहू नका — डोळे खराब होतात!</div>
     </div>
   </div>
+  <div class="pg-footer"></div>
 </div>
 <div class="page evening-page">
   <div class="page-band evening-band">
-    <div class="band-day">
-      २०
-      <small>शनिवार</small>
-    </div>
     <div class="band-middle">
-      <div class="band-session">📸 फोटो &nbsp;·&nbsp; ३० मे</div>
+      <div class="band-session">📸 फोटो</div>
       <div class="band-topic">दुर्बीण — दूरच्या गोष्टी कशा दिसतात?</div>
     </div>
   </div>
   <div class="page-body">
     <div class="page-content">
+      
       <hr class="separator">
 <p>🎉 <strong>या आठवड्याचे उपक्रम — फोटो शेअर करा!</strong></p>
 <p>या आठवड्यात आपण केले:<br>🌡️ रंगाचा थर्मामीटर (दिवस १५)<br>🧲 विद्युत-चुंबक बनवणे (दिवस १७)<br>💧 रंगाचे फूल — केशाकर्षण (दिवस १८)<br>🔭 साध्या लेन्सची दुर्बीण (दिवस २०)</p>
 <p><strong>फोटो कसे अपलोड करायचे?</strong></p>
 <p>उद्या रविवारी आठवड्याची क्विझ — तयार राहा! 🏆</p>
       
+      
     </div>
   </div>
+  <div class="pg-footer"></div>
 </div>
 <div class="page morning-page">
   <div class="page-band morning-band">
-    <div class="band-day">
-      २१
-      <small>रविवार</small>
-    </div>
     <div class="band-middle">
-      <div class="band-session">🌅 सकाळ &nbsp;·&nbsp; ३१ मे</div>
+      <div class="band-session">🌅</div>
       <div class="band-topic">साप्ताहिक क्विझ</div>
     </div>
   </div>
   <div class="page-body">
     <div class="page-content">
       <div class="day-icon-card">🏆</div>
-      <p>🔬 <strong>विज्ञान रंजन | दिवस २१ — साप्ताहिक क्विझ!</strong></p>
-<hr class="separator">
+      <hr class="separator">
 <p>🌕 <strong>आज ब्लू मून!</strong><br>"Once in a Blue Moon" — हा वाक्यप्रचार ऐकलाय ना? ब्लू मून म्हणजे एकाच महिन्यात येणारी दुसरी पौर्णिमा! चंद्राचे एक परिभ्रमण ~२९.५ दिवसांचे असते — म्हणजे बहुतांश महिन्यांत फक्त एकच पौर्णिमा येते. पण जेव्हा महिन्याच्या १ तारखेला पौर्णिमा येते, तेव्हा त्याच महिन्यात ३०–३१ तारखेला आणखी एक पौर्णिमा येते — हाच ब्लू मून! ब्लू मून निळा नसतो — हे फक्त नाव आहे. 🌕<br>आज रात्री चंद्र पाहायला विसरू नका!</p>
 <hr class="separator">
 <p>🏆 <strong>विज्ञान रंजन — आठवडा ३ क्विझ!</strong> 🏆</p>
@@ -1665,29 +1559,25 @@ hr.separator { border: none; border-top: 1.5px solid var(--rule); margin: 4px 0;
 <hr class="separator">
 <p>🔗 <strong>क्विझ ची लिंक :</strong><br>[\[GOOGLE<em>FORM</em>LINK\]](https://docs.google.com/forms/d/e/1FAIpQLSf_KH2v69TTlsNPauaTph76q4MQwe-cU9SvxDcJC6ABOrZkMQ/viewform)</p>
 <hr class="separator">
-<p>⏰ <strong>शेवटची तारीख:</strong> रविवार, ३१ मे २०२६ रात्री ११:५९ पर्यंत</p>
 <hr class="separator">
 <div class="fact-box">💡 <strong>टीप:</strong></div>
 <ul><li>प्रत्येक प्रश्नाचे उत्तर देताना शांतपणे विचार करा</li><li>गूगल करू नका — स्वतःच्या समजेवर विश्वास ठेवा! 💪</li><li>चुकीच्या उत्तरातून देखील शिकायला मिळते!</li></ul>
 <p>शुभेच्छा! 🌟</p>
     </div>
   </div>
+  <div class="pg-footer"></div>
 </div>
 <div class="page evening-page">
   <div class="page-band evening-band">
-    <div class="band-day">
-      २१
-      <small>रविवार</small>
-    </div>
     <div class="band-middle">
-      <div class="band-session">✅ उत्तरे &nbsp;·&nbsp; ३१ मे</div>
+      <div class="band-session">✅ उत्तरे</div>
       <div class="band-topic">साप्ताहिक क्विझ</div>
     </div>
   </div>
   <div class="page-body">
     <div class="page-content">
-      <p>🔬 <strong>विज्ञान रंजन | दिवस २१ — क्विझ उत्तरे</strong></p>
-<hr class="separator">
+      
+      <hr class="separator">
 <p>🏆 <strong>क्विझ उत्तरे:</strong></p>
 <p>✅ प्र.१ — <strong>ब) गरम झाल्यावर पाऱ्याचे रेणू वेगाने हलतात, जास्त जागा घेतात</strong><br>हेच Thermal Expansion! उष्णता मिळाली की रेणूंची गती वाढते → ते एकमेकांपासून जास्त दूर जातात → द्रव पसरतो → नळीत वर चढतो. हेच तत्त्व रेल्वे रूळ बांधताना वापरतात — उन्हाळ्यात रूळ पसरतात म्हणून मध्ये अंतर ठेवतात!</p>
 <p>✅ प्र.२ — <strong>क) अन्न पचवायला मदत करतात आणि रोगप्रतिकार शक्ती मजबूत ठेवतात</strong><br>आतड्यातील Gut Microbiome आपले खरे मित्र आहेत! ते B vitamins बनवतात, जड अन्न पचवतात, आणि हानिकारक जीवाणूंना जागा देत नाहीत. प्रतिजैविके (Antibiotics) घेतल्यावर हे मित्र जीवाणू कमी होतात — म्हणून दही खायला सांगतात!</p>
@@ -1702,30 +1592,26 @@ hr.separator { border: none; border-top: 1.5px solid var(--rule); margin: 4px 0;
 <p>📢 <strong>पुढच्या आठवड्याची झलक:</strong><br>आठवडा ४ मध्ये आपण शिकणार आहोत:<br>⚡ विद्युत परिपथ (Electric Circuit) — बल्ब कसा लागतो?<br>🌈 प्रकाशाचे अपवर्तन — इंद्रधनुष्य कसे तयार होते?<br>🧬 DNA आणि आनुवंशिकता — तुम्ही आईसारखे का दिसता?<br>🌋 भूकंप आणि ज्वालामुखी — पृथ्वीच्या आत काय आहे?<br>🔋 ऊर्जेचे स्रोत — सौर, पवन, आणि जीवाश्म इंधन<br>🌿 पर्यावरण — कार्बन चक्र आणि हरितगृह परिणाम</p>
 <p>तयार राहा — आणखी मजा, आणखी विज्ञान! 🚀</p>
       
+      
     </div>
   </div>
+  <div class="pg-footer"></div>
 </div>
 <div class="page morning-page">
   <div class="page-band morning-band">
-    <div class="band-day">
-      २२
-      <small>सोमवार</small>
-    </div>
     <div class="band-middle">
-      <div class="band-session">🌅 सकाळ &nbsp;·&nbsp; १ जून</div>
+      <div class="band-session">🌅</div>
       <div class="band-topic">उष्णता + जागतिक दूध दिवस 🥛</div>
     </div>
   </div>
   <div class="page-body">
     <div class="page-content">
       <div class="day-icon-card">🦕</div>
-      <p>🔬 <strong>विज्ञान रंजन | दिवस २२</strong></p>
-<hr class="separator">
+      <hr class="separator">
 <p>आठवडा ४ मध्ये आपले स्वागत! 🌌<br>या आठवड्यात आपण शिकणार आहोत विज्ञानाचे अद्भुत जग — उष्णता, यंत्रे, जीवाश्म, हाडे, पृष्ठतान आणि अन्न विज्ञान!</p>
 <hr class="separator">
 <p>🥛 <strong>आज जागतिक दूध दिवस (World Milk Day)!</strong><br>दूध हे आपल्या आयुष्याचे पहिले अन्न आहे — पण या पांढऱ्या द्रवाला उष्णतेने कसे सुरक्षित केले जाते, हे माहीत आहे का?</p>
 <hr class="separator">
-<p>🌡️ <strong>आजचा विषय: उष्णता आणि पाश्चरायझेशन — विज्ञानाने वाचवलेले दूध!</strong></p>
 <p><strong>उष्णता म्हणजे काय?</strong><br>उष्णता ही एक प्रकारची ऊर्जा आहे — जी एका वस्तूतून दुसऱ्या वस्तूत वाहते. तापमान म्हणजे उष्णतेचे मापन. गरम वस्तू थंड वस्तूला उष्णता देते — जोपर्यंत दोन्हींचे तापमान समान होत नाही (Thermal Equilibrium).</p>
 <p><strong>पाश्चरायझेशन म्हणजे काय?</strong><br>फ्रेंच शास्त्रज्ञ <strong>Louis Pasteur</strong> यांनी १८६५ मध्ये शोधले की दुधातील हानिकारक जीवाणू उष्णतेने नष्ट करता येतात. यालाच <strong>Pasteurization</strong> म्हणतात.</p>
 <p><strong>कसे होते?</strong><br>🔥 दूध ७२°C ला १५ सेकंद गरम करतात (HTST — High Temperature Short Time)<br>❄️ नंतर लगेच थंड करतात<br>✅ यामुळे रोगकारक जीवाणू नष्ट होतात, पण दुधाचे पोषण टिकते!</p>
@@ -1734,22 +1620,19 @@ hr.separator { border: none; border-top: 1.5px solid var(--rule); margin: 4px 0;
 <p>जगात दररोज सुमारे <strong>२.३ अब्ज लिटर</strong> दूध तयार होते! भारत जगातील सर्वात मोठा दूध उत्पादक देश आहे — दरवर्षी सुमारे २२ कोटी टन!</p>
     </div>
   </div>
+  <div class="pg-footer"></div>
 </div>
 <div class="page evening-page">
   <div class="page-band evening-band">
-    <div class="band-day">
-      २२
-      <small>सोमवार</small>
-    </div>
     <div class="band-middle">
-      <div class="band-session">🧪 प्रयोग &nbsp;·&nbsp; १ जून</div>
+      <div class="band-session">🧪 प्रयोग</div>
       <div class="band-topic">उष्णता + जागतिक दूध दिवस 🥛</div>
     </div>
   </div>
   <div class="page-body">
     <div class="page-content">
-      <p>🧪 <strong>विज्ञान रंजन | दिवस २२ — प्रयोग</strong></p>
-<hr class="separator">
+      
+      <hr class="separator">
 <p>🌡️ <strong>आजचा प्रयोग: तापमानाची फसवणूक — दोन ग्लास, एक हात!</strong></p>
 <div class="materials-box"><div class="section-label">📦 साहित्य</div><ul><li>तीन वाट्या / ग्लास</li><li>गरम पाणी (आरामदायक इतके — जास्त गरम नको!)</li><li>थंड पाणी (साधे किंवा थोडे बर्फाचे)</li><li>साध्या तपमानाचे पाणी</li></ul></div>
 <div class="steps-box"><div class="section-label">📋 कृती</div><ol><li>डाव्या हाताचे बोट थंड पाण्यात ३० सेकंद बुडवा</li><li>उजव्या हाताचे बोट गरम पाण्यात ३० सेकंद बुडवा</li><li>आता दोन्ही बोटे एकाच वेळी मधल्या (साध्या तपमानाच्या) पाण्यात बुडवा</li><li>— काय वाटले?</li></ol></div>
@@ -1763,25 +1646,22 @@ hr.separator { border: none; border-top: 1.5px solid var(--rule); margin: 4px 0;
   <div class="obs-line"></div>
   <div class="obs-draw">✏️ चित्र काढा / फोटो चिकटवा</div>
 </div>
+      
     </div>
   </div>
+  <div class="pg-footer"></div>
 </div>
 <div class="page morning-page">
   <div class="page-band morning-band">
-    <div class="band-day">
-      २३
-      <small>मंगळवार</small>
-    </div>
     <div class="band-middle">
-      <div class="band-session">🌅 सकाळ &nbsp;·&nbsp; २ जून</div>
+      <div class="band-session">🌅</div>
       <div class="band-topic">साधी यंत्रे</div>
     </div>
   </div>
   <div class="page-body">
     <div class="page-content">
       <div class="day-icon-card">⚙️</div>
-      <p>🔬 <strong>विज्ञान रंजन | दिवस २३</strong></p>
-<hr class="separator">
+      <hr class="separator">
 <div class="fact-box">💡 <strong>तुम्हाला माहीत आहे का? — साधी यंत्रे: विज्ञानाची जादू!</strong></div>
 <p>आर्किमिडीज म्हणाला होता:<br><strong>"मला एक लांब तरफ द्या — मी संपूर्ण पृथ्वी हलवीन!"</strong></p>
 <p>हे कसे शक्य आहे? चला समजून घेऊया!</p>
@@ -1792,22 +1672,19 @@ hr.separator { border: none; border-top: 1.5px solid var(--rule); margin: 4px 0;
 <p>🤔 <strong>विचार करा:</strong><br>विहीरीतून पाणी काढताना दोरी थेट खेचण्यापेक्षा कप्पी वापरणे सोपे का असते?</p>
     </div>
   </div>
+  <div class="pg-footer"></div>
 </div>
 <div class="page evening-page">
   <div class="page-band evening-band">
-    <div class="band-day">
-      २३
-      <small>मंगळवार</small>
-    </div>
     <div class="band-middle">
-      <div class="band-session">🧩 कोडे &nbsp;·&nbsp; २ जून</div>
+      <div class="band-session">🧩 कोडे</div>
       <div class="band-topic">साधी यंत्रे</div>
     </div>
   </div>
   <div class="page-body">
     <div class="page-content">
-      <p>🧩 <strong>विज्ञान रंजन | दिवस २३ — कोडे</strong></p>
-<hr class="separator">
+      
+      <hr class="separator">
 <p>🤔 <strong>आजचे कोडे:</strong></p>
 <p>"<strong>लोखंडाचा एक छोटा तुकडा पाण्यात बुडतो — पण लाखो टन वजनाचे लोखंडाचे जहाज पाण्यावर तरंगते! असे का होते?</strong>"</p>
 <p>उत्तर उद्या सकाळी देऊ!</p>
@@ -1818,86 +1695,22 @@ hr.separator { border: none; border-top: 1.5px solid var(--rule); margin: 4px 0;
   <div class="obs-line wide"></div>
   <div class="obs-line wide"></div>
 </div>
+      <div class="ans-xref">उत्तर: पृ. 59</div>
     </div>
   </div>
+  <div class="pg-footer"></div>
 </div>
 <div class="page morning-page">
   <div class="page-band morning-band">
-    <div class="band-day">
-      २४
-      <small>बुधवार</small>
-    </div>
     <div class="band-middle">
-      <div class="band-session">🌅 सकाळ &nbsp;·&nbsp; ३ जून</div>
-      <div class="band-topic">जीवाश्म आणि डायनोसॉर</div>
-    </div>
-  </div>
-  <div class="page-body">
-    <div class="page-content">
-      <div class="scientist-card"><img src="../scientists/Mary_Anning_painting.jpg" alt="शास्त्रज्ञ"></div>
-      <p>🔬 <strong>विज्ञान रंजन | दिवस २४</strong></p>
-<hr class="separator">
-<p><strong>कालच्या कोड्याचे उत्तर:</strong><br>लोखंडाचा तुकडा आत घन असतो — पाण्यापेक्षा जड. जहाजाचा आकार आतून पोकळ असतो — त्यामुळे जहाज मोठ्या प्रमाणात पाणी बाजूला ढकलते (<strong>Buoyancy</strong>). जेव्हा ढकललेल्या पाण्याचे वजन = जहाजाचे वजन, तेव्हा जहाज तरंगते! हे <strong>Archimedes' Principle</strong> आहे!</p>
-<hr class="separator">
-<p>🦕 <strong>आजचा शास्त्रज्ञ: मेरी अॅनिंग (Mary Anning) — जीवाश्मांची शोधकर्ती!</strong></p>
-<p><strong>कोण होत्या मेरी अॅनिंग?</strong><br>जन्म: १७९९, इंग्लंड. एका गरीब कुटुंबात जन्मलेल्या मेरींनी लहानपणापासून इंग्लंडच्या किनारपट्टीवरील खडकांमध्ये जीवाश्म शोधले. त्या काळी महिलांना विज्ञान क्षेत्रात स्थान नव्हते — पण मेरींच्या शोधांनी जगाला डायनोसॉर आणि प्राचीन सागरी प्राण्यांची ओळख करून दिली!</p>
-<p><strong>त्यांनी काय शोधले?</strong><br>🦕 <strong>Ichthyosaurus</strong> (१८१२) — सागरी डायनोसॉर सारखा प्राणी<br>🦎 <strong>Plesiosaur</strong> (१८२३) — लांब मानेचा सागरी सरपटणारा प्राणी<br>🦈 <strong>Pterodactyl</strong> — उडणारा सरपटणारा प्राणी</p>
-<p><strong>त्यांचे महत्त्व:</strong><br>मेरींच्या जीवाश्म शोधांमुळे शास्त्रज्ञांना समजले की पृथ्वीवर आधी वेगळे प्राणी होते — जे आता अस्तित्वात नाहीत. याने <strong>उत्क्रांती (Evolution)</strong> सिद्धांताचा पाया घातला!</p>
-<div class="fact-box">💡 <strong>तुम्हाला माहीत आहे का?</strong></div>
-<p>डायनोसॉर सुमारे ६.६ कोटी वर्षांपूर्वी नामशेष झाले — एका महाकाय उल्कापातामुळे! त्या उल्केचा व्यास सुमारे १० किमी होता.</p>
-<p>📢 संध्याकाळी त्याच उल्केसारखा आघात घरी करून बघणार आहोत — तयार राहा!</p>
-    </div>
-  </div>
-</div>
-<div class="page evening-page">
-  <div class="page-band evening-band">
-    <div class="band-day">
-      २४
-      <small>बुधवार</small>
-    </div>
-    <div class="band-middle">
-      <div class="band-session">🧪 प्रयोग &nbsp;·&nbsp; ३ जून</div>
-      <div class="band-topic">जीवाश्म आणि डायनोसॉर</div>
-    </div>
-  </div>
-  <div class="page-body">
-    <div class="page-content">
-      <p>🧪 <strong>विज्ञान रंजन | दिवस २४ — प्रयोग</strong></p>
-<hr class="separator">
-<p>🌠 <strong>आजचा प्रयोग: उल्का आघात — स्वतःचा क्रेटर बनवा!</strong></p>
-<p>सकाळी शिकलो की ६.६ कोटी वर्षांपूर्वी एका १० किमी उल्केने डायनोसॉर नामशेष केले. त्या आघाताचे विज्ञान आता स्वतः अनुभवा!</p>
-<div class="materials-box"><div class="section-label">📦 साहित्य</div><ul><li>एक मोठी थाळी किंवा ट्रे</li><li>पीठ किंवा बारीक वाळू (५–७ सेमी जाड थर)</li><li>वरून शिंपडायला हळद किंवा कोको पावडर (optional — वेगळा रंग)</li><li>वेगवेगळ्या आकाराचे दगड किंवा लहान-मोठे गोळे</li></ul></div>
-<div class="steps-box"><div class="section-label">📋 कृती</div><ol><li>थाळीत पीठ समान थराने पसरवा</li><li>वरून हळदीची पातळ थर शिंपडा (रंगीत पृष्ठभाग)</li><li>एक छोटा दगड कमी उंचीवरून (१५ सेमी) सोडा — क्रेटर पहा</li><li>तोच दगड जास्त उंचीवरून (५० सेमी) सोडा — फरक पहा</li><li>मोठा आणि लहान दगड एकाच उंचीवरून सोडा — आकार तुलना करा</li></ol></div>
-<div class="science-box"><strong>विज्ञान काय शिकलो?</strong><br>जास्त उंचीवरून पडल्यावर वेग जास्त → आघात जोरदार → क्रेटर मोठा आणि खोल!<br>असाच एक उल्का आघात आपल्या महाराष्ट्रातच झाला आहे — <strong>लोणार क्रेटर</strong>, बुलढाणा जिल्हा! सुमारे ५०,००० वर्षांपूर्वी एका उल्केने बेसाल्ट खडकात आघात केला आणि तयार झाला १.८ किमी रुंद खड्डा. आज त्यात एक खाऱ्या पाण्याचे सरोवर आहे — जगातील अशा फक्त ४ क्रेटर लेकपैकी एक! याच विज्ञानाने शास्त्रज्ञांना ६.६ कोटी वर्षांपूर्वीच्या Chicxulub आघाताचा — ज्याने डायनोसॉर नामशेष केले — अभ्यास करायला मदत केली.</div>
-<p>आव्हान: 📏 वेगवेगळ्या उंच्यांवरून क्रेटरचा व्यास मोजा आणि तक्ता बनवा!</p>
-      
-<div class="observation-box">
-  <div class="obs-title">✏️ माझे निरीक्षण</div>
-  <div class="obs-line"></div>
-  <div class="obs-line"></div>
-  <div class="obs-line"></div>
-  <div class="obs-draw">✏️ चित्र काढा / फोटो चिकटवा</div>
-</div>
-    </div>
-  </div>
-</div>
-<div class="page morning-page">
-  <div class="page-band morning-band">
-    <div class="band-day">
-      २५
-      <small>गुरुवार</small>
-    </div>
-    <div class="band-middle">
-      <div class="band-session">🌅 सकाळ &nbsp;·&nbsp; ४ जून</div>
+      <div class="band-session">🌅</div>
       <div class="band-topic">मानवी शरीर — हाडे</div>
     </div>
   </div>
   <div class="page-body">
     <div class="page-content">
       <div class="day-icon-card">🦴</div>
-      <p>🔬 <strong>विज्ञान रंजन | दिवस २५</strong></p>
-<hr class="separator">
-<p>🦴 <strong>आजचा विषय: आपल्या शरीरातील सांगाडा — हाडांचे अद्भुत विश्व!</strong></p>
+      <hr class="separator">
 <p><strong>आपल्या शरीरात किती हाडे असतात?</strong><br>प्रौढ माणसात <strong>२०६ हाडे</strong> असतात — पण जन्माच्या वेळी बाळाच्या शरीरात <strong>२७० पेक्षा जास्त हाडे</strong> असतात! मोठे होताना अनेक हाडे एकत्र येतात (जुळतात/Fuse होतात).</p>
 <p><strong>हाडे कशाचे बनलेले असतात?</strong><br>🔬 <strong>कॅल्शियम फॉस्फेट</strong> (Ca₃(PO₄)₂) — हाडांची कडकपणा येते<br>🧬 <strong>कोलॅजन प्रोटीन</strong> — लवचिकता (नाहीतर हाडे ठिसूळ होतील!)<br>🩸 <strong>अस्थिमज्जा (Bone Marrow)</strong> — हाडांच्या आत! लाल रक्तपेशी इथेच बनतात.</p>
 <p><strong>हाडांचे काम:</strong><br>💪 शरीराला आकार आणि आधार देणे<br>🛡️ मेंदू (कवटी), हृदय-फुफ्फुसे (पसली) यांचे संरक्षण करणे<br>🏃 स्नायूंसाठी आधार — हालचाल शक्य होते<br>🩸 रक्तपेशी निर्मिती</p>
@@ -1907,22 +1720,19 @@ hr.separator { border: none; border-top: 1.5px solid var(--rule); margin: 4px 0;
 <p>📢 संध्याकाळी हाडांवर एक रंजक ३-दिवसांचा उपक्रम — आजच सुरू करा!</p>
     </div>
   </div>
+  <div class="pg-footer"></div>
 </div>
 <div class="page evening-page">
   <div class="page-band evening-band">
-    <div class="band-day">
-      २५
-      <small>गुरुवार</small>
-    </div>
     <div class="band-middle">
-      <div class="band-session">🧪 प्रयोग &nbsp;·&nbsp; ४ जून</div>
+      <div class="band-session">🧪 प्रयोग</div>
       <div class="band-topic">मानवी शरीर — हाडे</div>
     </div>
   </div>
   <div class="page-body">
     <div class="page-content">
-      <p>🧪 <strong>विज्ञान रंजन | दिवस २५ — उपक्रम</strong></p>
-<hr class="separator">
+      
+      <hr class="separator">
 <p>🦴 <strong>आजचा उपक्रम: व्हिनेगरमध्ये हाड — कॅल्शियम कुठे गेले?</strong></p>
 <p><strong>हा उपक्रम ३ दिवस चालणार आहे — आजच सुरू करा!</strong></p>
 <div class="materials-box"><div class="section-label">📦 साहित्य</div><ul><li>एक चिकन लेग पीस (शिजवलेले हाड — धुऊन घ्या)</li><li>एक ग्लास किंवा वाटी</li><li>पांढरे व्हिनेगर (पुरेसे — हाड बुडेल इतके)</li></ul></div>
@@ -1937,28 +1747,24 @@ hr.separator { border: none; border-top: 1.5px solid var(--rule); margin: 4px 0;
   <div class="obs-line"></div>
   <div class="obs-draw">✏️ चित्र काढा / फोटो चिकटवा</div>
 </div>
+      
     </div>
   </div>
+  <div class="pg-footer"></div>
 </div>
 <div class="page morning-page">
   <div class="page-band morning-band">
-    <div class="band-day">
-      २६
-      <small>शुक्रवार</small>
-    </div>
     <div class="band-middle">
-      <div class="band-session">🌅 सकाळ &nbsp;·&nbsp; ५ जून</div>
+      <div class="band-session">🌅</div>
       <div class="band-topic">पाण्याचे गुणधर्म + जागतिक पर्यावरण दिवस 🌍</div>
     </div>
   </div>
   <div class="page-body">
     <div class="page-content">
       <div class="day-icon-card">🌍</div>
-      <p>🔬 <strong>विज्ञान रंजन | दिवस २६</strong></p>
-<hr class="separator">
+      <hr class="separator">
 <p>🌍 <strong>आज जागतिक पर्यावरण दिवस (World Environment Day)!</strong><br>या वर्षीची थीम: <strong>"Land Restoration, Desertification and Drought Resilience"</strong> — जमीन वाचवा, पाणी वाचवा!<br>पाण्याच्या पृष्ठतानाचे विज्ञान समजले तर आपण पर्यावरणातील अनेक रहस्ये उलगडू शकतो — आणि प्रदूषणाचे दुष्परिणाम समजतात.</p>
 <hr class="separator">
-<p>💧 <strong>आजचा विषय: पृष्ठतान आणि उत्प्लावकता — जहाज बांधणीचे विज्ञान!</strong></p>
 <p><strong>पृष्ठतान (Surface Tension) म्हणजे काय?</strong><br>पाण्याच्या पृष्ठभागावरील रेणू एकमेकांना आतील बाजूने खेचतात — बाहेरून कोणी खेचत नाही. त्यामुळे पृष्ठभाग एखाद्या पातळ लवचिक पटलासारखा वाटतो. याच शक्तीमुळे:<br>- पाण्यावर मच्छर चालतो<br>- फुलपाखरू पाण्यात न बुडता पाणी पिते<br>- साबणाचे बुडबुडे गोल असतात</p>
 <p><strong>जहाज कसे तरंगते?</strong><br>लाखो टन वजनाचे जहाज तरंगते कारण त्याचा आकार पोकळ असतो — त्यामुळे ते मोठ्या प्रमाणात पाणी बाजूला ढकलते. <strong>Buoyancy Force</strong> = ढकललेल्या पाण्याचे वजन. जेव्हा हे जहाजाच्या वजनाएवढे होते — जहाज तरंगते!</p>
 <p><strong>पर्यावरणाशी संबंध:</strong><br>🌊 समुद्रात प्लास्टिक तरंगते — कारण त्याची घनता पाण्यापेक्षा कमी आहे. हे तरंगते प्लास्टिक माशांना गिळता येते — आणि अन्नसाखळी दूषित होते!</p>
@@ -1967,22 +1773,19 @@ hr.separator { border: none; border-top: 1.5px solid var(--rule); margin: 4px 0;
 <p>📢 संध्याकाळी पृष्ठतानावर एक मजेदार खेळ!</p>
     </div>
   </div>
+  <div class="pg-footer"></div>
 </div>
 <div class="page evening-page">
   <div class="page-band evening-band">
-    <div class="band-day">
-      २६
-      <small>शुक्रवार</small>
-    </div>
     <div class="band-middle">
-      <div class="band-session">🧪 प्रयोग &nbsp;·&nbsp; ५ जून</div>
+      <div class="band-session">🧪 प्रयोग</div>
       <div class="band-topic">पाण्याचे गुणधर्म + जागतिक पर्यावरण दिवस 🌍</div>
     </div>
   </div>
   <div class="page-body">
     <div class="page-content">
-      <p>🎮 <strong>विज्ञान रंजन | दिवस २६ — विज्ञान खेळ</strong></p>
-<hr class="separator">
+      
+      <hr class="separator">
 <p>💧 <strong>आजचा खेळ: नाण्यावर किती थेंब? — पृष्ठतानाची कसोटी!</strong></p>
 <div class="materials-box"><div class="section-label">📦 साहित्य</div><ul><li>एक रुपयाचे नाणे</li><li>पाण्याने भरलेला ग्लास</li><li>ड्रॉपर किंवा सिरींज / चमचा</li></ul></div>
 <div class="steps-box"><div class="section-label">📋 कृती</div><ol><li>नाणे सपाट ठेवा</li><li>ड्रॉपर/चमच्याने एक-एक थेंब टाका</li><li>नाणे किती थेंब सामावते मोजा — आधी अंदाज करा!</li><li>आता साबण पाणी वापरा — किती थेंब?</li></ol></div>
@@ -1997,25 +1800,22 @@ hr.separator { border: none; border-top: 1.5px solid var(--rule); margin: 4px 0;
   <div class="obs-line"></div>
   <div class="obs-draw">✏️ चित्र काढा / फोटो चिकटवा</div>
 </div>
+      
     </div>
   </div>
+  <div class="pg-footer"></div>
 </div>
 <div class="page morning-page">
   <div class="page-band morning-band">
-    <div class="band-day">
-      २७
-      <small>शनिवार</small>
-    </div>
     <div class="band-middle">
-      <div class="band-session">🌅 सकाळ &nbsp;·&nbsp; ६ जून</div>
+      <div class="band-session">🌅</div>
       <div class="band-topic">अन्न आणि विज्ञान</div>
     </div>
   </div>
   <div class="page-body">
     <div class="page-content">
       <div class="day-icon-card">🍽️</div>
-      <p>🧪 <strong>विज्ञान रंजन | दिवस २७ — मोठा प्रयोग</strong></p>
-<hr class="separator">
+      <hr class="separator">
 <p>🍎 <strong>आजचा मोठा प्रयोग: अन्नातून ऊर्जा — तुमची पोषण तपासणी!</strong></p>
 <p>आपण जे खातो त्यातून शरीराला ऊर्जा मिळते — पण कोणत्या अन्नात काय असते हे माहीत आहे का? आजचा प्रयोग म्हणजे <strong>पोषण शास्त्र (Nutrition Science)</strong> चा थेट अनुभव!</p>
 <p><strong>उपक्रम: आज खाल्लेल्या अन्नाची पोषण यादी बनवा</strong></p>
@@ -2025,44 +1825,39 @@ hr.separator { border: none; border-top: 1.5px solid var(--rule); margin: 4px 0;
 <div class="science-box"><strong>विज्ञान काय शिकलो?</strong><br>शरीर एक जटिल रासायनिक कारखाना आहे — प्रत्येक पोषकाचे वेगळे काम आहे. संतुलित आहार म्हणजे सर्व पोषक योग्य प्रमाणात मिळणे. <strong>Malnutrition</strong> म्हणजे फक्त उपासमार नाही — एखाद्या पोषकाची कमतरता सुद्धा Malnutrition असते!</div>
     </div>
   </div>
+  <div class="pg-footer"></div>
 </div>
 <div class="page evening-page">
   <div class="page-band evening-band">
-    <div class="band-day">
-      २७
-      <small>शनिवार</small>
-    </div>
     <div class="band-middle">
-      <div class="band-session">📸 फोटो &nbsp;·&nbsp; ६ जून</div>
+      <div class="band-session">📸 फोटो</div>
       <div class="band-topic">अन्न आणि विज्ञान</div>
     </div>
   </div>
   <div class="page-body">
     <div class="page-content">
+      
       <hr class="separator">
 <p>🎉 <strong>या आठवड्याचे उपक्रम — फोटो शेअर करा!</strong></p>
 <p>या आठवड्यात आपण केले:<br>🌡️ तापमानाची फसवणूक — दोन ग्लास प्रयोग (दिवस २२)<br>🦕 स्वतःचा जीवाश्म बनवणे (दिवस २४)<br>🦴 व्हिनेगरमध्ये हाड — कॅल्शियम कुठे गेले? (दिवस २५)<br>💧 नाण्यावर पाण्याचे थेंब (दिवस २६)<br>🍎 पोषण यादी बनवणे (दिवस २७)</p>
 <p><strong>फोटो कसे अपलोड करायचे?</strong><br>१) लिंक उघडा → ➕ बटण दाबा<br>२) Subject: प्रयोगाचे नाव लिहा<br>३) 📷 कॅमेरा आयकॉन → फोटो अपलोड करा<br>४) Caption: तुमचे नाव आणि वय<br>५) Publish ✅</p>
       
+      
     </div>
   </div>
+  <div class="pg-footer"></div>
 </div>
 <div class="page morning-page">
   <div class="page-band morning-band">
-    <div class="band-day">
-      २८
-      <small>रविवार</small>
-    </div>
     <div class="band-middle">
-      <div class="band-session">🌅 सकाळ &nbsp;·&nbsp; ७ जून</div>
+      <div class="band-session">🌅</div>
       <div class="band-topic">साप्ताहिक क्विझ + जागतिक अन्न सुरक्षा दिवस</div>
     </div>
   </div>
   <div class="page-body">
     <div class="page-content">
       <div class="day-icon-card">🏆</div>
-      <p>🔬 <strong>विज्ञान रंजन | दिवस २८ — साप्ताहिक क्विझ!</strong></p>
-<hr class="separator">
+      <hr class="separator">
 <p>🏆 <strong>आठवडा ४ ची क्विझ!</strong></p>
 <p><strong>प्र.१)</strong> उष्णता आणि तापमान यात काय फरक आहे?<br>अ) दोन्ही एकच आहेत<br>ब) तापमान ऊर्जा आहे, उष्णता त्याचे मापन आहे<br><strong>क) उष्णता ऊर्जा आहे, तापमान उष्णतेचे मापन आहे</strong><br>ड) उष्णता थंड असते</p>
 <p><strong>प्र.२)</strong> माणसाच्या शरीरात किती हाडे असतात?<br>अ) १५०   ब) १८०   <strong>क) २०६</strong>   ड) २५०</p>
@@ -2072,22 +1867,19 @@ hr.separator { border: none; border-top: 1.5px solid var(--rule); margin: 4px 0;
 <p>🌟 <strong>बोनस प्रश्न (World Food Safety Day — ७ जून):</strong><br>अन्न खराब होण्यास सर्वात जास्त कारणीभूत कोण असते?<br>अ) उष्णता   <strong>ब) जीवाणू/बुरशी</strong>   क) हवा   ड) प्रकाश</p>
     </div>
   </div>
+  <div class="pg-footer"></div>
 </div>
 <div class="page evening-page">
   <div class="page-band evening-band">
-    <div class="band-day">
-      २८
-      <small>रविवार</small>
-    </div>
     <div class="band-middle">
-      <div class="band-session">✅ उत्तरे &nbsp;·&nbsp; ७ जून</div>
+      <div class="band-session">✅ उत्तरे</div>
       <div class="band-topic">साप्ताहिक क्विझ + जागतिक अन्न सुरक्षा दिवस</div>
     </div>
   </div>
   <div class="page-body">
     <div class="page-content">
-      <p>🏆 <strong>विज्ञान रंजन | दिवस २८ — क्विझ उत्तरे</strong></p>
-<hr class="separator">
+      
+      <hr class="separator">
 <p>✅ <strong>आठवडा ४ क्विझ उत्तरे:</strong></p>
 <p><strong>१. क) उष्णता ऊर्जा आहे, तापमान उष्णतेचे मापन आहे</strong> ✅<br>उष्णता (Heat) = ऊर्जेचा प्रकार. तापमान (Temperature) = त्या ऊर्जेचे मापन. गरम वस्तूतून थंड वस्तूत उष्णता वाहते — Thermal Equilibrium होईपर्यंत.</p>
 <p><strong>२. क) २०६</strong> ✅<br>जन्माच्या वेळी ~२७०+ हाडे असतात — मोठे होताना एकत्र येतात. शरीरातील सर्वात लहान हाड: Stapes (कान) — ३ मिमी!</p>
@@ -2100,8 +1892,286 @@ hr.separator { border: none; border-top: 1.5px solid var(--rule); margin: 4px 0;
 <p>अभिनंदन! 🎉 तुमची विज्ञान जिज्ञासा कायम राहो!</p>
 <p>पुढच्या आठवड्यात येणार आहे <strong>आठवडा ५ — मानवी शरीर आणि आरोग्य!</strong> 🧠</p>
       
+      
     </div>
   </div>
+  <div class="pg-footer"></div>
+</div>
+<div class="page scientists-section-page">
+  <div class="sci-sec-top">
+    <div class="sci-sec-icon-row">🔬 🧪 🌡️ 📜</div>
+    <div class="sci-sec-title">शास्त्रज्ञ</div>
+    <div class="sci-sec-subtitle">विज्ञानाचे महान अभ्यासक</div>
+  </div>
+  <div class="sci-sec-body">
+    <div class="sci-sec-label">या विभागात आहे…</div>
+    <div class="sci-sec-chips"><div class="sci-sec-chip">इव्हान्जेलिस्टा टॉरिचेली</div><div class="sci-sec-chip">सर आयझॅक न्यूटन</div><div class="sci-sec-chip">मायकेल फॅरेडे</div><div class="sci-sec-chip">मेरी अॅनिंग</div></div>
+    <div class="sci-sec-note">
+      प्रत्येक शास्त्रज्ञाची कहाणी, त्यांचे महत्त्वाचे शोध,
+      आणि त्यांच्याशी संबंधित प्रयोग.
+    </div>
+  </div>
+  <div class="pg-footer"></div>
+</div>
+<div class="page scientist-page">
+  <div class="page-band scientist-band">
+    <div class="band-middle">
+      <div class="band-session">🔬 शास्त्रज्ञ</div>
+      <div class="band-topic">हवा आणि वायुदाब</div>
+    </div>
+  </div>
+  <div class="page-body">
+    <div class="page-content">
+      
+<div class="sci-profile">
+  <div class="sci-profile-left">
+    <img src="../scientists/Torricelli.jpg" alt="इव्हान्जेलिस्टा टॉरिचेली">
+    <div class="sci-name">इव्हान्जेलिस्टा टॉरिचेली</div>
+    <div class="sci-subtitle">Evangelista Torricelli · बॅरोमीटरचे जनक</div>
+  </div>
+  <div class="sci-profile-right">
+    <table class="sci-meta-table"><tr><td>जन्म</td><td>१५ ऑक्टोबर १६०८, फेएन्झा, इटली</td></tr><tr><td>निधन</td><td>२५ ऑक्टोबर १६४७ (वय ३९)</td></tr><tr><td>क्षेत्र</td><td>भौतिकशास्त्र, गणित</td></tr></table>
+    <span class="sci-tag">वायुदाब · बॅरोमीटर</span>
+    <p>इटलीमध्ये १६०८ साली जन्मलेले टॉरिचेली हे गॅलिलिओंचे शिष्य होते.<br>गॅलिलिओंच्या आयुष्याच्या अखेरच्या काही महिन्यांत ते त्यांचे सहायक होते.<br>गॅलिलिओंच्या निधनानंतर (१६४२) टोस्कानीच्या महाराजांचे प्रमुख गणितज्ञ म्हणून त्यांची नेमणूक झाली.<br>"हवेला वजन आहे का?" या एका प्रश्नाने त्यांचे आयुष्य बदलले!</p>
+<p><strong>त्यांनी काय शोधले?</strong><br>१६४३ साली त्यांनी एक साधा पण क्रांतिकारी प्रयोग केला —<br>एक लांब काचेची नळी पाऱ्याने भरून उलटी केली.<br>पारा नळीत एका ठराविक उंचीवर थांबला, खाली पडला नाही!<br>का? कारण बाहेरच्या हवेचा दाब पाऱ्याला धरून ठेवत होता.<br>वरची रिकामी जागा म्हणजे जगातील पहिले 'शून्यावकाश' (Vacuum)!</p>
+<p><strong>इतर योगदान:</strong><br>टॉरिचेली केवळ भौतिकशास्त्रज्ञच नव्हते — ते उत्तम गणितज्ञही होते.<br>त्यांनी दुर्बीण (Telescope) आणि सूक्ष्मदर्शक (Microscope) यांचे डिझाइन सुधारले.<br>दाबाचे एकक <strong>"Torr"</strong> त्यांच्याच नावावर आहे.<br>वयाच्या अवघ्या ३९ व्या वर्षी टायफॉइडमुळे त्यांचे निधन झाले.</p>
+<p><strong>आपल्या आयुष्यावर काय परिणाम?</strong><br>टॉरिचेलींनी जगातील पहिला बॅरोमीटर बनवला —<br>हवामान अंदाज सांगणारे यंत्र!<br>आजही विमानातील उंचीमापक, हवामान केंद्रे, आणि<br>वैद्यकीय उपकरणे याच तत्त्वावर काम करतात.</p>
+<div class="fact-box">💡 <strong>विचार करा:</strong></div>
+<p>हवेला वजन असेल तर आपल्या डोक्यावर किती हवा असेल?</p>
+  </div>
+</div>
+<div class="sci-chips"><span class="sci-chip">दाबाचे एकक "Torr"</span><span class="sci-chip">हवामानशास्त्राचा पाया</span><span class="sci-chip">आधुनिक बॅरोमीटर</span><span class="sci-chip">शून्यावकाशाचा शोध</span></div>
+    </div>
+  </div>
+  <div class="pg-footer"></div>
+</div>
+<div class="page evening-page">
+  <div class="page-band evening-band">
+    <div class="band-middle">
+      <div class="band-session">🧪 प्रयोग</div>
+      <div class="band-topic">हवा आणि वायुदाब</div>
+    </div>
+  </div>
+  <div class="page-body">
+    <div class="page-content">
+      
+      <p>🧪 <strong>विज्ञान रंजन | प्रयोग</strong></p>
+<hr class="separator">
+<p>🔬 <strong>आजचा प्रयोग: हवेचे वजन</strong></p>
+<div class="materials-box"><div class="section-label">📦 साहित्य</div><ul><li>२ फुगे (सारख्या आकाराचे)</li><li>१ लांब काठी किंवा हँगर</li><li>दोरा/सुतळी</li></ul></div>
+<div class="steps-box"><div class="section-label">📋 कृती</div><ol><li>दोन्ही फुगे सारख्या आकाराचे फुगवा</li><li>प्रत्येक फुग्याला दोऱ्याने काठीच्या दोन टोकांना बांधा</li><li>काठीच्या मध्यभागी दोरा बांधून तराजूसारखे लटकवा</li><li>काठी समतोल होईपर्यंत मधला दोरा समायोजित करा</li><li>आता एक फुगा फोडा किंवा हवा सोडा — काय होते ते पहा!</li></ol></div>
+<div class="science-box"><strong>विज्ञान काय शिकलो?</strong><br>फुगवलेल्या फुग्यात हवा भरलेली असते.<br>हवेला वजन असल्यामुळे फुगवलेला फुगा जड होतो —<br>म्हणून त्याची बाजू खाली झुकते!<br>प्रयोग हे सिद्ध करतो की <strong>हवेला वजन असते!</strong><br>आपल्या शरीरावर सुमारे १,००० किलो हवेचा दाब असतो —<br>याला <strong>वायुदाब (Atmospheric Pressure)</strong> म्हणतात.</div>
+<p><strong>मग आपले शरीर चपटे का होत नाही?</strong><br>कारण आपल्या शरीराच्या आतूनही तितकाच दाब बाहेरच्या दिशेने असतो!<br>रक्त, पेशींमधील द्रव, आणि श्वासातील हवा —<br>हे सगळे मिळून शरीराच्या आतून बाहेरील दाबाइतकाच प्रतिदाब देतात.<br>बाहेरील दाब = आतील दाब → समतोल!<br>म्हणूनच आपल्याला तो दाब जाणवत नाही.</p>
+<div class="warning-box">⚠️ <strong>सुरक्षितता:</strong> लहान मुलांनी फुगा फोडताना काळजी घ्या!</div>
+      
+<div class="observation-box">
+  <div class="obs-title">✏️ माझे निरीक्षण</div>
+  <div class="obs-line"></div>
+  <div class="obs-line"></div>
+  <div class="obs-line"></div>
+  <div class="obs-draw">✏️ चित्र काढा / फोटो चिकटवा</div>
+</div>
+      
+    </div>
+  </div>
+  <div class="pg-footer"></div>
+</div>
+<div class="page scientist-page">
+  <div class="page-band scientist-band">
+    <div class="band-middle">
+      <div class="band-session">🔬 शास्त्रज्ञ</div>
+      <div class="band-topic">गुरुत्वाकर्षण</div>
+    </div>
+  </div>
+  <div class="page-body">
+    <div class="page-content">
+      
+<div class="sci-profile">
+  <div class="sci-profile-left">
+    <img src="../scientists/Sir_Newton.png" alt="सर आयझॅक न्यूटन">
+    <div class="sci-name">सर आयझॅक न्यूटन</div>
+    <div class="sci-subtitle">Sir Isaac Newton · आधुनिक भौतिकशास्त्राचे जनक</div>
+  </div>
+  <div class="sci-profile-right">
+    <table class="sci-meta-table"><tr><td>जन्म</td><td>४ जानेवारी १६४३, इंग्लंड</td></tr><tr><td>निधन</td><td>३१ मार्च १७२७ (वय ८४)</td></tr><tr><td>क्षेत्र</td><td>भौतिकशास्त्र, गणित, खगोलशास्त्र</td></tr></table>
+    <span class="sci-tag">गुरुत्वाकर्षण · गतीचे नियम</span>
+    <p>इंग्लंडमधील वूल्सथॉर्प या छोट्या गावातील एका शेतकरी कुटुंबात जन्मलेले न्यूटन इतिहासातील सर्वात प्रभावशाली शास्त्रज्ञ मानले जातात. जन्माच्या वेळी ते इतके अशक्त होते की आईला वाटले ते जगणार नाहीत — पण ८४ वर्षे जगून त्यांनी विज्ञान जगत कायमचे बदलले!</p>
+<p><strong>🍎 गुरुत्वाकर्षणाचा नियम</strong><br>१६६५ साली प्लेगच्या साथीमुळे केंब्रिज विद्यापीठ बंद झाले. न्यूटन गावी परतले आणि तिथे एक सफरचंद झाडावरून पडताना पाहिले. त्यांनी विचार केला: "सफरचंद खाली का पडते? बाजूला किंवा वर का जात नाही?"<br>या एका प्रश्नातून त्यांनी <strong>सार्वत्रिक गुरुत्वाकर्षणाचा नियम</strong> शोधला —<br><em>"विश्वातील प्रत्येक वस्तू इतर प्रत्येक वस्तूला आकर्षित करते. ही शक्ती वस्तुमानाच्या गुणाकाराच्या समप्रमाणात व अंतराच्या वर्गाच्या व्यस्त प्रमाणात असते."</em></p>
+<p><strong>महत्त्वाचे तथ्य:</strong> चंद्रावर गुरुत्वाकर्षण पृथ्वीच्या १/६ आहे. तुमचे वजन ४२ किलो असेल तर चंद्रावर फक्त ७ किलो वाटेल!</p>
+<p><strong>⚙️ गतीचे तीन नियम (Laws of Motion)</strong><br>
+१) <strong>जडत्व:</strong> वस्तू स्वतःहून आपली अवस्था बदलत नाही — थांबलेली थांबतेच, चाललेली चालतच राहते.<br>
+२) <strong>F = ma:</strong> बल = वस्तुमान × त्वरण. जितकी जड वस्तू, तितका जास्त बल लागतो.<br>
+३) <strong>प्रतिक्रिया:</strong> प्रत्येक क्रियेला समान आणि विरुद्ध प्रतिक्रिया असते. रॉकेट याच तत्त्वावर उडतो!</p>
+<p><strong>📐 इतर योगदान</strong><br>
+- प्रिझमातून सूर्यप्रकाश ७ रंगांत विभागला जातो हे सिद्ध केले<br>
+- कॅल्क्युलसचा शोध लावला (लाइबनिझ यांनी स्वतंत्रपणे)<br>
+- पहिली यशस्वी परावर्ती दुर्बीण (Reflecting Telescope) बनवली<br>
+- "Principia Mathematica" — विज्ञान इतिहासातील सर्वात प्रभावशाली पुस्तक</p>
+<p><strong>🏆 वारसा</strong><br>बलाचे एकक "Newton (N)" त्यांच्या नावावर आहे. Royal Society चे अध्यक्ष. गुरुत्वाकर्षण आणि गतीच्या नियमांनी आधुनिक भौतिकशास्त्राचा पाया घातला.</p>
+  </div>
+</div>
+    </div>
+  </div>
+  <div class="pg-footer"></div>
+</div>
+<div class="page scientist-page">
+  <div class="page-band scientist-band">
+    <div class="band-middle">
+      <div class="band-session">🔬 शास्त्रज्ञ</div>
+      <div class="band-topic">गुरुत्वाकर्षण — पुढे</div>
+    </div>
+  </div>
+  <div class="page-body">
+    <div class="page-content">
+<div class="fact-box">💡 <strong>मनोरंजक तथ्य:</strong> न्यूटन यांचा जन्म ख्रिसमसच्या दिवशी (२५ डिसेंबर १६४२, ज्युलियन कॅलेंडरनुसार) झाला. ते लहानपणी अत्यंत एकलकोंडे होते — पण वयाच्या २३ व्या वर्षी त्यांनी गुरुत्वाकर्षण, कॅल्क्युलस आणि प्रकाश विज्ञान — तिन्ही क्षेत्रांत क्रांतिकारी शोध लावले!</div>
+<p><strong>🍎 सफरचंदाची कथा — खरी की खोटी?</strong><br>न्यूटनचे मित्र William Stukeley यांनी १७२६ मध्ये लिहून ठेवले — न्यूटन बागेत बसले असताना सफरचंद पडताना पाहिले आणि विचार केला: "हे नेहमी खालीच का पडते?" ही घटना प्रेरणादायी होती, पण <em>"डोक्यावर पडले आणि लगेच नियम सापडला"</em> ही नाट्यमय आवृत्ती खरी नाही. त्यामागे दीर्घ गणिती अभ्यास, खगोलशास्त्रीय निरीक्षणे आणि अनेक वर्षांचा विचार होता.</p>
+<div class="sci-chips"><span class="sci-chip">बलाचे एकक "Newton (N)"</span><span class="sci-chip">गुरुत्वाकर्षणाचा नियम</span><span class="sci-chip">गतीचे ३ नियम</span><span class="sci-chip">Principia Mathematica</span><span class="sci-chip">Royal Society अध्यक्ष</span></div>
+<hr class="separator">
+<p>🔬 <strong>आजचा प्रयोग: दोन वस्तू एकत्र पडतात का?</strong></p>
+<div class="materials-box"><div class="section-label">📦 साहित्य</div><ul><li>एक जड वस्तू (दगड)</li><li>एक हलकी वस्तू (पेन किंवा रबर)</li><li>एक उंच जागा (खुर्ची किंवा खिडकी)</li></ul></div>
+<div class="steps-box"><div class="section-label">📋 कृती</div><ol><li>दोन्ही वस्तू एकाच उंचीवर एका हातात धरा</li><li>एकाच वेळी सोडा</li><li>कोण आधी जमिनीवर पडते ते बघा!</li></ol></div>
+<div class="observation-box">
+  <div class="obs-title">✏️ माझे निरीक्षण</div>
+  <div class="obs-line"></div>
+  <div class="obs-line"></div>
+  <div class="obs-line"></div>
+  <div class="obs-draw">✏️ चित्र काढा / फोटो चिकटवा</div>
+</div>
+<div class="science-box"><strong>विज्ञान काय शिकलो?</strong><br>गॅलिलिओ यांनी हेच पिसाच्या मनोऱ्यावरून सिद्ध केले होते — गुरुत्वीय प्रवेग (g = ९.८ m/s²) सर्व वस्तूंसाठी सारखाच असतो!</div>
+    </div>
+  </div>
+  <div class="pg-footer"></div>
+</div>
+<div class="page scientist-page">
+  <div class="page-band scientist-band">
+    <div class="band-middle">
+      <div class="band-session">🔬 शास्त्रज्ञ</div>
+      <div class="band-topic">मायकेल फॅरेडे आणि विद्युत-चुंबक</div>
+    </div>
+  </div>
+  <div class="page-body">
+    <div class="page-content">
+      
+<div class="sci-profile">
+  <div class="sci-profile-left">
+    <img src="../scientists/M_Faraday_Th_Phillips_oil_1842.jpg" alt="मायकेल फॅरेडे">
+    <div class="sci-name">मायकेल फॅरेडे</div>
+    <div class="sci-subtitle">Michael Faraday · आधुनिक विद्युत युगाचे जनक</div>
+  </div>
+  <div class="sci-profile-right">
+    <table class="sci-meta-table"><tr><td>जन्म</td><td>२२ सप्टेंबर १७९१, इंग्लंड</td></tr><tr><td>निधन</td><td>२५ ऑगस्ट १८६७ (वय ७५)</td></tr><tr><td>क्षेत्र</td><td>भौतिकशास्त्र, रसायनशास्त्र</td></tr></table>
+    <span class="sci-tag">विद्युत-चुंबकीय प्रेरण · जनित्र</span>
+    <hr class="separator">
+<p>माझा १० पट लहान शत्रू — <strong>विषाणू</strong> (Virus)!<br>▸ आकार ~०.१ मायक्रोमीटर — जीवाणूपेक्षा १० पट लहान<br>▸ स्वतः जगू शकत नाही — जीवाणू किंवा इतर पेशींमध्ये घुसून गुणाकार करतो<br>▸ उदाहरणे: सर्दी (Rhinovirus), कोरोना (SARS-CoV-2), पोलिओ (Poliovirus) ✅</p>
+<hr class="separator">
+<p><strong>(Michael Faraday · ²² सप्टेंबर १७९१ – २५ ऑगस्ट १८६७)</strong></p>
+<p>इंग्लंडमधील एका गरीब लोहाराच्या घरी जन्मलेल्या फॅरेडे यांना शाळेत जाण्याची संधीच मिळाली नाही — ते पुस्तक बांधणाऱ्याच्या दुकानात काम करत स्वतः पुस्तके वाचत शिकले! आज त्यांच्या नावावर विज्ञानातील काही सर्वात मूलभूत नियम आहेत.</p>
+<p><strong>⚡ सर्वात मोठा शोध — विद्युत-चुंबकीय प्रेरण (Electromagnetic Induction)</strong><br>१८३१ साली फॅरेडे यांनी सिद्ध केले: <strong>चुंबक हलवले की वायरमध्ये वीज निर्माण होते!</strong><br>हे एकच वाक्य आधुनिक सभ्यतेचा पाया आहे. यावरून जनित्र (Generator) बनले — आज घरात येणारी सर्व वीज याच तत्त्वावर बनते.<br>विपरीत देखील खरे: <strong>वायरमधून वीज सोडली की चुंबकीय बल निर्माण होते</strong> — हाच विद्युत-चुंबक (Electromagnet)! यावरून विद्युत मोटर बनली.</p>
+<p><strong>🔬 इतर महत्त्वाचे शोध:</strong><br>- इलेक्ट्रोलिसिस (विजेने पदार्थ वेगळे करणे) — सोने-चांदी मढवणे (Electroplating) यावरच चालते<br>- Faraday Cage — धातूच्या पिंजऱ्यात वीज आत शिरत नाही. विमानात वीज पडली तरी प्रवासी सुरक्षित असतात!<br>- बेंझिनचा शोध (सेंद्रिय रसायनशास्त्राचा पाया)</p>
+<p><strong>🏆 वारसा:</strong><br>विद्युत धारितेचे (Capacitance) एकक Farad (F) — त्यांच्याच नावावर.<br>अल्बर्ट आईन्स्टाईन यांनी फॅरेडे यांचे चित्र भिंतीवर लावले होते — आदर्श म्हणून!</p>
+<div class="fact-box">💡 <strong>मनोरंजक तथ्य:</strong></div>
+<p>ब्रिटिश सरकारने फॅरेडे यांना "नाइट" (Sir) हा किताब देऊ केला — पण त्यांनी नम्रपणे नाकारला. ते म्हणाले, "मला फक्त मायकेल फॅरेडेच राहायचे आहे."</p>
+<p>📢 संध्याकाळी विद्युत-चुंबक स्वतः बनवा!</p>
+  </div>
+</div>
+<div class="sci-chips"><span class="sci-chip">धारितेचे एकक "Farad (F)"</span><span class="sci-chip">Generator आणि Motor</span><span class="sci-chip">Faraday Cage</span><span class="sci-chip">Electroplating</span></div>
+    </div>
+  </div>
+  <div class="pg-footer"></div>
+</div>
+<div class="page evening-page">
+  <div class="page-band evening-band">
+    <div class="band-middle">
+      <div class="band-session">🧪 प्रयोग</div>
+      <div class="band-topic">मायकेल फॅरेडे आणि विद्युत-चुंबक</div>
+    </div>
+  </div>
+  <div class="page-body">
+    <div class="page-content">
+      
+      <hr class="separator">
+<p>🧲 <strong>आजचा प्रयोग: विद्युत-चुंबक बनवा!</strong></p>
+<div class="materials-box"><div class="section-label">📦 साहित्य</div><ul><li>एक लोखंडी खिळा (किंवा bolt)</li><li>विद्युत तार (~५० सेमी; इन्सुलेशनसकट)</li><li>१.५V किंवा ९V बॅटरी</li><li>लहान कागदाचे तुकडे किंवा पिना</li></ul></div>
+<div class="steps-box"><div class="section-label">📋 कृती</div><ol><li>तार खिळ्यावर घट्ट गुंडाळा — जितकी जास्त वेटोळी तितके जास्त चुंबकीय बल!</li><li>तारेचे दोन्ही टोक बॅटरीशी जोडा (+ आणि -)</li><li>खिळ्याजवळ कागदाचे तुकडे आणा — ते चिकटतात का?</li><li>बॅटरी काढा — आता काय होते?</li></ol></div>
+<p><strong>प्रयोग करा:</strong><br>- वेटोळ्यांची संख्या वाढवा — चुंबकीय शक्ती कशी बदलते?<br>- वेगळ्या आकाराचा खिळा वापरा — फरक पडतो का?</p>
+<div class="science-box"><strong>विज्ञान काय शिकलो?</strong><br>वीज वाहिली की चुंबकीय क्षेत्र निर्माण होते — हेच फॅरेडे यांनी शोधले! खिळा लोखंडाचा असल्याने तो तात्पुरता चुंबक बनतो. वीज बंद केली की चुंबकत्व जाते — म्हणून याला <strong>Electromagnet</strong> म्हणतात. क्रेन मध्ये जड लोखंड उचलायला हेच वापरतात!</div>
+<div class="warning-box">⚠️ <strong>सुरक्षितता:</strong> तार जास्त वेळ बॅटरीशी जोडू नका — बॅटरी गरम होते!</div>
+      
+<div class="observation-box">
+  <div class="obs-title">✏️ माझे निरीक्षण</div>
+  <div class="obs-line"></div>
+  <div class="obs-line"></div>
+  <div class="obs-line"></div>
+  <div class="obs-draw">✏️ चित्र काढा / फोटो चिकटवा</div>
+</div>
+      
+    </div>
+  </div>
+  <div class="pg-footer"></div>
+</div>
+<div class="page scientist-page">
+  <div class="page-band scientist-band">
+    <div class="band-middle">
+      <div class="band-session">🔬 शास्त्रज्ञ</div>
+      <div class="band-topic">जीवाश्म आणि डायनोसॉर</div>
+    </div>
+  </div>
+  <div class="page-body">
+    <div class="page-content">
+      
+<div class="sci-profile">
+  <div class="sci-profile-left">
+    <img src="../scientists/Mary_Anning_painting.jpg" alt="मेरी अॅनिंग">
+    <div class="sci-name">मेरी अॅनिंग</div>
+    <div class="sci-subtitle">Mary Anning · जीवाश्मांची शोधकर्ती</div>
+  </div>
+  <div class="sci-profile-right">
+    <table class="sci-meta-table"><tr><td>जन्म</td><td>२१ मे १७९९, लाईम रेजिस, इंग्लंड</td></tr><tr><td>निधन</td><td>९ मार्च १८४७ (वय ४७)</td></tr><tr><td>क्षेत्र</td><td>जीवाश्मशास्त्र (Palaeontology)</td></tr></table>
+    <span class="sci-tag">जीवाश्मशास्त्र · उत्क्रांती</span>
+    <hr class="separator">
+<hr class="separator">
+<p><strong>कोण होत्या मेरी अॅनिंग?</strong><br>जन्म: १७९९, इंग्लंड. एका गरीब कुटुंबात जन्मलेल्या मेरींनी लहानपणापासून इंग्लंडच्या किनारपट्टीवरील खडकांमध्ये जीवाश्म शोधले. त्या काळी महिलांना विज्ञान क्षेत्रात स्थान नव्हते — पण मेरींच्या शोधांनी जगाला डायनोसॉर आणि प्राचीन सागरी प्राण्यांची ओळख करून दिली!</p>
+<p><strong>त्यांनी काय शोधले?</strong><br>🦕 <strong>Ichthyosaurus</strong> (१८१२) — सागरी डायनोसॉर सारखा प्राणी<br>🦎 <strong>Plesiosaur</strong> (१८२३) — लांब मानेचा सागरी सरपटणारा प्राणी<br>🦈 <strong>Pterodactyl</strong> — उडणारा सरपटणारा प्राणी</p>
+<p><strong>त्यांचे महत्त्व:</strong><br>मेरींच्या जीवाश्म शोधांमुळे शास्त्रज्ञांना समजले की पृथ्वीवर आधी वेगळे प्राणी होते — जे आता अस्तित्वात नाहीत. याने <strong>उत्क्रांती (Evolution)</strong> सिद्धांताचा पाया घातला!</p>
+<div class="fact-box">💡 <strong>तुम्हाला माहीत आहे का?</strong></div>
+<p>डायनोसॉर सुमारे ६.६ कोटी वर्षांपूर्वी नामशेष झाले — एका महाकाय उल्कापातामुळे! त्या उल्केचा व्यास सुमारे १० किमी होता.</p>
+<p>📢 संध्याकाळी त्याच उल्केसारखा आघात घरी करून बघणार आहोत — तयार राहा!</p>
+  </div>
+</div>
+<div class="sci-chips"><span class="sci-chip">Ichthyosaurus शोध</span><span class="sci-chip">Plesiosaur शोध</span><span class="sci-chip">उत्क्रांती सिद्धांताचा पाया</span><span class="sci-chip">जीवाश्मशास्त्राची जननी</span></div>
+    </div>
+  </div>
+  <div class="pg-footer"></div>
+</div>
+<div class="page evening-page">
+  <div class="page-band evening-band">
+    <div class="band-middle">
+      <div class="band-session">🧪 प्रयोग</div>
+      <div class="band-topic">जीवाश्म आणि डायनोसॉर</div>
+    </div>
+  </div>
+  <div class="page-body">
+    <div class="page-content">
+      
+      <hr class="separator">
+<p>🌠 <strong>आजचा प्रयोग: उल्का आघात — स्वतःचा क्रेटर बनवा!</strong></p>
+<p>सकाळी शिकलो की ६.६ कोटी वर्षांपूर्वी एका १० किमी उल्केने डायनोसॉर नामशेष केले. त्या आघाताचे विज्ञान आता स्वतः अनुभवा!</p>
+<div class="materials-box"><div class="section-label">📦 साहित्य</div><ul><li>एक मोठी थाळी किंवा ट्रे</li><li>पीठ किंवा बारीक वाळू (५–७ सेमी जाड थर)</li><li>वरून शिंपडायला हळद किंवा कोको पावडर (optional — वेगळा रंग)</li><li>वेगवेगळ्या आकाराचे दगड किंवा लहान-मोठे गोळे</li></ul></div>
+<div class="steps-box"><div class="section-label">📋 कृती</div><ol><li>थाळीत पीठ समान थराने पसरवा</li><li>वरून हळदीची पातळ थर शिंपडा (रंगीत पृष्ठभाग)</li><li>एक छोटा दगड कमी उंचीवरून (१५ सेमी) सोडा — क्रेटर पहा</li><li>तोच दगड जास्त उंचीवरून (५० सेमी) सोडा — फरक पहा</li><li>मोठा आणि लहान दगड एकाच उंचीवरून सोडा — आकार तुलना करा</li></ol></div>
+<div class="science-box"><strong>विज्ञान काय शिकलो?</strong><br>जास्त उंचीवरून पडल्यावर वेग जास्त → आघात जोरदार → क्रेटर मोठा आणि खोल!<br>असाच एक उल्का आघात आपल्या महाराष्ट्रातच झाला आहे — <strong>लोणार क्रेटर</strong>, बुलढाणा जिल्हा! सुमारे ५०,००० वर्षांपूर्वी एका उल्केने बेसाल्ट खडकात आघात केला आणि तयार झाला १.८ किमी रुंद खड्डा. आज त्यात एक खाऱ्या पाण्याचे सरोवर आहे — जगातील अशा फक्त ४ क्रेटर लेकपैकी एक! याच विज्ञानाने शास्त्रज्ञांना ६.६ कोटी वर्षांपूर्वीच्या Chicxulub आघाताचा — ज्याने डायनोसॉर नामशेष केले — अभ्यास करायला मदत केली.</div>
+<p>आव्हान: 📏 वेगवेगळ्या उंच्यांवरून क्रेटरचा व्यास मोजा आणि तक्ता बनवा!</p>
+      
+<div class="observation-box">
+  <div class="obs-title">✏️ माझे निरीक्षण</div>
+  <div class="obs-line"></div>
+  <div class="obs-line"></div>
+  <div class="obs-line"></div>
+  <div class="obs-draw">✏️ चित्र काढा / फोटो चिकटवा</div>
+</div>
+      
+    </div>
+  </div>
+  <div class="pg-footer"></div>
 </div>
 <div class="page appendix-page">
   <div class="appendix-band">
@@ -2114,18 +2184,16 @@ hr.separator { border: none; border-top: 1.5px solid var(--rule); margin: 4px 0;
 <h2>🧩 कोड्यांची उत्तरे</h2>
 <table class="answer-table">
   <tr><th>दिवस</th><th>उत्तर</th></tr>
-  <tr><td>दिवस १ — सोमवार, ११ मे</td><td><strong>पाणी! 💧 🎉</strong></td></tr><tr><td>दिवस १६ — मंगळवार, २६ मे</td><td><strong>मी जीवाणू (Bacteria) आहे!</strong></td></tr><tr><td>दिवस २३ — मंगळवार, २ जून</td><td><strong>लोखंडाचा तुकडा आत घन असतो — पाण्यापेक्षा जड. जहाजाचा आकार आतून पोकळ असतो — त्यामुळे जहाज मोठ्या प्रमाणात पाणी बाजूला ढकलते (Buoyancy). जेव्हा ढकललेल्या पाण्याचे वजन = जहाजाचे वजन, तेव्हा जहाज तरंगते! हे Archimedes' Principle आहे!</strong></td></tr>
+  <tr><td>सोमवार, ११ मे<br><small style='color:#888'>प्र. पृ. 3</small></td><td><strong>पाणी! 💧 🎉</strong></td></tr><tr><td>मंगळवार, २६ मे<br><small style='color:#888'>प्र. पृ. 29</small></td><td><strong>मी जीवाणू (Bacteria) आहे!</strong></td></tr><tr><td>मंगळवार, २ जून<br><small style='color:#888'>प्र. पृ. 41</small></td><td><strong>लोखंडाचा तुकडा आत घन असतो — पाण्यापेक्षा जड. जहाजाचा आकार आतून पोकळ असतो — त्यामुळे जहाज मोठ्या प्रमाणात पाणी बाजूला ढकलते (Buoyancy). जेव्हा ढकललेल्या पाण्याचे वजन = जहाजाचे वजन, तेव्हा जहाज तरंगते! हे Archimedes' Principle आहे!</strong></td></tr>
 </table>
-      <h2>🏆 क्विझ उत्तरे</h2><h3>दिवस ७ — १७ मे</h3><p>🔬 <strong>विज्ञान रंजन | दिवस ७ — क्विझ उत्तरे</strong></p>
-<hr class="separator">
+      <h2>🏆 क्विझ उत्तरे</h2><h3>दिवस ७ — १७ मे</h3><hr class="separator">
 <p>🏆 <strong>क्विझ उत्तरे:</strong></p>
 <p>✅ प्र.१ — <strong>ब) चाकूकडे वळेल</strong> (लोखंड जवळ आल्यावर चुंबकीय खेच बदलते — पृथ्वीच्या चुंबकत्वापेक्षा जवळचे लोखंड जास्त प्रभाव टाकते!)<br>✅ प्र.२ — <strong>क) पश्चिमेला</strong> (सकाळी सूर्य पूर्वेला असतो — म्हणजे पाठीमागे. इंद्रधनुष्य नेहमी सूर्याच्या विरुद्ध दिशेला दिसते!)<br>✅ प्र.३ — <strong>क) तसाच बाहेर येतो</strong> (शरीराला फक्त ऑक्सिजन लागतो — नायट्रोजन न बदलता बाहेर पडतो!)<br>✅ प्र.४ — <strong>ब) कमी होईल</strong> (हवेला वजन असते — हवा नसेल तर तेवढे वजन कमी होते!)<br>✅ प्र.५ — <strong>ब) खेळाडूचे हृदय एका ठोक्यात जास्त रक्त पंप करते म्हणून</strong> (सराव केल्याने हृदय अधिक कार्यक्षम बनते!)</p>
 <hr class="separator">
 <p>🎉 <strong>अभिनंदन!</strong><br>तुम्ही सगळ्यांनी पहिला आठवडा उत्साहाने पूर्ण केला!</p>
 <hr class="separator">
 <p>📢 <strong>पुढच्या आठवड्याची झलक:</strong><br>आठवडा २ मध्ये आपण शिकणार आहोत:<br>🌱 वनस्पती अन्न कसे बनवतात<br>🎵 आवाज कसा निर्माण होतो<br>🍎 गुरुत्वाकर्षण म्हणजे काय<br>🌙 चंद्राच्या कलांचे रहस्य<br>⚡ विज कशी तयार होते<br>🌍 पर्यावरण आणि प्रदूषण</p>
-<p>तयार राहा — आणखी मजा, आणखी विज्ञान! 🚀</p><h3>दिवस १४ — २४ मे</h3><p>🔬 <strong>विज्ञान रंजन | दिवस १४ — क्विझ उत्तरे</strong></p>
-<hr class="separator">
+<p>तयार राहा — आणखी मजा, आणखी विज्ञान! 🚀</p><h3>दिवस १४ — २४ मे</h3><hr class="separator">
 <p>🏆 <strong>क्विझ उत्तरे:</strong></p>
 <p>✅ प्र.१ — <strong>ब) रात्री प्रकाशसंश्लेषण थांबते, पण श्वसन चालू राहते</strong><br>झाडे दिवसा प्रकाशसंश्लेषण + श्वसन दोन्ही करतात (O₂ जास्त सोडतात). पण रात्री फक्त श्वसन चालते — O₂ घेतात, CO₂ सोडतात. बंद खोलीत हे धोकादायक होऊ शकते. मोकळ्या हवेत मात्र फरक पडत नाही!</p>
 <p>✅ प्र.२ — <strong>ब) लोखंडातून ध्वनी ~५,१२० m/s वेगाने प्रवास करतो</strong><br>घनपदार्थातील रेणू अत्यंत जवळ असतात, त्यामुळे कंपन वेगाने पुढे जाते. रूळ लोखंडाचे आहेत → आवाज हवेपेक्षा ~१५ पट वेगाने पोहोचतो. म्हणूनच जुन्या काळी लोक रुळावर कान लावून गाडी येतेय का ते तपासायचे!</p>
@@ -2144,8 +2212,7 @@ hr.separator { border: none; border-top: 1.5px solid var(--rule); margin: 4px 0;
 <p>पहिल्या आठवड्यात विजेती — आणि दुसऱ्या आठवड्यातही!<br>हे सातत्य खरोखरच कौतुकास्पद आहे! 👏</p>
 <hr class="separator">
 <p>📢 <strong>पुढच्या आठवड्याची झलक:</strong><br>आठवडा ३ मध्ये आपण शिकणार आहोत:<br>🌡️ उष्णता आणि तापमान — थर्मामीटर कसे काम करते?<br>🧲 विद्युत-चुंबक (Electromagnet) — स्वतः बनवा!<br>🌊 पाण्याचे गुणधर्म — पृष्ठतान आणि केशाकर्षण<br>🦠 सूक्ष्मजीव — दिसत नाहीत पण सगळीकडे आहेत!<br>🌬️ हवामान आणि ऋतू — बदल का होतात?<br>🔭 दुर्बीण — दूरच्या गोष्टी कशा दिसतात?</p>
-<p>तयार राहा — आणखी मजा, आणखी विज्ञान! 🚀</p><h3>दिवस २१ — ३१ मे</h3><p>🔬 <strong>विज्ञान रंजन | दिवस २१ — क्विझ उत्तरे</strong></p>
-<hr class="separator">
+<p>तयार राहा — आणखी मजा, आणखी विज्ञान! 🚀</p><h3>दिवस २१ — ३१ मे</h3><hr class="separator">
 <p>🏆 <strong>क्विझ उत्तरे:</strong></p>
 <p>✅ प्र.१ — <strong>ब) गरम झाल्यावर पाऱ्याचे रेणू वेगाने हलतात, जास्त जागा घेतात</strong><br>हेच Thermal Expansion! उष्णता मिळाली की रेणूंची गती वाढते → ते एकमेकांपासून जास्त दूर जातात → द्रव पसरतो → नळीत वर चढतो. हेच तत्त्व रेल्वे रूळ बांधताना वापरतात — उन्हाळ्यात रूळ पसरतात म्हणून मध्ये अंतर ठेवतात!</p>
 <p>✅ प्र.२ — <strong>क) अन्न पचवायला मदत करतात आणि रोगप्रतिकार शक्ती मजबूत ठेवतात</strong><br>आतड्यातील Gut Microbiome आपले खरे मित्र आहेत! ते B vitamins बनवतात, जड अन्न पचवतात, आणि हानिकारक जीवाणूंना जागा देत नाहीत. प्रतिजैविके (Antibiotics) घेतल्यावर हे मित्र जीवाणू कमी होतात — म्हणून दही खायला सांगतात!</p>
@@ -2158,8 +2225,7 @@ hr.separator { border: none; border-top: 1.5px solid var(--rule); margin: 4px 0;
 <p>🎉 <strong>अभिनंदन!</strong><br>तुम्ही सगळ्यांनी तिसरा आठवडाही उत्साहाने पूर्ण केला!</p>
 <hr class="separator">
 <p>📢 <strong>पुढच्या आठवड्याची झलक:</strong><br>आठवडा ४ मध्ये आपण शिकणार आहोत:<br>⚡ विद्युत परिपथ (Electric Circuit) — बल्ब कसा लागतो?<br>🌈 प्रकाशाचे अपवर्तन — इंद्रधनुष्य कसे तयार होते?<br>🧬 DNA आणि आनुवंशिकता — तुम्ही आईसारखे का दिसता?<br>🌋 भूकंप आणि ज्वालामुखी — पृथ्वीच्या आत काय आहे?<br>🔋 ऊर्जेचे स्रोत — सौर, पवन, आणि जीवाश्म इंधन<br>🌿 पर्यावरण — कार्बन चक्र आणि हरितगृह परिणाम</p>
-<p>तयार राहा — आणखी मजा, आणखी विज्ञान! 🚀</p><h3>दिवस २८ — ७ जून</h3><p>🏆 <strong>विज्ञान रंजन | दिवस २८ — क्विझ उत्तरे</strong></p>
-<hr class="separator">
+<p>तयार राहा — आणखी मजा, आणखी विज्ञान! 🚀</p><h3>दिवस २८ — ७ जून</h3><hr class="separator">
 <p>✅ <strong>आठवडा ४ क्विझ उत्तरे:</strong></p>
 <p><strong>१. क) उष्णता ऊर्जा आहे, तापमान उष्णतेचे मापन आहे</strong> ✅<br>उष्णता (Heat) = ऊर्जेचा प्रकार. तापमान (Temperature) = त्या ऊर्जेचे मापन. गरम वस्तूतून थंड वस्तूत उष्णता वाहते — Thermal Equilibrium होईपर्यंत.</p>
 <p><strong>२. क) २०६</strong> ✅<br>जन्माच्या वेळी ~२७०+ हाडे असतात — मोठे होताना एकत्र येतात. शरीरातील सर्वात लहान हाड: Stapes (कान) — ३ मिमी!</p>
@@ -2173,6 +2239,7 @@ hr.separator { border: none; border-top: 1.5px solid var(--rule); margin: 4px 0;
 <p>पुढच्या आठवड्यात येणार आहे <strong>आठवडा ५ — मानवी शरीर आणि आरोग्य!</strong> 🧠</p>
     </div>
   </div>
+  <div class="pg-footer"></div>
 </div>
 </body>
 </html>

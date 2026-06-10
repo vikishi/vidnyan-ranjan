@@ -18,6 +18,7 @@ BASE_DIR       = Path(__file__).resolve().parent.parent
 PLAN_DIR       = BASE_DIR / '.plan'
 BOOK_DIR       = BASE_DIR / 'book'
 SCIENTISTS_REL = '../scientists'
+IMAGES_REL     = '..'
 
 # ---------------------------------------------------------------------------
 # Scientist images (whole-word regex to avoid "Non-Newtonian" matching Newton)
@@ -32,6 +33,73 @@ SCIENTIST_IMAGES = {
     'मेरी अॅनिंग':     'Mary_Anning_painting.jpg',
     r'\bMary Anning\b': 'Mary_Anning_painting.jpg',
 }
+
+# Structured metadata for blog-style rendering (keyed by image filename)
+SCIENTIST_METADATA = {
+    'Torricelli.jpg': {
+        'name':     'इव्हान्जेलिस्टा टॉरिचेली',
+        'subtitle': 'Evangelista Torricelli · बॅरोमीटरचे जनक',
+        'tag':      'वायुदाब · बॅरोमीटर',
+        'meta': [
+            ('जन्म',    '१५ ऑक्टोबर १६०८, फेएन्झा, इटली'),
+            ('निधन',    '२५ ऑक्टोबर १६४७ (वय ३९)'),
+            ('क्षेत्र', 'भौतिकशास्त्र, गणित'),
+        ],
+        'chips': ['दाबाचे एकक "Torr"', 'हवामानशास्त्राचा पाया', 'आधुनिक बॅरोमीटर', 'शून्यावकाशाचा शोध'],
+    },
+    'Sir_Newton.png': {
+        'name':     'सर आयझॅक न्यूटन',
+        'subtitle': 'Sir Isaac Newton · आधुनिक भौतिकशास्त्राचे जनक',
+        'tag':      'गुरुत्वाकर्षण · गतीचे नियम',
+        'meta': [
+            ('जन्म',    '४ जानेवारी १६४३, इंग्लंड'),
+            ('निधन',    '३१ मार्च १७२७ (वय ८४)'),
+            ('क्षेत्र', 'भौतिकशास्त्र, गणित, खगोलशास्त्र'),
+        ],
+        'chips': ['बलाचे एकक "Newton (N)"', 'गुरुत्वाकर्षणाचा नियम', 'गतीचे ३ नियम', 'Principia Mathematica'],
+    },
+    'M_Faraday_Th_Phillips_oil_1842.jpg': {
+        'name':     'मायकेल फॅरेडे',
+        'subtitle': 'Michael Faraday · आधुनिक विद्युत युगाचे जनक',
+        'tag':      'विद्युत-चुंबकीय प्रेरण · जनित्र',
+        'meta': [
+            ('जन्म',    '२२ सप्टेंबर १७९१, इंग्लंड'),
+            ('निधन',    '२५ ऑगस्ट १८६७ (वय ७५)'),
+            ('क्षेत्र', 'भौतिकशास्त्र, रसायनशास्त्र'),
+        ],
+        'chips': ['धारितेचे एकक "Farad (F)"', 'Generator आणि Motor', 'Faraday Cage', 'Electroplating'],
+    },
+    'Mary_Anning_painting.jpg': {
+        'name':     'मेरी अॅनिंग',
+        'subtitle': 'Mary Anning · जीवाश्मांची शोधकर्ती',
+        'tag':      'जीवाश्मशास्त्र · उत्क्रांती',
+        'meta': [
+            ('जन्म',    '२१ मे १७९९, लाईम रेजिस, इंग्लंड'),
+            ('निधन',    '९ मार्च १८४७ (वय ४७)'),
+            ('क्षेत्र', 'जीवाश्मशास्त्र (Palaeontology)'),
+        ],
+        'chips': ['Ichthyosaurus शोध', 'Plesiosaur शोध', 'उत्क्रांती सिद्धांताचा पाया', 'जीवाश्मशास्त्राची जननी'],
+    },
+}
+
+# ---------------------------------------------------------------------------
+# Topic images — shown on non-scientist pages when topic matches
+# keyword → filename relative to project root
+# ---------------------------------------------------------------------------
+TOPIC_IMAGES = [
+    (['हृदय'],                          'Gemini_Generated_whale-heart.png'),
+    (['इंद्रधनुष्य', 'रंगांचे'],       'Double-alaskan-rainbow.jpg'),
+    (['जैवविविधता', 'मधमाश'],          'licensed-image.jpeg'),
+]
+
+def get_topic_image(topic, text):
+    combined = topic + ' ' + text[:300]
+    for keywords, filename in TOPIC_IMAGES:
+        if any(kw in combined for kw in keywords):
+            path = BASE_DIR / filename
+            if path.exists():
+                return f'{IMAGES_REL}/{filename}'
+    return None
 
 # ---------------------------------------------------------------------------
 # Day icons — shown as a visual element on non-scientist morning pages
@@ -93,6 +161,11 @@ SKIP_LINE_RE = re.compile('|'.join([
     r'Pin केलेला मेसेज',
     r'📸.*Padlet',
     r'Padlet.*शेअर',
+    r'विज्ञान रंजन\s*[|।]\s*दिवस',
+    r'संध्याकाळची पोस्ट दुपारी',
+    r'⏰',
+    r'आजचा विषय\s*:',
+    r'आजच[ाे] शास्त्रज्ञ',
 ]))
 
 # Chunk-level: skip entire paragraph if it contains these keywords
@@ -102,6 +175,7 @@ SKIP_CHUNK_RE = re.compile('|'.join([
     r'या आठवड्याचा विज्ञानवीर',
     r'असाच उत्साह कायम ठेव',
     r'सर्वाधिक बरोबर उत्तरे देणाऱ्याचे नाव',
+    r'काल\'?च्या.*उत्तर',
 ]))
 
 
@@ -453,24 +527,66 @@ def morning_page(day):
     content = md_to_html(day['morning'])
 
     if day['scientist_img']:
-        visual = (
-            f'<div class="scientist-card">'
-            f'<img src="{day["scientist_img"]}" alt="शास्त्रज्ञ">'
-            f'</div>'
-        )
-    else:
-        icon = day['day_icon'] or '🔬'
-        visual = f'<div class="day-icon-card">{icon}</div>'
+        img_file = Path(day['scientist_img']).name
+        meta = SCIENTIST_METADATA.get(img_file, {})
 
-    return f'''
+        meta_rows = ''.join(
+            f'<tr><td>{k}</td><td>{v}</td></tr>'
+            for k, v in meta.get('meta', [])
+        )
+        chips_html = ''.join(
+            f'<span class="sci-chip">{c}</span>'
+            for c in meta.get('chips', [])
+        )
+
+        profile_html = f'''
+<div class="sci-profile">
+  <div class="sci-profile-left">
+    <img src="{day["scientist_img"]}" alt="{meta.get("name", "")}">
+    <table class="sci-meta-table">{meta_rows}</table>
+  </div>
+  <div class="sci-profile-right">
+    <div class="sci-name">{meta.get("name", "")}</div>
+    <div class="sci-subtitle">{meta.get("subtitle", "")}</div>
+    <span class="sci-tag">{meta.get("tag", "")}</span>
+    {content}
+  </div>
+</div>
+<div class="sci-chips">{chips_html}</div>'''
+
+        return f'''
+<div class="page scientist-page">
+  <div class="page-band scientist-band">
+    <div class="band-middle">
+      <div class="band-session">🔬 शास्त्रज्ञ</div>
+      <div class="band-topic">{day["topic"]}</div>
+    </div>
+  </div>
+  <div class="page-body">
+    <div class="page-content">
+      {profile_html}
+    </div>
+  </div>
+  <div class="pg-footer"></div>
+</div>'''
+
+    else:
+        topic_img = get_topic_image(day['topic'], day['morning'])
+        if topic_img:
+            visual = (
+                f'<div class="topic-img-card">'
+                f'<img src="{topic_img}" alt="{day["topic"]}">'
+                f'</div>'
+            )
+        else:
+            icon = day['day_icon'] or '🔬'
+            visual = f'<div class="day-icon-card">{icon}</div>'
+
+        return f'''
 <div class="page morning-page">
   <div class="page-band morning-band">
-    <div class="band-day">
-      {day["number"]}
-      <small>{day["day_name"]}</small>
-    </div>
     <div class="band-middle">
-      <div class="band-session">🌅 सकाळ &nbsp;·&nbsp; {day["date"]}</div>
+      <div class="band-session">🌅</div>
       <div class="band-topic">{day["topic"]}</div>
     </div>
   </div>
@@ -480,6 +596,7 @@ def morning_page(day):
       {content}
     </div>
   </div>
+  <div class="pg-footer"></div>
 </div>'''
 
 
@@ -503,7 +620,7 @@ def observation_box(etype):
     return ''
 
 
-def evening_page(day):
+def evening_page(day, appendix_page_num=None):
     is_riddle = day['evening_type'] == 'riddle'
     content   = md_to_html(day['evening'], in_riddle=is_riddle)
     obs       = observation_box(day['evening_type'])
@@ -515,34 +632,47 @@ def evening_page(day):
         'quiz':         '🏆 क्विझ',
         'quiz_answers': '✅ उत्तरे',
         'photo_sharing':'📸 फोटो',
-        'general':      '🌆 संध्याकाळ',
+        'general':      '🌆',
     }
-    session_label = type_icons.get(day['evening_type'], '🌆 संध्याकाळ')
+    session_label = type_icons.get(day['evening_type'], '🌆')
+
+    topic_img = get_topic_image(day['topic'], day['evening'])
+    visual = ''
+    if topic_img and day['evening_type'] not in ('quiz', 'quiz_answers', 'photo_sharing'):
+        visual = (
+            f'<div class="topic-img-card">'
+            f'<img src="{topic_img}" alt="{day["topic"]}">'
+            f'</div>'
+        )
+
+    xref = ''
+    if is_riddle and appendix_page_num:
+        xref = f'<div class="ans-xref">उत्तर: पृ. {appendix_page_num}</div>'
 
     return f'''
 <div class="page evening-page">
   <div class="page-band evening-band">
-    <div class="band-day">
-      {day["number"]}
-      <small>{day["day_name"]}</small>
-    </div>
     <div class="band-middle">
-      <div class="band-session">{session_label} &nbsp;·&nbsp; {day["date"]}</div>
+      <div class="band-session">{session_label}</div>
       <div class="band-topic">{day["topic"]}</div>
     </div>
   </div>
   <div class="page-body">
     <div class="page-content">
+      {visual}
       {content}
       {obs}
+      {xref}
     </div>
   </div>
+  <div class="pg-footer"></div>
 </div>'''
 
 
-def answers_appendix(all_days):
+def answers_appendix(all_days, riddle_page_nums=None):
     riddles = []
     quizzes = []
+    riddle_page_nums = riddle_page_nums or {}
 
     for i, day in enumerate(all_days):
         if day['evening_type'] == 'riddle':
@@ -552,8 +682,13 @@ def answers_appendix(all_days):
                               all_days[i + 1]['morning'])
                 if m:
                     answer = re.sub(r'\*+', '', m.group(1)).strip()
-            riddles.append({'day': day['number'], 'day_name': day['day_name'],
-                            'date': day['date'], 'answer': answer})
+            riddles.append({
+                'day':      day['number'],
+                'day_name': day['day_name'],
+                'date':     day['date'],
+                'answer':   answer,
+                'pg':       riddle_page_nums.get(day['number'], ''),
+            })
 
         if day['evening_type'] == 'quiz_answers':
             quizzes.append({
@@ -565,8 +700,12 @@ def answers_appendix(all_days):
     riddle_html = ''
     if riddles:
         rows = ''.join(
-            f'<tr><td>दिवस {r["day"]} — {r["day_name"]}, {r["date"]}</td>'
-            f'<td><strong>{r["answer"]}</strong></td></tr>'
+            f'<tr>'
+            f'<td>{r["day_name"]}, {r["date"]}'
+            f'{"<br><small style=\'color:#888\'>प्र. पृ. " + str(r["pg"]) + "</small>" if r["pg"] else ""}'
+            f'</td>'
+            f'<td><strong>{r["answer"]}</strong></td>'
+            f'</tr>'
             for r in riddles
         )
         riddle_html = f'''
@@ -596,6 +735,34 @@ def answers_appendix(all_days):
       {quiz_html}
     </div>
   </div>
+  <div class="pg-footer"></div>
+</div>'''
+
+
+def scientists_section_page(scientist_days):
+    names = []
+    for day in scientist_days:
+        m = re.search(r'आजच[ाे] शास्त्रज्ञ[:\s*]+([^\n*\(]+)', day['morning'])
+        if m:
+            names.append(m.group(1).strip().strip('*').strip())
+    name_chips = ''.join(f'<div class="sci-sec-chip">{n}</div>' for n in names)
+
+    return f'''
+<div class="page scientists-section-page">
+  <div class="sci-sec-top">
+    <div class="sci-sec-icon-row">🔬 🧪 🌡️ 📜</div>
+    <div class="sci-sec-title">शास्त्रज्ञ</div>
+    <div class="sci-sec-subtitle">विज्ञानाचे महान अभ्यासक</div>
+  </div>
+  <div class="sci-sec-body">
+    <div class="sci-sec-label">या विभागात आहे…</div>
+    <div class="sci-sec-chips">{name_chips}</div>
+    <div class="sci-sec-note">
+      प्रत्येक शास्त्रज्ञाची कहाणी, त्यांचे महत्त्वाचे शोध,
+      आणि त्यांच्याशी संबंधित प्रयोग.
+    </div>
+  </div>
+  <div class="pg-footer"></div>
 </div>'''
 
 
@@ -613,8 +780,7 @@ def cover_page():
 <div class="page cover-page">
   <div class="cover-top">
     <div class="cover-emoji-row">🔬 🧪 🌡️ 🔭 ⚡ 🌿</div>
-    <div class="cover-title">विज्ञान रंजन</div>
-    <div class="cover-subtitle">दैनिक विज्ञान उपक्रम पुस्तिका</div>
+    <div class="cover-title">विज्ञानाचा रंजक शोध</div>
     <div class="cover-period">मे – जून २०२६</div>
   </div>
   <div class="cover-bottom">
@@ -639,24 +805,27 @@ CSS = """\
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --orange:       #C94E0A;
-  --orange-mid:   #E8621B;
-  --orange-light: #FFF3E8;
-  --blue:         #005F99;
-  --blue-mid:     #1882C4;
-  --blue-light:   #E0F0FF;
-  --amber:        #B87800;
-  --amber-light:  #FFFAE0;
-  --teal:         #097860;
-  --teal-light:   #E0F5EF;
-  --purple:       #5E35A8;
-  --purple-light: #F2ECFC;
-  --green:        #256B3A;
-  --green-light:  #E4F3EA;
-  --red:          #B03020;
-  --text:         #1C1C2E;
-  --muted:        #5A6070;
-  --rule:         #E0E4EA;
+  --orange:          #C94E0A;
+  --orange-mid:      #E8621B;
+  --orange-light:    #FFF3E8;
+  --blue:            #005F99;
+  --blue-mid:        #1882C4;
+  --blue-light:      #E0F0FF;
+  --amber:           #B87800;
+  --amber-light:     #FFFAE0;
+  --teal:            #097860;
+  --teal-light:      #E0F5EF;
+  --purple:          #5E35A8;
+  --purple-light:    #F2ECFC;
+  --green:           #256B3A;
+  --green-light:     #E4F3EA;
+  --red:             #B03020;
+  --text:            #1C1C2E;
+  --muted:           #5A6070;
+  --rule:            #E0E4EA;
+  --scientist:       #4A1580;
+  --scientist-mid:   #7B2FBE;
+  --scientist-light: #F3EAFF;
 }
 
 body {
@@ -664,10 +833,32 @@ body {
   font-size: 8.5pt;
   line-height: 1.5;
   color: var(--text);
+  counter-reset: pg;
+}
+
+/* ── Page counter ────────────────────────────────────── */
+.page { counter-increment: pg; }
+
+.pg-footer {
+  text-align: center;
+  font-size: 6pt;
+  color: var(--muted);
+  padding: 1.5mm 0 1mm;
+  border-top: 0.5px solid var(--rule);
+  flex-shrink: 0;
+}
+.pg-footer::after { content: counter(pg); }
+
+.ans-xref {
+  font-size: 7pt;
+  color: var(--muted);
+  text-align: right;
+  margin-top: 5px;
+  font-style: italic;
 }
 
 /* ── Print ─────────────────────────────────────────── */
-@page { size: A5; margin: 0; }
+@page { size: 130mm 198mm; margin: 0; }
 
 @media print {
   body { background: white; }
@@ -678,8 +869,8 @@ body {
 @media screen {
   body { background: #b8bec8; padding: 8mm; }
   .page {
-    width: 148mm;
-    min-height: 210mm;
+    width: 130mm;
+    min-height: 198mm;
     margin: 8mm auto;
     background: white;
     box-shadow: 0 5px 22px rgba(0,0,0,0.35);
@@ -710,21 +901,18 @@ body {
   color: white;
 }
 
-.band-day {
-  font-size: 26pt;
-  font-weight: 700;
-  line-height: 1;
-  min-width: 16mm;
-  text-align: center;
+.scientist-band {
+  background: linear-gradient(120deg, var(--scientist) 0%, var(--scientist-mid) 55%, #A855F7 100%);
+  color: white;
 }
 
-.band-day small {
-  display: block;
-  font-size: 6.5pt;
-  font-weight: 400;
-  opacity: 0.85;
-  margin-top: 1mm;
-  white-space: nowrap;
+.scientist-box {
+  background: var(--scientist-light);
+  border-left: 4px solid var(--scientist-mid);
+  border-radius: 0 6px 6px 0;
+  padding: 6px 9px;
+  margin: 5px 0 8px;
+  page-break-inside: avoid;
 }
 
 .band-divider {
@@ -772,6 +960,19 @@ body {
 }
 
 .scientist-card img { width: 100%; height: auto; display: block; }
+
+/* ── Topic image card ────────────────────────────────── */
+.topic-img-card {
+  float: right;
+  margin: 0 0 5mm 5mm;
+  width: 36mm;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.22);
+  border: 2px solid var(--rule);
+}
+
+.topic-img-card img { width: 100%; height: auto; display: block; }
 
 /* ── Day icon (non-scientist pages) ─────────────────── */
 .day-icon-card {
@@ -1083,6 +1284,174 @@ hr.separator { border: none; border-top: 1.5px solid var(--rule); margin: 4px 0;
 }
 .answer-table th, .answer-table td { border: 1px solid #ccc; padding: 3px 7px; }
 .answer-table th { background: var(--green-light); font-weight: 700; }
+
+/* ── Scientists section page ─────────────────────────── */
+.scientists-section-page { min-height: 198mm; overflow: hidden; display: flex; flex-direction: column; }
+
+.sci-sec-top {
+  background: linear-gradient(145deg, var(--scientist) 0%, var(--scientist-mid) 55%, #A855F7 100%);
+  padding: 18mm 8mm 12mm;
+  text-align: center;
+  color: white;
+}
+
+.sci-sec-icon-row {
+  font-size: 18pt;
+  letter-spacing: 3mm;
+  margin-bottom: 6mm;
+}
+
+.sci-sec-title {
+  font-size: 30pt;
+  font-weight: 700;
+  margin-bottom: 3mm;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.sci-sec-subtitle {
+  font-size: 9pt;
+  opacity: 0.88;
+}
+
+.sci-sec-body {
+  flex: 1;
+  background: var(--scientist-light);
+  padding: 8mm 7mm 6mm;
+  display: flex;
+  flex-direction: column;
+  gap: 5mm;
+}
+
+.sci-sec-label {
+  font-size: 7.5pt;
+  font-weight: 700;
+  color: var(--scientist);
+  text-transform: uppercase;
+  letter-spacing: 0.8pt;
+}
+
+.sci-sec-chips {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5mm;
+}
+
+.sci-sec-chip {
+  background: white;
+  border: 1.5px solid var(--scientist-mid);
+  border-radius: 8px;
+  padding: 3px 10px;
+  font-size: 8.5pt;
+  font-weight: 600;
+  color: var(--scientist);
+  box-shadow: 0 1px 4px rgba(74,21,128,0.1);
+}
+
+.sci-sec-note {
+  font-size: 7.5pt;
+  color: var(--muted);
+  line-height: 1.6;
+  border-top: 1px solid #D8C8F0;
+  padding-top: 4mm;
+}
+
+/* ── Blog-style scientist profile layout ─────────────── */
+.scientist-page .page-content { overflow: visible; }
+
+.sci-profile {
+  display: flex;
+  gap: 3.5mm;
+  margin-bottom: 3mm;
+  align-items: stretch;
+}
+
+.sci-profile-left {
+  width: 30mm;
+  flex-shrink: 0;
+  background: var(--scientist-light);
+  border-radius: 5px;
+  padding: 2mm 1.5mm 2mm;
+  display: flex;
+  flex-direction: column;
+  gap: 2mm;
+}
+
+.sci-profile-left img {
+  width: 100%;
+  border-radius: 4px;
+  border: 2px solid var(--scientist-mid);
+  box-shadow: 0 2px 8px rgba(74,21,128,0.2);
+  display: block;
+}
+
+.sci-meta-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 5.5pt;
+  flex: 1;
+}
+
+.sci-meta-table td {
+  padding: 1.5px 2px;
+  vertical-align: top;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+.sci-meta-table td:first-child {
+  font-weight: 700;
+  color: var(--scientist-mid);
+  white-space: nowrap;
+  padding-right: 3px;
+}
+
+.sci-profile-right { flex: 1; min-width: 0; padding-top: 1mm; }
+
+.sci-name {
+  font-size: 10.5pt;
+  font-weight: 700;
+  color: var(--scientist);
+  line-height: 1.3;
+  margin-bottom: 1.5px;
+  overflow: visible;
+}
+
+.sci-subtitle {
+  font-size: 6.5pt;
+  color: var(--scientist-mid);
+  font-weight: 600;
+  margin-bottom: 2.5mm;
+}
+
+.sci-tag {
+  display: inline-block;
+  background: white;
+  border: 1px solid var(--scientist-mid);
+  border-radius: 20px;
+  font-size: 6pt;
+  color: var(--scientist);
+  padding: 1px 6px;
+  margin-bottom: 2.5mm;
+}
+
+.sci-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  margin-top: 3mm;
+  padding-top: 2.5mm;
+  border-top: 1px solid #D8C8F0;
+}
+
+.sci-chip {
+  background: var(--scientist-light);
+  color: var(--scientist);
+  font-size: 6pt;
+  font-weight: 600;
+  padding: 1.5px 5px;
+  border-radius: 20px;
+  border: 1px solid var(--scientist-mid);
+}
 """
 
 
@@ -1101,17 +1470,34 @@ def generate():
 
     print(f'Total: {len(all_days)} days')
 
+    regular_days   = [d for d in all_days if not d['scientist_img']]
+    scientist_days = [d for d in all_days if d['scientist_img']]
+
+    # Compute page numbers:
+    # 1 cover + 2*regular + 1 sci-section + 2*scientist + 1 appendix
+    appendix_page_num = 1 + len(regular_days) * 2 + 1 + len(scientist_days) * 2 + 1
+
+    # Map day_number -> evening page number for riddle days
+    riddle_page_nums = {}
+    for i, day in enumerate(regular_days):
+        if day['evening_type'] == 'riddle':
+            riddle_page_nums[day['number']] = 1 + i * 2 + 2  # cover=1, morning=+1, evening=+2
+
     pages = [cover_page()]
-    for day in all_days:
+    for day in regular_days:
+        pages.append(morning_page(day))
+        pages.append(evening_page(day, appendix_page_num))
+    pages.append(scientists_section_page(scientist_days))
+    for day in scientist_days:
         pages.append(morning_page(day))
         pages.append(evening_page(day))
-    pages.append(answers_appendix(all_days))
+    pages.append(answers_appendix(all_days, riddle_page_nums))
 
     html = f"""<!DOCTYPE html>
 <html lang="mr">
 <head>
   <meta charset="UTF-8">
-  <title>विज्ञान रंजन — दैनिक विज्ञान उपक्रम पुस्तिका</title>
+  <title>विज्ञानाचा रंजक शोध</title>
   <style>
 {CSS}
   </style>
@@ -1124,7 +1510,7 @@ def generate():
     out = BOOK_DIR / 'vidnyan-ranjan-pustak.html'
     out.write_text(html, encoding='utf-8')
     print(f'\nDone → {out}')
-    print('Chrome → Print → Save as PDF → A5 → No margins')
+    print('Chrome → Print → Save as PDF → Custom 130×198mm → No margins')
 
 
 if __name__ == '__main__':
